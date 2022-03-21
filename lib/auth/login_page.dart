@@ -1,21 +1,19 @@
-import 'package:angimehub/text_form_fields.dart';
-import 'package:angimehub/validators.dart';
+import 'package:angime_hub/text_form_fields.dart';
+import 'package:angime_hub/validators.dart';
 import 'package:flutter/material.dart';
 
 import '../styles.dart';
 
-class LoginForm extends StatefulWidget{
-  const LoginForm({Key? key}): super(key: key);
+class LoginForm extends StatefulWidget {
+  const LoginForm({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-      return LoginState();
+    return LoginState();
   }
-
 }
 
-class LoginState extends State<LoginForm>{
-
+class LoginState extends State<LoginForm> {
   final _loginFormKey = GlobalKey<LoginState>();
 
   @override
@@ -24,7 +22,6 @@ class LoginState extends State<LoginForm>{
       key: _loginFormKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-
         children: <Widget>[
           Center(
             child: Padding(
@@ -35,7 +32,6 @@ class LoginState extends State<LoginForm>{
               ),
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 20, 0, 5),
             child: Text(
@@ -43,7 +39,6 @@ class LoginState extends State<LoginForm>{
               style: CommonStyle.descriptionTextStyle(),
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
             child: MyTextFormField(
@@ -51,7 +46,6 @@ class LoginState extends State<LoginForm>{
               EmailValidator("Invalid e-mail"),
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 10, 0, 5),
             child: Text(
@@ -59,7 +53,6 @@ class LoginState extends State<LoginForm>{
               style: CommonStyle.descriptionTextStyle(),
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
             child: MyTextFormField(
@@ -68,13 +61,13 @@ class LoginState extends State<LoginForm>{
               isObscure: true,
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 30, 10, 0),
             child: ElevatedButton(
-              onPressed: () {  },
+              onPressed: () {},
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 11, 191, 184)),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color.fromARGB(255, 11, 191, 184)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -96,5 +89,3 @@ class LoginState extends State<LoginForm>{
     );
   }
 }
-
-

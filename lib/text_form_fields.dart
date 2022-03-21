@@ -1,10 +1,10 @@
-
-import 'package:angimehub/styles.dart';
+import 'package:angime_hub/styles.dart';
 import 'package:flutter/material.dart';
 
-class MyTextFormField extends StatelessWidget{
+class MyTextFormField extends StatelessWidget {
   MyTextFormField(this.hintText, this.validator,
-      {Key? key, this.isObscure = false}) : super(key: key);
+      {Key? key, this.isObscure = false})
+      : super(key: key);
 
   final bool isObscure;
   final String hintText;
@@ -17,13 +17,10 @@ class MyTextFormField extends StatelessWidget{
       style: CommonStyle.textFieldInputStyle(),
       decoration: CommonStyle.textFieldStyle(hintTextStr: hintText),
       cursorColor: Colors.white,
-      validator: (value){
+      validator: (value) {
         validator;
         return null;
       },
     );
   }
-
-
-
 }

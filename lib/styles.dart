@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
 
-class CommonStyle{
-  static InputDecoration textFieldStyle({String labelTextStr="",String hintTextStr=""}) {
+class CommonStyle {
+  static InputDecoration textFieldStyle(
+      {String labelTextStr = "", String hintTextStr = ""}) {
     return InputDecoration(
       contentPadding: const EdgeInsets.all(12),
       fillColor: const Color.fromARGB(255, 42, 45, 71),
       filled: true,
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0)
-      ),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
       hintText: hintTextStr,
       hintStyle: const TextStyle(
-          fontFamily: "Open Sans",
-          color: Color.fromARGB(255, 133, 135, 159)
-      ),
+          fontFamily: "Open Sans", color: Color.fromARGB(255, 133, 135, 159)),
     );
   }
 
-  static TextStyle descriptionTextStyle(){
+  static TextStyle descriptionTextStyle() {
     return const TextStyle(
       fontFamily: "Open Sans",
-      color: Color.fromARGB(255,133, 135, 159),
+      color: Color.fromARGB(255, 133, 135, 159),
     );
   }
 
-  static TextStyle headingTextStyle(){
+  static TextStyle headingTextStyle() {
     return const TextStyle(
       fontWeight: FontWeight.bold,
       color: Colors.white,
@@ -32,12 +29,10 @@ class CommonStyle{
     );
   }
 
-  static TextStyle textFieldInputStyle(){
+  static TextStyle textFieldInputStyle() {
     return const TextStyle(
       fontFamily: "Open Sans",
       color: Colors.white,
-
     );
   }
-
 }

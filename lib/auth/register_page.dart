@@ -1,26 +1,21 @@
-
-import 'package:angimehub/styles.dart';
-import 'package:angimehub/text_form_fields.dart';
-import 'package:angimehub/validators.dart';
+import 'package:angime_hub/styles.dart';
+import 'package:angime_hub/text_form_fields.dart';
+import 'package:angime_hub/validators.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class RegisterForm extends StatefulWidget{
+class RegisterForm extends StatefulWidget {
   const RegisterForm({Key? key}) : super(key: key);
 
-  
-  
   @override
   State<StatefulWidget> createState() {
     return RegisterState();
   }
-  
 }
 
-class RegisterState extends State<RegisterForm>{
-  
+class RegisterState extends State<RegisterForm> {
   final _registerFormKey = GlobalKey<RegisterState>();
-  
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -50,8 +45,7 @@ class RegisterState extends State<RegisterForm>{
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
             child: MyTextFormField(
-                "First name", NameValidator("Invalid First name")
-            ),
+                "First name", NameValidator("Invalid First name")),
           ),
 
           // Second Name
@@ -66,8 +60,7 @@ class RegisterState extends State<RegisterForm>{
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
             child: MyTextFormField(
-                "Second Name", NameValidator("Invalid Second name")
-            ),
+                "Second Name", NameValidator("Invalid Second name")),
           ),
 
           // E-mail
@@ -82,8 +75,7 @@ class RegisterState extends State<RegisterForm>{
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
             child: MyTextFormField(
-                "Enter your e-mail", EmailValidator("Invalid email")
-            ),
+                "Enter your e-mail", EmailValidator("Invalid email")),
           ),
 
           // Password
@@ -125,9 +117,10 @@ class RegisterState extends State<RegisterForm>{
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 30, 10, 0),
             child: ElevatedButton(
-              onPressed: () {  },
+              onPressed: () {},
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 11, 191, 184)),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color.fromARGB(255, 11, 191, 184)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -144,7 +137,6 @@ class RegisterState extends State<RegisterForm>{
               ),
             ),
           ),
-
         ],
       ),
     );
