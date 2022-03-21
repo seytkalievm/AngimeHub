@@ -1,3 +1,4 @@
+import 'package:angimehub/auth/register_page.dart';
 import 'package:flutter/material.dart';
 
 import 'login_page.dart';
@@ -14,15 +15,17 @@ class Authorization extends StatelessWidget{
       ),
       home: Scaffold(
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              LoginForm(),
-              
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                LoginForm(),
+
+              ],
+            ),
           ),
         ),
-      ),
+      )
     );
   }
 

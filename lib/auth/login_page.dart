@@ -1,7 +1,8 @@
-
-
-import 'package:flutter/cupertino.dart';
+import 'package:angimehub/text_form_fields.dart';
+import 'package:angimehub/validators.dart';
 import 'package:flutter/material.dart';
+
+import '../styles.dart';
 
 class LoginForm extends StatefulWidget{
   const LoginForm({Key? key}): super(key: key);
@@ -25,76 +26,46 @@ class LoginState extends State<LoginForm>{
         crossAxisAlignment: CrossAxisAlignment.stretch,
 
         children: <Widget>[
-          const Center(
+          Center(
             child: Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Text(
                 "Welcome Back!",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  fontSize: 28,
-                ),
+                style: CommonStyle.headingTextStyle(),
               ),
             ),
           ),
 
-          const Padding(
-            padding: EdgeInsets.fromLTRB(10, 20, 0, 5),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 20, 0, 5),
             child: Text(
               "E-mail",
-              style: TextStyle(
-                  fontFamily: "Open Sans",
-                  color: Color.fromARGB(255,133, 135, 159)
-              ),
+              style: CommonStyle.descriptionTextStyle(),
             ),
           ),
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-            child: TextFormField(
-              style: const TextStyle(
-                fontFamily: "Open Sans",
-                color: Colors.white,
-              ),
-              decoration: CommonStyle.textFieldStyle(hintTextStr: "Enter your e-mail"),
-              cursorColor: Colors.white,
-              validator: (value){
-                if (value == null || value.isEmpty || !value.contains("@")){
-                  return "Invalid Email";
-                }
-                return null;
-                },
+            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+            child: MyTextFormField(
+              "E=mail",
+              EmailValidator("Invalid e-mail"),
             ),
           ),
 
-          const Padding(
-            padding: EdgeInsets.fromLTRB(10, 10, 0, 5),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 10, 0, 5),
             child: Text(
               "Password",
-              style: TextStyle(
-                  fontFamily: "Open Sans",
-                  color: Color.fromARGB(255,133, 135, 159)
-              ),
+              style: CommonStyle.descriptionTextStyle(),
             ),
           ),
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-            child: TextFormField(
-              style: const TextStyle(
-                fontFamily: "Open Sans",
-                color: Colors.white,
-              ),
-              obscureText: true,
-              decoration: CommonStyle.textFieldStyle(hintTextStr: "Password"),
-              cursorColor: Colors.white,
-              validator: (value){
-                if (value == null || value.isEmpty){
-                  return "Invalid Password";
-                }
-                return null;
-                },
+            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+            child: MyTextFormField(
+              "Password",
+              passwordValidator,
+              isObscure: true,
             ),
           ),
 
@@ -114,6 +85,7 @@ class LoginState extends State<LoginForm>{
                 "Log in",
                 style: TextStyle(
                   fontSize: 16,
+                  fontFamily: "Open Sans",
                   color: Colors.white,
                 ),
               ),
@@ -125,22 +97,4 @@ class LoginState extends State<LoginForm>{
   }
 }
 
-class CommonStyle{
-  static InputDecoration textFieldStyle({String labelTextStr="",String hintTextStr=""}) {
-    return InputDecoration(
-      contentPadding: const EdgeInsets.all(12),
-      fillColor: const Color.fromARGB(255, 42, 45, 71),
-      filled: true,
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0)
-      ),
-      hintText: hintTextStr,
-      hintStyle: const TextStyle(
-          fontFamily: "Open Sans",
-          color: Color.fromARGB(255, 133, 135, 159)
-      ),
-    );
-  }
-
-}
 
