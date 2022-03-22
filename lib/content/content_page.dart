@@ -1,15 +1,20 @@
+import 'package:angime_hub/content/profile.dart';
+import 'package:angime_hub/content/user_bottom.dart';
 import 'icons.dart';
 import 'package:flutter/material.dart';
+import 'globals.dart' as globals;
 
 class ContentPage extends StatefulWidget {
   final String header;
   final String hint;
   final String popular;
+  final IconData icon;
 
   const ContentPage(
       {required this.header,
       required this.hint,
       required this.popular,
+      required this.icon,
       Key? key})
       : super(key: key);
 
@@ -18,115 +23,112 @@ class ContentPage extends StatefulWidget {
 }
 
 class ContentPageState extends State<ContentPage> {
+  int page = 0;
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: const Color.fromARGB(255, 20, 22, 38),
-          body: SingleChildScrollView(
-              child: Column(
-            children: [
-              Header(
-                header: widget.header,
-                hint: widget.hint,
-                popular: widget.popular,
-              )
-            ],
-          )),
-        ));
-  }
-}
-
-class Header extends StatefulWidget {
-  final String header;
-  final String hint;
-  final String popular;
-
-  const Header(
-      {required this.header,
-      required this.hint,
-      required this.popular,
-      Key? key})
-      : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => HeaderState();
-}
-
-class HeaderState extends State<Header> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            SizedBox(
-              child: Text(
-                widget.header,
-                style: const TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 28,
-                    fontFamily: "OpenSans",
-                    color: Color.fromARGB(255, 255, 255, 255)),
-              ),
-              height: 38,
-              width: 225,
-            ),
-            const Center(
-                child: SizedBox(
-              width: 32,
-              height: 32,
-              child: CircleAvatar(
-                backgroundColor: Color.fromARGB(255, 156, 160, 199),
-                radius: 32,
-                child: Icon(
-                  MyFlutterApp.account,
-                  size: 24,
-                ),
-              ),
-            ))
-          ]),
-          margin: const EdgeInsets.fromLTRB(16, 40, 16, 10),
-        ),
-        Container(
-          child: TextField(
-              style: const TextStyle(
-                  fontFamily: "OpenSans",
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: Color.fromARGB(255, 255, 255, 255)),
-              decoration: InputDecoration(
-                  prefixIcon: const Padding(
-                    child: Icon(
-                      Icons.search,
-                      color: Color.fromARGB(255, 133, 135, 159),
-                      size: 18,
+    if (page == 0) {
+      return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: const Color.fromARGB(255, 20, 22, 38),
+            body: SingleChildScrollView(
+                child: Column(
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              child: Text(
+                                widget.header,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 28,
+                                    fontFamily: "OpenSans",
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ),
+                              height: 38,
+                            ),
+                            Center(
+                                child: InkWell(
+                              child: const SizedBox(
+                                  height: 32,
+                                  width: 32,
+                                  child: CircleAvatar(
+                                    backgroundColor:
+                                        Color.fromARGB(255, 156, 160, 199),
+                                    radius: 32,
+                                    child: Icon(
+                                      MyFlutterApp.account,
+                                      size: 20,
+                                    ),
+                                  )),
+                              onTap: () {
+                                switchToProf();
+                              },
+                            ))
+                          ]),
+                      margin: const EdgeInsets.fromLTRB(16, 40, 16, 10),
                     ),
-                    padding: EdgeInsets.fromLTRB(20, 11, 10, 11),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  filled: true,
-                  hintText: widget.hint,
-                  hintStyle: const TextStyle(
-                      color: Color.fromARGB(255, 133, 135, 159),
-                      fontFamily: "OpenSans",
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400),
-                  fillColor: const Color.fromARGB(255, 42, 45, 71),
-                  contentPadding:
-                      const EdgeInsets.fromLTRB(0, 13.5, 15, 13.5))),
-          height: 46,
-          margin: const EdgeInsets.fromLTRB(16, 10, 16, 0),
-        ),
-        const PopularArtists(),
-        PopularShows(popular: widget.popular)
-      ],
-    );
+                    Container(
+                      child: TextField(
+                          style: const TextStyle(
+                              fontFamily: "OpenSans",
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: Color.fromARGB(255, 255, 255, 255)),
+                          decoration: InputDecoration(
+                              prefixIcon: const Padding(
+                                child: Icon(
+                                  Icons.search,
+                                  color: Color.fromARGB(255, 133, 135, 159),
+                                  size: 18,
+                                ),
+                                padding: EdgeInsets.fromLTRB(20, 11, 10, 11),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              filled: true,
+                              hintText: widget.hint,
+                              hintStyle: const TextStyle(
+                                  color: Color.fromARGB(255, 133, 135, 159),
+                                  fontFamily: "OpenSans",
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400),
+                              fillColor: const Color.fromARGB(255, 42, 45, 71),
+                              contentPadding: const EdgeInsets.fromLTRB(
+                                  0, 13.5, 15, 13.5))),
+                      height: 46,
+                      margin: const EdgeInsets.fromLTRB(16, 10, 16, 34),
+                    ),
+                  ],
+                ),
+                const PopularArtists(),
+                PopularShows(
+                  popular: widget.popular,
+                  icon: widget.icon,
+                )
+              ],
+            )),
+          ));
+    } else {
+      return const ProfilePage();
+    }
+  }
+
+  switchToProf() {
+    setState(() {
+      print(globals.selectedIndex);
+      globals.selectedIndex = -1;
+      print(globals.selectedIndex);
+      UserBottom();
+      print(globals.selectedIndex);
+      page = 1;
+    });
   }
 }
 
@@ -140,42 +142,39 @@ class PopularArtists extends StatefulWidget {
 class PopularArtistsState extends State<PopularArtists> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Container(
-            child: const Padding(
-              child: Text(
-                "Popular artists",
-                style: TextStyle(
-                    fontFamily: "OpenSans",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Color.fromARGB(255, 133, 135, 159)),
-              ),
-              padding: EdgeInsets.fromLTRB(16, 10, 16, 0),
+    return Column(
+      children: [
+        Container(
+          child: const Padding(
+            child: Text(
+              "Popular artists",
+              style: TextStyle(
+                  fontFamily: "OpenSans",
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Color.fromARGB(255, 133, 135, 159)),
             ),
-            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.fromLTRB(16, 10, 16, 0),
           ),
-          Padding(
-              padding: const EdgeInsets.fromLTRB(16, 10, 0, 10),
-              child: SizedBox(
-                height: 125,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: List.generate(6, (index) {
-                    int i = (index + 1) % 3;
-                    if (i == 0) {
-                      i = 3;
-                    }
-                    String name = i.toString();
-                    return Card(name: name);
-                  }),
-                ),
-              ))
-        ],
-      ),
-      margin: const EdgeInsets.fromLTRB(0, 34, 0, 0),
+          alignment: Alignment.centerLeft,
+        ),
+        Padding(
+            padding: const EdgeInsets.fromLTRB(16, 10, 0, 10),
+            child: SizedBox(
+              height: 125,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: List.generate(6, (index) {
+                  int i = (index + 1) % 3;
+                  if (i == 0) {
+                    i = 3;
+                  }
+                  String name = i.toString();
+                  return Card(name: name);
+                }),
+              ),
+            ))
+      ],
     );
   }
 }
@@ -214,7 +213,9 @@ class Card extends StatelessWidget {
 
 class PopularShows extends StatefulWidget {
   final String popular;
-  const PopularShows({required this.popular, Key? key}) : super(key: key);
+  final IconData icon;
+  const PopularShows({required this.popular, required this.icon, Key? key})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => PopularShowsState();
@@ -250,7 +251,10 @@ class PopularShowsState extends State<PopularShows> {
                   i = 4;
                 }
                 String name = i.toString();
-                return ShowCard(name: name);
+                return ShowCard(
+                  name: name,
+                  icon: widget.icon,
+                );
               }),
             ),
           )
@@ -263,8 +267,10 @@ class PopularShowsState extends State<PopularShows> {
 
 class ShowCard extends StatelessWidget {
   final String name;
+  final IconData icon;
 
-  const ShowCard({required this.name, Key? key}) : super(key: key);
+  const ShowCard({required this.name, required this.icon, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -304,16 +310,16 @@ class ShowCard extends StatelessWidget {
               margin: const EdgeInsets.fromLTRB(16, 6, 16, 6),
             )
           ]),
-          const SizedBox(
+          SizedBox(
             child: Icon(
-              MyFlutterApp.download,
+              icon,
               size: 16,
-              color: Color.fromARGB(255, 156, 160, 199),
+              color: const Color.fromARGB(255, 156, 160, 199),
             ),
           )
         ],
       ),
-      margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+      margin: const EdgeInsets.fromLTRB(16, 0, 18, 16),
     );
   }
 }

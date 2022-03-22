@@ -3,5 +3,5 @@ import 'package:flutter/material.dart';
 import 'content/user_bottom.dart';
 
 void main() {
-  runApp(const Authorization());
+  runApp(const UserBottom());
 }

@@ -1,3 +1,6 @@
+import 'package:angime_hub/content/profile.dart';
+
+import 'globals.dart' as globals;
 import 'icons.dart';
 import 'podcast.dart' as podcast;
 import 'saved.dart' as saved;
@@ -12,75 +15,157 @@ class UserBottom extends StatefulWidget {
 }
 
 class UserBottomState extends State<UserBottom> {
-  int selectedIndex = 0;
   Widget podcastPage = const podcast.Podcast();
-  Widget savedPage = const saved.Saved();
+  Widget savedPage = const saved.SavedPage();
   Widget standUpPage = const stand_up.StandUp();
   late final TabController controller;
 
   @override
   Widget build(BuildContext context) {
+    print(globals.selectedIndex);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        bottomNavigationBar: DefaultTabController(
-          length: 3,
-          child: Scaffold(
-            backgroundColor: const Color.fromARGB(255, 42, 45, 71),
-            body: TabBarView(
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                standUpPage,
-                podcastPage,
-                savedPage,
-              ],
-            ),
-            bottomNavigationBar: const TabBar(
-                unselectedLabelColor: Color.fromARGB(255, 156, 160, 199),
-                indicatorSize: TabBarIndicatorSize.label,
-                indicatorColor: Color.fromARGB(255, 11, 191, 184),
-                indicatorPadding: EdgeInsets.fromLTRB(0, 0, 0, 4),
-                tabs: [
-                  SizedBox(
-                    child: Tab(
-                      child: Icon(
-                        MyFlutterApp.standup,
-                      ),
-                    ),
-                    height: 54,
-                  ),
-                  SizedBox(
-                    child: Tab(
-                      child: Icon(MyFlutterApp.podcast),
-                    ),
-                    height: 54,
-                  ),
-                  SizedBox(
-                    child: Tab(
-                      child: Icon(MyFlutterApp.saved),
-                    ),
-                    height: 54,
-                  ),
-                ]),
-          ),
+        resizeToAvoidBottomInset: false,
+        body: getBody(),
+        bottomNavigationBar: Container(
+          height: 54,
+          decoration:
+              const BoxDecoration(color: Color.fromARGB(255, 42, 45, 71)),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+            IconButton(
+                iconSize: 32,
+                enableFeedback: false,
+                onPressed: () {
+                  setState(() {
+                    globals.selectedIndex = 0;
+                  });
+                },
+                icon: globals.selectedIndex == 0
+                    ? Column(
+                        children: [
+                          const Icon(
+                            MyFlutterApp.standup,
+                            color: Colors.white,
+                            size: 24,
+                          ),
+                          Container(
+                            color: const Color.fromARGB(255, 11, 191, 184),
+                            height: 2,
+                            width: 24,
+                            margin: const EdgeInsets.fromLTRB(1, 6, 1, 0),
+                          )
+                        ],
+                      )
+                    : Column(children: [
+                        const Icon(
+                          MyFlutterApp.standup,
+                          color: Color.fromARGB(255, 156, 160, 199),
+                          size: 24,
+                        ),
+                        Container(
+                          color: const Color.fromARGB(255, 42, 45, 71),
+                          height: 2,
+                          width: 24,
+                          margin: const EdgeInsets.fromLTRB(1, 6, 1, 0),
+                        )
+                      ])),
+            IconButton(
+                iconSize: 32,
+                enableFeedback: false,
+                onPressed: () {
+                  setState(() {
+                    globals.selectedIndex = 1;
+                  });
+                },
+                icon: globals.selectedIndex == 1
+                    ? Column(
+                        children: [
+                          const Icon(
+                            MyFlutterApp.podcast,
+                            color: Colors.white,
+                            size: 24,
+                          ),
+                          Container(
+                            color: const Color.fromARGB(255, 11, 191, 184),
+                            height: 2,
+                            width: 24,
+                            margin: const EdgeInsets.fromLTRB(1, 6, 1, 0),
+                          )
+                        ],
+                      )
+                    : Column(children: [
+                        const Icon(
+                          MyFlutterApp.podcast,
+                          color: Color.fromARGB(255, 156, 160, 199),
+                          size: 24,
+                        ),
+                        Container(
+                          color: const Color.fromARGB(255, 42, 45, 71),
+                          height: 2,
+                          width: 24,
+                          margin: const EdgeInsets.fromLTRB(1, 6, 1, 0),
+                        )
+                      ])),
+            IconButton(
+                iconSize: 32,
+                enableFeedback: false,
+                onPressed: () {
+                  setState(() {
+                    globals.selectedIndex = 2;
+                  });
+                },
+                icon: globals.selectedIndex == 2
+                    ? Column(
+                        children: [
+                          const Icon(
+                            MyFlutterApp.saved,
+                            color: Colors.white,
+                            size: 24,
+                          ),
+                          Container(
+                            color: const Color.fromARGB(255, 11, 191, 184),
+                            height: 2,
+                            width: 24,
+                            margin: const EdgeInsets.fromLTRB(1, 6, 1, 0),
+                          )
+                        ],
+                      )
+                    : Column(children: [
+                        const Icon(
+                          MyFlutterApp.saved,
+                          color: Color.fromARGB(255, 156, 160, 199),
+                          size: 24,
+                        ),
+                        Container(
+                          color: const Color.fromARGB(255, 42, 45, 71),
+                          height: 2,
+                          width: 24,
+                          margin: const EdgeInsets.fromLTRB(1, 6, 1, 0),
+                        )
+                      ])),
+          ]),
         ),
       ),
     );
   }
 
   Widget getBody() {
-    if (selectedIndex == 0) {
+    if (globals.selectedIndex == 0) {
       return standUpPage;
-    } else if (selectedIndex == 1) {
+    } else if (globals.selectedIndex == 1) {
       return podcastPage;
-    } else {
+    } else if (globals.selectedIndex == 2) {
       return savedPage;
+    } else {
+      return const ProfilePage();
     }
   }
 
   void onTapHandler(int index) {
     setState(() {
-      selectedIndex = index;
+      globals.selectedIndex = index;
     });
   }
 }
