@@ -6,9 +6,11 @@ class MyTextFormField extends StatelessWidget {
       {Key? key, this.isObscure = false})
       : super(key: key);
 
+  String input = "";
   final bool isObscure;
   final String hintText;
   final FormFieldValidator<String> validator;
+
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,14 @@ class MyTextFormField extends StatelessWidget {
         validator;
         return null;
       },
+      onSaved: (value){
+        input = value.toString();
+      },
     );
+  }
+
+
+  String getValue(){
+    return input;
   }
 }

@@ -1,4 +1,3 @@
-import 'package:angime_hub/text_form_fields.dart';
 import 'package:angime_hub/validators.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +13,37 @@ class LoginForm extends StatefulWidget {
 }
 
 class LoginState extends State<LoginForm> {
-  final _loginFormKey = GlobalKey<LoginState>();
+  final _loginFormKey = GlobalKey<FormState>();
+
+  late String email;
+  late String password;
+
+  Widget _emailTextField(){
+    return TextFormField(
+      keyboardType: TextInputType.emailAddress,
+      style: CommonStyle.textFieldInputStyle(),
+      decoration: CommonStyle.textFieldStyle(hintTextStr: "E-mail"),
+      cursorColor: Colors.white,
+      validator: emailValidator,
+      onSaved: (value){
+        email = value!.toString();
+      },
+    );
+  }
+
+  Widget _passwordTextField(){
+    return TextFormField(
+      keyboardType: TextInputType.visiblePassword,
+      obscureText: true,
+      style: CommonStyle.textFieldInputStyle(),
+      decoration: CommonStyle.textFieldStyle(hintTextStr: "Password"),
+      cursorColor: Colors.white,
+      validator: passwordValidator,
+      onSaved: (value){
+        password = value!.toString();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +70,7 @@ class LoginState extends State<LoginForm> {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-            child: MyTextFormField(
-              "E=mail",
-              EmailValidator("Invalid e-mail"),
-            ),
+            child: _emailTextField(),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 10, 0, 5),
@@ -55,16 +81,11 @@ class LoginState extends State<LoginForm> {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-            child: MyTextFormField(
-              "Password",
-              passwordValidator,
-              isObscure: true,
-            ),
+            child: _passwordTextField(),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 30, 10, 0),
             child: ElevatedButton(
-              onPressed: () {},
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
                     const Color.fromARGB(255, 11, 191, 184)),
@@ -82,6 +103,13 @@ class LoginState extends State<LoginForm> {
                   color: Colors.white,
                 ),
               ),
+              onPressed: () {
+                if (!_loginFormKey.currentState!.validate()){
+                  return;
+                }
+                _loginFormKey.currentState?.save();
+
+              },
             ),
           ),
         ],

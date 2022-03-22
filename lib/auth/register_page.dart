@@ -1,8 +1,8 @@
 import 'package:angime_hub/styles.dart';
 import 'package:angime_hub/text_form_fields.dart';
 import 'package:angime_hub/validators.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({Key? key}) : super(key: key);
@@ -14,7 +14,92 @@ class RegisterForm extends StatefulWidget {
 }
 
 class RegisterState extends State<RegisterForm> {
-  final _registerFormKey = GlobalKey<RegisterState>();
+  final _registerFormKey = GlobalKey<FormState>();
+
+  late String firstName;
+  late String secondName;
+  late String email;
+  late String password;
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confPasswordController = TextEditingController();
+
+
+
+  Widget _firsNameTextField(){
+    return TextFormField(
+      keyboardType: TextInputType.name,
+      style: CommonStyle.textFieldInputStyle(),
+      decoration: CommonStyle.textFieldStyle(hintTextStr: "First name"),
+      cursorColor: Colors.white,
+      validator: firstNameValidator,
+      onSaved: (value){
+        firstName = value!.toString();
+      },
+    );
+  }
+
+  Widget _secondNameTextField(){
+    return TextFormField(
+      keyboardType: TextInputType.name,
+      style: CommonStyle.textFieldInputStyle(),
+      decoration: CommonStyle.textFieldStyle(hintTextStr: "Second name"),
+      cursorColor: Colors.white,
+      validator: secondNameValidator,
+      onSaved: (value){
+        secondName = value!.toString();
+      },
+    );
+  }
+
+
+  Widget _emailTextField(){
+    return TextFormField(
+      keyboardType: TextInputType.emailAddress,
+      style: CommonStyle.textFieldInputStyle(),
+      decoration: CommonStyle.textFieldStyle(hintTextStr: "E-mail"),
+      cursorColor: Colors.white,
+      validator: emailValidator,
+      onSaved: (value){
+        email = value!.toString();
+      },
+    );
+  }
+
+  Widget _passwordTextField(){
+    return TextFormField(
+      keyboardType: TextInputType.visiblePassword,
+      obscureText: true,
+      controller: passwordController,
+      style: CommonStyle.textFieldInputStyle(),
+      decoration: CommonStyle.textFieldStyle(hintTextStr: "Password"),
+      cursorColor: Colors.white,
+      validator: passwordValidator,
+
+    );
+  }
+
+  Widget _confPasswordTextField(){
+    return TextFormField(
+      keyboardType: TextInputType.visiblePassword,
+      obscureText: true,
+      controller: confPasswordController,
+      style: CommonStyle.textFieldInputStyle(),
+      decoration: CommonStyle.textFieldStyle(hintTextStr: "Confirm password"),
+      cursorColor: Colors.white,
+      validator: (value){
+        if (value == null || value.isEmpty){
+          return "Confirm password";
+        }else if(confPasswordController.text != passwordController.text){
+          return "Passwords don't match";
+        }
+        return null;
+      },
+      onSaved: (value){
+        password = confPasswordController.text;
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +129,7 @@ class RegisterState extends State<RegisterForm> {
 
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-            child: MyTextFormField(
-                "First name", NameValidator("Invalid First name")),
+            child: _firsNameTextField(),
           ),
 
           // Second Name
@@ -59,8 +143,7 @@ class RegisterState extends State<RegisterForm> {
 
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-            child: MyTextFormField(
-                "Second Name", NameValidator("Invalid Second name")),
+            child: _secondNameTextField(),
           ),
 
           // E-mail
@@ -74,8 +157,7 @@ class RegisterState extends State<RegisterForm> {
 
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-            child: MyTextFormField(
-                "Enter your e-mail", EmailValidator("Invalid email")),
+            child: _emailTextField(),
           ),
 
           // Password
@@ -89,11 +171,7 @@ class RegisterState extends State<RegisterForm> {
 
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-            child: MyTextFormField(
-              "Create password",
-              passwordValidator,
-              isObscure: true,
-            ),
+            child: _passwordTextField(),
           ),
 
           // Confirm password
@@ -107,17 +185,12 @@ class RegisterState extends State<RegisterForm> {
 
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-            child: MyTextFormField(
-              "Confirm password",
-              NameValidator("Passwords don't match"),
-              isObscure: true,
-            ),
+            child: _confPasswordTextField(),
           ),
 
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 30, 10, 0),
             child: ElevatedButton(
-              onPressed: () {},
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
                     const Color.fromARGB(255, 11, 191, 184)),
@@ -135,6 +208,14 @@ class RegisterState extends State<RegisterForm> {
                   color: Colors.white,
                 ),
               ),
+              onPressed: () {
+                if (!_registerFormKey.currentState!.validate()){
+                  return;
+                }
+                _registerFormKey.currentState!.save();
+                print(password);
+
+              },
             ),
           ),
         ],
