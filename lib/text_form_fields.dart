@@ -11,7 +11,6 @@ class MyTextFormField extends StatelessWidget {
   final String hintText;
   final FormFieldValidator<String> validator;
 
-
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -23,14 +22,13 @@ class MyTextFormField extends StatelessWidget {
         validator;
         return null;
       },
-      onSaved: (value){
+      onSaved: (value) {
         input = value.toString();
       },
     );
   }
 
-
-  String getValue(){
+  String getValue() {
     return input;
   }
 }

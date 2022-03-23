@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import '../validators.dart';
 import 'login_page.dart';
 
-class Authorization extends StatefulWidget{
-
+class Authorization extends StatefulWidget {
   const Authorization({Key? key}) : super(key: key);
 
   @override
@@ -15,14 +14,10 @@ class Authorization extends StatefulWidget{
   }
 }
 
-
 class AuthorizationState extends State<Authorization> {
-
   int page = 0;
   String sign = "Sign in";
   String account = "Already have an account?";
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +43,7 @@ class AuthorizationState extends State<Authorization> {
                         style: CommonStyle.descriptionTextStyle(),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(5, 0, 0,0),
+                        padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                         child: InkWell(
                           child: Text(
                             sign,
@@ -58,7 +53,7 @@ class AuthorizationState extends State<Authorization> {
                               color: Color.fromARGB(255, 11, 191, 184),
                             ),
                           ),
-                          onTap:(){
+                          onTap: () {
                             changePage();
                           },
                         ),
@@ -88,15 +83,11 @@ class AuthorizationState extends State<Authorization> {
         page = 1;
         sign = "Sign in";
         account = "Already have an account?";
-
       } else {
         page = 0;
         sign = "Sign Up";
         account = "Don't have an account?";
-
       }
-    }
-    );
+    });
   }
-
 }

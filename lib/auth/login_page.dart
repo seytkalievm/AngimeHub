@@ -1,7 +1,29 @@
+import 'dart:convert';
+
 import 'package:angime_hub/validators.dart';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import '../styles.dart';
+
+loginUser({
+  required String email,
+  required String password,
+}) async {
+  final responce = await http.get(
+    Uri.parse(
+        'http://192.168.0.106:8080/user/login?email=$email&password=$password'),
+    headers: <String, String>{
+      'Content-Type': 'application/json',
+      'Charset': 'utf-8',
+    },
+  );
+  if (responce.statusCode != 200) {
+    print(jsonDecode(responce.body)['message']);
+  } else {
+    print(responce.statusCode);
+  }
+}
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -18,20 +40,20 @@ class LoginState extends State<LoginForm> {
   late String email;
   late String password;
 
-  Widget _emailTextField(){
+  Widget _emailTextField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
       style: CommonStyle.textFieldInputStyle(),
       decoration: CommonStyle.textFieldStyle(hintTextStr: "E-mail"),
       cursorColor: Colors.white,
       validator: emailValidator,
-      onSaved: (value){
+      onSaved: (value) {
         email = value!.toString();
       },
     );
   }
 
-  Widget _passwordTextField(){
+  Widget _passwordTextField() {
     return TextFormField(
       keyboardType: TextInputType.visiblePassword,
       obscureText: true,
@@ -39,7 +61,7 @@ class LoginState extends State<LoginForm> {
       decoration: CommonStyle.textFieldStyle(hintTextStr: "Password"),
       cursorColor: Colors.white,
       validator: passwordValidator,
-      onSaved: (value){
+      onSaved: (value) {
         password = value!.toString();
       },
     );
@@ -104,11 +126,11 @@ class LoginState extends State<LoginForm> {
                 ),
               ),
               onPressed: () {
-                if (!_loginFormKey.currentState!.validate()){
+                if (!_loginFormKey.currentState!.validate()) {
                   return;
                 }
                 _loginFormKey.currentState?.save();
-
+                loginUser(email: email, password: password);
               },
             ),
           ),

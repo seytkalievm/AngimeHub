@@ -1,5 +1,7 @@
+import 'package:angime_hub/content/audio.dart';
 import 'package:angime_hub/content/profile.dart';
 import 'package:angime_hub/content/user_bottom.dart';
+import 'package:angime_hub/content/video.dart';
 import 'icons.dart';
 import 'package:flutter/material.dart';
 import 'globals.dart' as globals;
@@ -24,6 +26,7 @@ class ContentPage extends StatefulWidget {
 
 class ContentPageState extends State<ContentPage> {
   int page = 0;
+
   @override
   Widget build(BuildContext context) {
     if (page == 0) {
@@ -108,9 +111,18 @@ class ContentPageState extends State<ContentPage> {
                   ],
                 ),
                 const PopularArtists(),
-                PopularShows(
-                  popular: widget.popular,
-                  icon: widget.icon,
+                InkWell(
+                  child: PopularShows(
+                    popular: widget.popular,
+                    icon: widget.icon,
+                  ),
+                  onTap: () {
+                    showBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AudioPage();
+                        });
+                  },
                 )
               ],
             )),
@@ -122,11 +134,6 @@ class ContentPageState extends State<ContentPage> {
 
   switchToProf() {
     setState(() {
-      print(globals.selectedIndex);
-      globals.selectedIndex = -1;
-      print(globals.selectedIndex);
-      UserBottom();
-      print(globals.selectedIndex);
       page = 1;
     });
   }

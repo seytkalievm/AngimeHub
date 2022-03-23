@@ -1,5 +1,6 @@
 import 'package:angime_hub/content/icons.dart';
 import 'package:angime_hub/content/profile.dart';
+import 'package:angime_hub/content/video.dart';
 import 'package:flutter/material.dart';
 import 'content_page.dart';
 
@@ -98,7 +99,17 @@ class SavedPageState extends State<SavedPage> {
                         height: 46,
                         margin: const EdgeInsets.fromLTRB(16, 10, 16, 34),
                       ),
-                      PopularShows(popular: popular, icon: MyFlutterApp.saved)
+                      InkWell(
+                        child: PopularShows(
+                            popular: popular, icon: MyFlutterApp.saved),
+                        onTap: () {
+                          showBottomSheet(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return VideoPage();
+                              });
+                        },
+                      )
                     ],
                   )
                 ]),

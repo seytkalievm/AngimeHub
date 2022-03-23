@@ -10,15 +10,14 @@ class NameValidator extends TextFieldValidator {
   }
 }
 
-
-class EmailValidator extends TextFieldValidator{
+class EmailValidator extends TextFieldValidator {
   EmailValidator(String errorText) : super(errorText);
-  var pattern = r'^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+  var pattern =
+      r'^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
   @override
   bool isValid(String? value) {
     return RegExp(pattern).hasMatch(value!);
   }
-
 }
 
 final firstNameValidator = MultiValidator([
@@ -46,5 +45,6 @@ final passwordValidator = MultiValidator([
   RequiredValidator(errorText: 'Password is required'),
   MinLengthValidator(6, errorText: 'Password must be at least 6 digits long'),
   PatternValidator(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$',
-      errorText: 'Password should contain at least:\nOne upper case letter,\nOne lower case letter,\nOne number'),
+      errorText:
+          'Password should contain at least:\nOne upper case letter,\nOne lower case letter,\nOne number'),
 ]);
