@@ -2,6 +2,7 @@
 
 ## :scroll: Project description
 Cross-platform streaming mobile application on Flutter. This app allows users to see stand-up shows and podcasts in one place.
+You can download pre-release APK [here](https://github.com/seytkalievm/AngimeHub/releases/download/v1.0.0/AngimeHub.apk).
 
 ## :hammer: Building the project
 
@@ -64,6 +65,10 @@ Video can be played / paused (by tapping on the center on the video), rewound ba
 Audio can be played / paused, restarted. The speed of the audio also can be changed.
 
 <img src="https://github.com/seytkalievm/AngimeHub/blob/master/assets/images/readme/audio.jpg" width="200" height="400" />
+
+Demo of the app:
+
+<img src="https://github.com/seytkalievm/AngimeHub/blob/master/assets/images/readme/demo.gif" width="200" height="400" />
 
 
 ## :tm: Contributors
