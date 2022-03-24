@@ -7,6 +7,8 @@ import 'common.dart';
 import 'icons.dart';
 
 class AudioPage extends StatefulWidget {
+  const AudioPage({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => AudioPageState();
 }
@@ -27,15 +29,13 @@ class AudioPageState extends State<AudioPage> with WidgetsBindingObserver {
   Future<void> _init() async {
     final session = await AudioSession.instance;
     await session.configure(const AudioSessionConfiguration.speech());
-    player.playbackEventStream.listen((event) {},
-        onError: (Object e, StackTrace stackTrace) {
-      print('A stream error occurred: $e');
-    });
+    player.playbackEventStream
+        .listen((event) {}, onError: (Object e, StackTrace stackTrace) {});
     try {
       await player.setAudioSource(AudioSource.uri(Uri.parse(
           "https://s3.amazonaws.com/scifri-episodes/scifri20181123-episode.mp3")));
     } catch (e) {
-      print("Error loading audio source: $e");
+      return;
     }
   }
 
@@ -150,7 +150,7 @@ class AudioPageState extends State<AudioPage> with WidgetsBindingObserver {
 class ControlButtons extends StatelessWidget {
   final AudioPlayer player;
 
-  ControlButtons(this.player);
+  const ControlButtons(this.player, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -167,28 +167,28 @@ class ControlButtons extends StatelessWidget {
                 if (processingState == ProcessingState.loading ||
                     processingState == ProcessingState.buffering) {
                   return Container(
-                    margin: EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.all(8.0),
                     width: 64.0,
                     height: 64.0,
-                    child: CircularProgressIndicator(),
+                    child: const CircularProgressIndicator(),
                   );
                 } else if (playing != true) {
                   return IconButton(
-                    icon: Icon(Icons.play_arrow),
+                    icon: const Icon(Icons.play_arrow),
                     iconSize: 64.0,
                     onPressed: player.play,
                     color: Colors.white,
                   );
                 } else if (processingState != ProcessingState.completed) {
                   return IconButton(
-                    icon: Icon(Icons.pause),
+                    icon: const Icon(Icons.pause),
                     iconSize: 64.0,
                     onPressed: player.pause,
                     color: Colors.white,
                   );
                 } else {
                   return IconButton(
-                    icon: Icon(Icons.play_arrow),
+                    icon: const Icon(Icons.play_arrow),
                     iconSize: 64.0,
                     onPressed: () => player.seek(Duration.zero),
                   );
@@ -199,9 +199,9 @@ class ControlButtons extends StatelessWidget {
           margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
           alignment: Alignment.centerLeft,
           child: IconButton(
-            icon: Icon(Icons.replay),
+            icon: const Icon(Icons.replay),
             iconSize: 30.0,
-            color: Color.fromARGB(255, 133, 135, 159),
+            color: const Color.fromARGB(255, 133, 135, 159),
             onPressed: () => player.seek(Duration.zero),
           ),
         ),

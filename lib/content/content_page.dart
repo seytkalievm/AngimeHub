@@ -1,22 +1,24 @@
 import 'package:angime_hub/content/audio.dart';
 import 'package:angime_hub/content/profile.dart';
-import 'package:angime_hub/content/user_bottom.dart';
 import 'package:angime_hub/content/video.dart';
 import 'icons.dart';
 import 'package:flutter/material.dart';
-import 'globals.dart' as globals;
 
 class ContentPage extends StatefulWidget {
   final String header;
   final String hint;
   final String popular;
   final IconData icon;
+  final List popularArtists;
+  final List popularShows;
 
   const ContentPage(
       {required this.header,
       required this.hint,
       required this.popular,
       required this.icon,
+      required this.popularArtists,
+      required this.popularShows,
       Key? key})
       : super(key: key);
 
@@ -110,17 +112,18 @@ class ContentPageState extends State<ContentPage> {
                     ),
                   ],
                 ),
-                const PopularArtists(),
+                PopularArtists(popularArtists: widget.popularArtists),
                 InkWell(
                   child: PopularShows(
                     popular: widget.popular,
                     icon: widget.icon,
+                    popularShows: widget.popularShows,
                   ),
                   onTap: () {
                     showBottomSheet(
                         context: context,
                         builder: (BuildContext context) {
-                          return AudioPage();
+                          return const VideoPage();
                         });
                   },
                 )
@@ -140,7 +143,9 @@ class ContentPageState extends State<ContentPage> {
 }
 
 class PopularArtists extends StatefulWidget {
-  const PopularArtists({Key? key}) : super(key: key);
+  final List popularArtists;
+  const PopularArtists({required this.popularArtists, Key? key})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => PopularArtistsState();
@@ -171,13 +176,12 @@ class PopularArtistsState extends State<PopularArtists> {
               height: 125,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: List.generate(6, (index) {
-                  int i = (index + 1) % 3;
-                  if (i == 0) {
-                    i = 3;
-                  }
-                  String name = i.toString();
-                  return Card(name: name);
+                children: List.generate(widget.popularArtists.length, (index) {
+                  Map current = widget.popularArtists[index];
+                  return Card(
+                    name: current["name"],
+                    photo: current["photo"],
+                  );
                 }),
               ),
             ))
@@ -188,22 +192,26 @@ class PopularArtistsState extends State<PopularArtists> {
 
 class Card extends StatelessWidget {
   final String name;
+  final String photo;
 
-  const Card({required this.name, Key? key}) : super(key: key);
+  const Card({required this.name, required this.photo, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: [
-          Image.asset('assets/images/$name.png', height: 97, width: 95),
+          ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Image.network(photo, height: 97, width: 95)),
           Container(
             height: 16,
             width: 95,
             alignment: Alignment.centerLeft,
-            child: const Text(
-              "Alex",
-              style: TextStyle(
+            child: Text(
+              name,
+              style: const TextStyle(
                   fontFamily: "Open Sans",
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
@@ -221,7 +229,12 @@ class Card extends StatelessWidget {
 class PopularShows extends StatefulWidget {
   final String popular;
   final IconData icon;
-  const PopularShows({required this.popular, required this.icon, Key? key})
+  final List popularShows;
+  const PopularShows(
+      {required this.popular,
+      required this.icon,
+      required this.popularShows,
+      Key? key})
       : super(key: key);
 
   @override
@@ -252,15 +265,14 @@ class PopularShowsState extends State<PopularShows> {
             child: ListView(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              children: List.generate(6, (index) {
-                int i = (index + 1) % 4;
-                if (i == 0) {
-                  i = 4;
-                }
-                String name = i.toString();
+              children: List.generate(widget.popularShows.length, (index) {
+                Map current = widget.popularShows[index];
                 return ShowCard(
-                  name: name,
+                  name: current["name"],
                   icon: widget.icon,
+                  artist: current["artist"],
+                  photo: current["photo"],
+                  duration: current["duration"],
                 );
               }),
             ),
@@ -274,9 +286,18 @@ class PopularShowsState extends State<PopularShows> {
 
 class ShowCard extends StatelessWidget {
   final String name;
+  final String artist;
+  final String duration;
+  final String photo;
   final IconData icon;
 
-  const ShowCard({required this.name, required this.icon, Key? key})
+  const ShowCard(
+      {required this.name,
+      required this.artist,
+      required this.duration,
+      required this.photo,
+      required this.icon,
+      Key? key})
       : super(key: key);
 
   @override
@@ -286,32 +307,45 @@ class ShowCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(children: [
-            Image.asset('assets/images/s$name.png', height: 60, width: 83),
+            ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.network(
+                  photo,
+                  height: 60,
+                  width: 83,
+                )),
             Container(
-              child: Column(
-                children: const [
-                  Padding(
-                      padding: EdgeInsets.only(bottom: 2),
-                      child: Text("Name",
-                          style: TextStyle(
+              height: 48,
+              child: Stack(
+                alignment: Alignment.centerLeft,
+                children: [
+                  Container(
+                      alignment: Alignment.topLeft,
+                      padding: const EdgeInsets.only(bottom: 2),
+                      child: Text(name,
+                          textAlign: TextAlign.right,
+                          style: const TextStyle(
                               fontFamily: "OpenSans",
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: Color.fromARGB(255, 255, 255, 255)))),
-                  Padding(
-                      padding: EdgeInsets.only(bottom: 2),
-                      child: Text("Alex K.",
-                          style: TextStyle(
+                  Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.only(bottom: 2),
+                      child: Text(artist,
+                          style: const TextStyle(
                               fontFamily: "OpenSans",
                               fontSize: 10,
                               fontWeight: FontWeight.w400,
                               color: Color.fromARGB(255, 156, 160, 199)))),
-                  Text("44 min",
-                      style: TextStyle(
-                          fontFamily: "OpenSans",
-                          fontSize: 10,
-                          fontWeight: FontWeight.w400,
-                          color: Color.fromARGB(255, 156, 160, 199))),
+                  Container(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(duration,
+                          style: const TextStyle(
+                              fontFamily: "OpenSans",
+                              fontSize: 10,
+                              fontWeight: FontWeight.w400,
+                              color: Color.fromARGB(255, 156, 160, 199)))),
                 ],
               ),
               margin: const EdgeInsets.fromLTRB(16, 6, 16, 6),

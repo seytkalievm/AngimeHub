@@ -1,6 +1,4 @@
-import 'package:angime_hub/content/content_page.dart';
 import 'package:angime_hub/content/profile.dart';
-import 'package:flutter/rendering.dart';
 import 'globals.dart' as globals;
 import 'icons.dart';
 import 'podcast.dart' as podcast;

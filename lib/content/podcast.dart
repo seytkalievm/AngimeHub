@@ -1,4 +1,5 @@
 import 'package:angime_hub/content/icons.dart';
+import 'package:angime_hub/content/requests.dart';
 
 import 'content_page.dart';
 import 'package:flutter/material.dart';
@@ -8,11 +9,13 @@ class Podcast extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ContentPage(
+    return ContentPage(
       header: "Podcasts",
       hint: "Artists or podcasts",
       popular: "Popular Podcasts",
       icon: MyFlutterApp.download,
+      popularArtists: popularArtistsList(),
+      popularShows: popularShowsList(),
     );
   }
 }

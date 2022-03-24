@@ -1,37 +1,13 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:angime_hub/styles.dart';
-import 'package:angime_hub/text_form_fields.dart';
 import 'package:angime_hub/validators.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
-
-registerUser({
-  required String firstname,
-  required String secondname,
-  required String email,
-  required String password,
-}) async {
-  final responce = await http.post(
-    Uri.parse('http://192.168.0.106:8080/user/register'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      'firstName': firstname,
-      'secondName': secondname,
-      'email': email,
-      'password': password
-    }),
-  );
-  print(responce.statusCode);
-}
+import 'package:angime_hub/content/globals.dart' as globals;
 
 class RegisterForm extends StatefulWidget {
-  const RegisterForm({Key? key}) : super(key: key);
+  final Function() notifyParent;
+  const RegisterForm({Key? key, required this.notifyParent}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -229,16 +205,51 @@ class RegisterState extends State<RegisterForm> {
                   color: Colors.white,
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
                 if (!_registerFormKey.currentState!.validate()) {
                   return;
                 }
                 _registerFormKey.currentState!.save();
-                registerUser(
-                    firstname: firstName,
-                    secondname: secondName,
-                    email: email,
-                    password: password);
+                String IP = globals.IP;
+                final responce = await http.post(
+                  Uri.parse('http://$IP:8080/user/register'),
+                  headers: <String, String>{
+                    'Content-Type': 'application/json; charset=UTF-8',
+                  },
+                  body: jsonEncode(<String, String>{
+                    'firstName': firstName,
+                    'secondName': secondName,
+                    'email': email,
+                    'password': password
+                  }),
+                );
+                int result = responce.statusCode;
+                if (result == 200) {
+                  globals.registered = 1;
+                  widget.notifyParent();
+                } else {
+                  showBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return InkWell(
+                          child: SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: 40,
+                              child: const Center(
+                                  child: Text(
+                                "User already exists",
+                                style: TextStyle(
+                                  fontFamily: "OpenSans",
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ))),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        );
+                      });
+                }
               },
             ),
           ),

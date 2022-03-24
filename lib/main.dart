@@ -1,13 +1,60 @@
+import 'dart:convert';
+
 import 'package:angime_hub/auth/authorization.dart';
-import 'package:angime_hub/auth/login_page.dart';
-import 'package:angime_hub/auth/register_page.dart';
-import 'package:angime_hub/content/audio.dart';
 import 'package:angime_hub/content/user_bottom.dart';
-import 'package:angime_hub/content/video.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
-import 'package:chewie/chewie.dart';
+import 'package:angime_hub/content/globals.dart' as globals;
+import 'package:http/http.dart' as http;
 
 void main() {
-  runApp(UserBottom());
+  runApp(MainApp());
+}
+
+class MainApp extends StatefulWidget {
+  const MainApp({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => MainAppState();
+}
+
+class MainAppState extends State<MainApp> {
+  int registered = 0;
+  @override
+  Widget build(BuildContext context) {
+    return getScreen();
+  }
+
+  Widget getScreen() {
+    if (registered == 0) {
+      return Authorization(notifyParent: changePage);
+    } else {
+      getProfileInfo();
+      return const UserBottom();
+    }
+  }
+
+  void changePage() {
+    setState(() {
+      if (registered == 0) {
+        registered = 1;
+      } else {
+        registered = 0;
+      }
+    });
+  }
+
+  void getProfileInfo() async {
+    String IP = globals.IP;
+    String token = globals.token;
+    final responce = await http.get(
+      Uri.parse('http://$IP:8080/user/info?token=$token'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Charset': 'utf-8',
+      },
+    );
+    globals.firstname = jsonDecode(responce.body)["firstName"].toString();
+    globals.secondname = jsonDecode(responce.body)["secondName"].toString();
+    globals.email = jsonDecode(responce.body)["email"].toString();
+  }
 }

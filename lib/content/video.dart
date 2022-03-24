@@ -22,7 +22,7 @@ class VideoPageState extends State<VideoPage> {
 
   loadVideoPlayer() {
     controller = VideoPlayerController.network(
-      'https://archive.org/download/SampleVideo1280x7205mb/SampleVideo_1280x720_5mb.mp4',
+      'https://storage.yandexcloud.net/angimehub-videos/Shane%20Gillis%20Live%20In%20Austin%20_%20Stand%20Up%20Comedy.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=YCAJEsFaNYuFUbqIxlXPsL6kD%2F20220324%2Fru-central1%2Fs3%2Faws4_request&X-Amz-Date=20220324T131810Z&X-Amz-Expires=360000&X-Amz-Signature=EF85CD2C61FDB62CA112C44FADD472A87BB1A286A40BDC2FAA306D644B1B9E6E&X-Amz-SignedHeaders=host',
     );
     controller.addListener(() {
       setState(() {});
@@ -107,8 +107,8 @@ class VideoPageState extends State<VideoPage> {
                         alignment: Alignment.centerRight,
                         child: InkWell(
                           child: AnimatedSwitcher(
-                            duration: Duration(milliseconds: 50),
-                            reverseDuration: Duration(milliseconds: 200),
+                            duration: const Duration(milliseconds: 50),
+                            reverseDuration: const Duration(milliseconds: 200),
                             child: controller.value.isPlaying
                                 ? const SizedBox(height: 80, width: 80)
                                 : const Icon(

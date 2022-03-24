@@ -1,6 +1,7 @@
 import 'package:angime_hub/styles.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class MyTextFormField extends StatelessWidget {
   MyTextFormField(this.hintText, this.validator,
       {Key? key, this.isObscure = false})

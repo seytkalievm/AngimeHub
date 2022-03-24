@@ -1,8 +1,6 @@
 import 'package:angime_hub/content/icons.dart';
-import 'package:angime_hub/content/user_bottom.dart';
-import 'package:flutter/widgets.dart';
-import 'content_page.dart';
 import 'package:flutter/material.dart';
+import 'package:angime_hub/content/globals.dart' as globals;
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -94,6 +92,9 @@ class ShowInfo extends StatefulWidget {
 }
 
 class ShowInfoState extends State<ShowInfo> {
+  String fname = globals.firstname;
+  String sname = globals.secondname;
+  String email = globals.email;
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -113,17 +114,17 @@ class ShowInfoState extends State<ShowInfo> {
       Container(
           margin: const EdgeInsets.fromLTRB(16, 0, 16, 72),
           child: Center(
-              child: Column(children: const [
+              child: Column(children: [
             Text(
-              "Ida Strong",
-              style: TextStyle(
+              fname + " " + sname,
+              style: const TextStyle(
                   fontFamily: "OpenSans",
                   fontSize: 24,
                   fontWeight: FontWeight.w700,
                   color: Color.fromARGB(255, 255, 255, 255)),
             ),
-            Text("idastrong@gmail.com",
-                style: TextStyle(
+            Text(email,
+                style: const TextStyle(
                     fontFamily: "OpenSans",
                     fontSize: 16,
                     fontWeight: FontWeight.w400,

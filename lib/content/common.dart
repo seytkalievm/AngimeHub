@@ -8,13 +8,14 @@ class SeekBar extends StatefulWidget {
   final ValueChanged<Duration>? onChanged;
   final ValueChanged<Duration>? onChangeEnd;
 
-  SeekBar({
+  const SeekBar({
+    Key? key,
     required this.duration,
     required this.position,
     required this.bufferedPosition,
     this.onChanged,
     this.onChangeEnd,
-  });
+  }) : super(key: key);
 
   @override
   _SeekBarState createState() => _SeekBarState();
@@ -31,9 +32,9 @@ class _SeekBarState extends State<SeekBar> {
     _sliderThemeData = SliderTheme.of(context).copyWith(
         trackHeight: 5.0,
         disabledThumbColor: Colors.red,
-        thumbColor: Color.fromARGB(255, 255, 255, 255),
+        thumbColor: const Color.fromARGB(255, 255, 255, 255),
         overlayColor: Colors.white,
-        activeTickMarkColor: Color.fromARGB(157, 255, 255, 255),
+        activeTickMarkColor: const Color.fromARGB(157, 255, 255, 255),
         activeTrackColor: Colors.white);
   }
 
@@ -44,12 +45,12 @@ class _SeekBarState extends State<SeekBar> {
         SliderTheme(
           data: _sliderThemeData.copyWith(
             thumbShape: HiddenThumbComponentShape(),
-            activeTrackColor: Color.fromARGB(255, 156, 160, 199),
+            activeTrackColor: const Color.fromARGB(255, 156, 160, 199),
             inactiveTrackColor: const Color.fromARGB(172, 42, 45, 71),
           ),
           child: ExcludeSemantics(
             child: Slider(
-              thumbColor: Color.fromARGB(255, 133, 135, 159),
+              thumbColor: const Color.fromARGB(255, 133, 135, 159),
               min: 0.0,
               max: widget.duration.inMilliseconds.toDouble(),
               value: min(widget.bufferedPosition.inMilliseconds.toDouble(),
@@ -160,12 +161,12 @@ void showSliderDialog({
       title: Text(title, textAlign: TextAlign.center),
       content: StreamBuilder<double>(
         stream: stream,
-        builder: (context, snapshot) => Container(
+        builder: (context, snapshot) => SizedBox(
           height: 100.0,
           child: Column(
             children: [
               Text('${snapshot.data?.toStringAsFixed(1)}$valueSuffix',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Fixed',
                     fontWeight: FontWeight.bold,
                     fontSize: 24.0,

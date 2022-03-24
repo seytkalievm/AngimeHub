@@ -1,12 +1,12 @@
 import 'package:angime_hub/auth/register_page.dart';
 import 'package:angime_hub/styles.dart';
 import 'package:flutter/material.dart';
-
-import '../validators.dart';
 import 'login_page.dart';
+import 'package:angime_hub/content/globals.dart' as globals;
 
 class Authorization extends StatefulWidget {
-  const Authorization({Key? key}) : super(key: key);
+  final Function() notifyParent;
+  const Authorization({required this.notifyParent, Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -16,7 +16,7 @@ class Authorization extends StatefulWidget {
 
 class AuthorizationState extends State<Authorization> {
   int page = 0;
-  String sign = "Sign in";
+  String sign = "Sign up";
   String account = "Already have an account?";
 
   @override
@@ -71,22 +71,28 @@ class AuthorizationState extends State<Authorization> {
 
   Widget getBody() {
     if (page == 0) {
-      return const LoginForm();
+      return LoginForm(
+        notifyParent: changePage,
+      );
     } else {
-      return const RegisterForm();
+      return RegisterForm(notifyParent: changePage);
     }
   }
 
   void changePage() {
     setState(() {
-      if (page == 0) {
-        page = 1;
-        sign = "Sign in";
-        account = "Already have an account?";
+      if (globals.logged == 1) {
+        widget.notifyParent();
       } else {
-        page = 0;
-        sign = "Sign Up";
-        account = "Don't have an account?";
+        if (page == 0) {
+          page = 1;
+          sign = "Sign in";
+          account = "Already have an account?";
+        } else {
+          page = 0;
+          sign = "Sign Up";
+          account = "Don't have an account?";
+        }
       }
     });
   }

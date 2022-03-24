@@ -1,32 +1,12 @@
-import 'dart:convert';
-
+import 'package:angime_hub/content/globals.dart' as globals;
 import 'package:angime_hub/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 import '../styles.dart';
 
-loginUser({
-  required String email,
-  required String password,
-}) async {
-  final responce = await http.get(
-    Uri.parse(
-        'http://192.168.0.106:8080/user/login?email=$email&password=$password'),
-    headers: <String, String>{
-      'Content-Type': 'application/json',
-      'Charset': 'utf-8',
-    },
-  );
-  if (responce.statusCode != 200) {
-    print(jsonDecode(responce.body)['message']);
-  } else {
-    print(responce.statusCode);
-  }
-}
-
 class LoginForm extends StatefulWidget {
-  const LoginForm({Key? key}) : super(key: key);
+  final Function() notifyParent;
+  const LoginForm({required this.notifyParent, Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -108,31 +88,66 @@ class LoginState extends State<LoginForm> {
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 30, 10, 0),
             child: ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    const Color.fromARGB(255, 11, 191, 184)),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color.fromARGB(255, 11, 191, 184)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
                 ),
-              ),
-              child: const Text(
-                "Log in",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: "Open Sans",
-                  color: Colors.white,
+                child: const Text(
+                  "Log in",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: "Open Sans",
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              onPressed: () {
-                if (!_loginFormKey.currentState!.validate()) {
-                  return;
-                }
-                _loginFormKey.currentState?.save();
-                loginUser(email: email, password: password);
-              },
-            ),
+                onPressed: () async {
+                  if (!_loginFormKey.currentState!.validate()) {
+                    return;
+                  }
+                  _loginFormKey.currentState?.save();
+
+                  String IP = globals.IP;
+                  final responce = await http.get(
+                    Uri.parse(
+                        'http://$IP:8080/user/login?email=$email&password=$password'),
+                    headers: <String, String>{
+                      'Content-Type': 'application/json',
+                      'Charset': 'utf-8',
+                    },
+                  );
+                  if (responce.statusCode == 200) {
+                    globals.logged = 1;
+                    globals.token = responce.body;
+                    widget.notifyParent();
+                  } else {
+                    showBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return InkWell(
+                            child: SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height: 40,
+                                child: const Center(
+                                    child: Text(
+                                  "Email or password is incorrect",
+                                  style: TextStyle(
+                                    fontFamily: "OpenSans",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ))),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          );
+                        });
+                  }
+                }),
           ),
         ],
       ),
