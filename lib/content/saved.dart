@@ -2,7 +2,6 @@ import 'package:angime_hub/content/audio.dart';
 import 'package:angime_hub/content/icons.dart';
 import 'package:angime_hub/content/profile.dart';
 import 'package:angime_hub/content/requests.dart';
-import 'package:angime_hub/content/video.dart';
 import 'package:flutter/material.dart';
 import 'content_page.dart';
 
@@ -120,7 +119,7 @@ class SavedPageState extends State<SavedPage> {
                 ]),
               )));
     } else {
-      return ProfilePage();
+      return const ProfilePage();
     }
   }
 

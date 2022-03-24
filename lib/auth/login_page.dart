@@ -111,6 +111,7 @@ class LoginState extends State<LoginForm> {
                   }
                   _loginFormKey.currentState?.save();
 
+                  // ignore: non_constant_identifier_names
                   String IP = globals.IP;
                   final responce = await http.get(
                     Uri.parse(

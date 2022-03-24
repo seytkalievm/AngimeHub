@@ -7,7 +7,7 @@ import 'package:angime_hub/content/globals.dart' as globals;
 import 'package:http/http.dart' as http;
 
 void main() {
-  runApp(MainApp());
+  runApp(const MainApp());
 }
 
 class MainApp extends StatefulWidget {
@@ -44,6 +44,7 @@ class MainAppState extends State<MainApp> {
   }
 
   void getProfileInfo() async {
+    // ignore: non_constant_identifier_names
     String IP = globals.IP;
     String token = globals.token;
     final responce = await http.get(

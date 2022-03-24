@@ -210,6 +210,7 @@ class RegisterState extends State<RegisterForm> {
                   return;
                 }
                 _registerFormKey.currentState!.save();
+                // ignore: non_constant_identifier_names
                 String IP = globals.IP;
                 final responce = await http.post(
                   Uri.parse('http://$IP:8080/user/register'),
