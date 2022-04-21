@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class CommonStyle {
   static InputDecoration textFieldStyle(
-      {String labelTextStr = "", String hintTextStr = ""}) {
+      {String labelTextStr = "", String hintTextStr = "", Icon icon = const Icon(Icons.input)}) {
     return InputDecoration(
+      prefixIcon: icon,
       contentPadding: const EdgeInsets.all(12),
       fillColor: const Color.fromARGB(255, 42, 45, 71),
       filled: true,

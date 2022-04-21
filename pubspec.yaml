@@ -35,6 +35,7 @@ dependencies:
   audioplayers: ^0.20.1
   http: ^0.13.3
   just_audio: ^0.9.20
+  flutter_bloc: ^8.0.0
 
 
 
