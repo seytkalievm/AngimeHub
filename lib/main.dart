@@ -2,12 +2,13 @@ import 'dart:convert';
 
 import 'package:angime_hub/app_navigator.dart';
 import 'package:angime_hub/content/user_bottom.dart';
-import 'package:angime_hub/data/auth_repository.dart';
 import 'package:angime_hub/ui/session/session_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:angime_hub/content/globals.dart' as globals;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+
+import 'data/repository/auth_repository.dart';
 
 void main() {
   runApp(

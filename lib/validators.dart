@@ -16,6 +16,7 @@ class EmailValidator extends TextFieldValidator {
       r'^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
   @override
   bool isValid(String? value) {
+    value?.trim();
     return RegExp(pattern).hasMatch(value!);
   }
 }

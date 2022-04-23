@@ -10,7 +10,7 @@ class Unauthenticated extends SessionState{
 }
 
 class Authenticated extends SessionState{
-  final dynamic user;
+  final User user;
 
   Authenticated({required this.user});
 }

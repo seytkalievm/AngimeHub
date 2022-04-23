@@ -1,9 +1,7 @@
 import 'package:angime_hub/ui/auth/register/register_bloc.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../data/auth_repository.dart';
+import '../../../data/repository/auth_repository.dart';
 import '../../../styles.dart';
 import '../../../validators.dart';
 import '../auth_cubit.dart';
@@ -103,7 +101,9 @@ class RegisterView extends StatelessWidget{
           cursorColor: Colors.white,
           validator: firstNameValidator,
           onChanged: (firstName) {
-            context.read<RegisterBloc>().add(RegisterFirstNameChanged(firstName));
+            context.read<RegisterBloc>().add(
+                RegisterFirstNameChanged(firstName.trim())
+            );
             },
         ),
       );
@@ -125,7 +125,7 @@ class RegisterView extends StatelessWidget{
          validator: secondNameValidator,
          onChanged: (secondName) {
            context.read<RegisterBloc>().add(
-               RegisterSecondNameChanged(secondName));
+               RegisterSecondNameChanged(secondName.trim()));
            },
 
         ),
@@ -148,7 +148,7 @@ class RegisterView extends StatelessWidget{
           cursorColor: Colors.white,
           validator: emailValidator,
           onChanged: (email) {
-            context.read<RegisterBloc>().add(RegisterEmailChanged(email));
+            context.read<RegisterBloc>().add(RegisterEmailChanged(email.trim()));
           },
 
         ),

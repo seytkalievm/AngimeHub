@@ -12,8 +12,8 @@ class AuthCubit extends Cubit<AuthState> {
 
   void showLogIn() => emit (LogIn());
   void showRegister() => emit(Register());
-  void launchSession(AuthCredentials authCredentials) {
-    return sessionCubit.showSession(authCredentials);
+  Future<void> launchSession() {
+    return sessionCubit.showSession();
   }
 
 }

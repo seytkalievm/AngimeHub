@@ -1,9 +1,8 @@
-import 'package:angime_hub/content/content_page.dart';
-import 'package:angime_hub/data/auth_repository.dart';
 import 'package:angime_hub/ui/auth/form_submission_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../data/repository/auth_repository.dart';
 import '../../../styles.dart';
 import '../../../validators.dart';
 import '../auth_cubit.dart';
@@ -95,7 +94,7 @@ class LoginView extends StatelessWidget{
             validator: emailValidator,
             onChanged: (value) {
               print("$value change @view");
-              context.read<LoginBloc>().add(LoginEmailChanged(email: value));
+              context.read<LoginBloc>().add(LoginEmailChanged(email: value.trim()));
             },
           ),
         );

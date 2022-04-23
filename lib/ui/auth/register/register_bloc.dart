@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:angime_hub/data/auth_repository.dart';
 import 'package:angime_hub/ui/auth/auth_cubit.dart';
 import 'package:angime_hub/ui/auth/form_submission_status.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-
 import '../../../data/exceptions.dart';
+import '../../../data/repository/auth_repository.dart';
 
 part 'register_event.dart';
 part 'register_state.dart';
@@ -38,7 +37,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   void _onRegisterSecondNameChanged(RegisterSecondNameChanged event,
       Emitter<RegisterState> emit,
       ) {
-    emit(state.copyWith(firstName: event.secondName));
+    emit(state.copyWith(secondName: event.secondName));
   }
 
   void _onRegisterEmailChanged(RegisterEmailChanged event,
@@ -62,19 +61,17 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     emit(state.copyWith(formStatus: FormSubmitting()));
 
     try {
+      print("$firstName, $secondName, $email. @registerBloc");
       statusCode = await authRepo.register(firstName, secondName, email, password);
 
       if(statusCode == 200){
-        print("Diasik");
         emit(state.copyWith(formStatus: SubmissionSuccess()));
         authCubit.showLogIn();
 
       }else{
-        print("Pidorasik");
         emit(state.copyWith(formStatus: SubmissionFailed(exception: UserAlreadyExists())));
       }
     }catch (e){
-      print("667");
       emit(state.copyWith(formStatus: SubmissionFailed( exception: e as Exception)));
     }
 
