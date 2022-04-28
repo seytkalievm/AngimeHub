@@ -25,8 +25,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState>{
   void _onLoginEmailChanged(
       LoginEmailChanged event,
       Emitter<LoginState> emit,
-      ) {
-    print("${event.email} @loginBloc");
+      ){
     emit(state.copyWith(email: event.email));
   }
   void _onLoginPasswordChanged(

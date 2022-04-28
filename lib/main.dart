@@ -1,7 +1,9 @@
 import 'dart:convert';
 
-import 'package:angime_hub/app_navigator.dart';
-import 'package:angime_hub/content/user_bottom.dart';
+import 'package:angime_hub/ui/navigation/app_navigator.dart';
+import 'package:angime_hub/data/database/user/user_database.dart';
+import 'package:angime_hub/data/repository/data_repository.dart';
+import 'package:angime_hub/ui/navigation/user_bottom_bar/user_bottom_bar_view.dart';
 import 'package:angime_hub/ui/session/session_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:angime_hub/content/globals.dart' as globals;
@@ -18,11 +20,17 @@ void main() {
           fontFamily: "Open Sans",
         ),
         home: Scaffold(
-          body: RepositoryProvider(
-            create: (context) => AuthRepository(),
+          body: MultiRepositoryProvider(
+            providers: [
+              RepositoryProvider(create: (context)=>AuthRepository()),
+              RepositoryProvider(create: (context)=>DataRepository())
+            ],
             child: BlocProvider(
               create: (context) =>
-                  SessionCubit(authRepo: context.read<AuthRepository>()),
+                  SessionCubit(
+                    authRepo: context.read<AuthRepository>(),
+                    dataRepo: context.read<DataRepository>(),
+                  ),
               child: const AppNavigator(),
             ),
           ),
@@ -30,6 +38,8 @@ void main() {
         ),
   );
 }
+
+
 
 class MainApp extends StatefulWidget {
   const MainApp({Key? key}) : super(key: key);
@@ -47,10 +57,10 @@ class MainAppState extends State<MainApp> {
 
   Widget getScreen() {
     if (registered == 0) {
-      return const UserBottom();
+      return UserBottomBar();
     } else {
       getProfileInfo();
-      return const UserBottom();
+      return UserBottomBar();
     }
   }
 

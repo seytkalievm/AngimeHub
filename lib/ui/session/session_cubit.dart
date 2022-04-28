@@ -1,3 +1,4 @@
+import 'package:angime_hub/data/repository/data_repository.dart';
 import 'package:angime_hub/ui/auth/auth_credentials.dart';
 import 'package:bloc/bloc.dart';
 
@@ -10,8 +11,12 @@ part 'session_state.dart';
 class SessionCubit extends Cubit<SessionState> {
   final AuthRepository authRepo;
   final db = UserDatabase.instance;
+  final DataRepository dataRepo;
 
-  SessionCubit({required this.authRepo}) : super(UnknownSessionState()){
+  SessionCubit({
+    required this.authRepo,
+    required this.dataRepo,
+  }) : super(UnknownSessionState()){
       attemptAutoLogin();
   }
 
@@ -26,7 +31,7 @@ class SessionCubit extends Cubit<SessionState> {
   void shouAuth() => emit(Unauthenticated());
 
   Future<void> showSession() async {
-    final user = await db.getUser();
+    final user = await dataRepo.getUser();
     emit(Authenticated(user: user));
   }
 
