@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../content/icons.dart';
 
 class BottomBarIcon extends StatelessWidget{
   final bool isSelected;

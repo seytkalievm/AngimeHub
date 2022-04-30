@@ -17,6 +17,7 @@ class User{
   late String _firstName;
   late String _secondName;
   late String _email;
+  late String? _profilePic;
   List<MediaEntity> _medias = <MediaEntity>[];
 
   User({
@@ -24,10 +25,12 @@ class User{
     required String firstName,
     required String secondName,
     required String email,
+    String? profilePic,
   }){
     _firstName = firstName;
     _secondName = secondName;
     _email = email;
+    _profilePic = profilePic;
   }
 
   String get firstName{
@@ -36,10 +39,6 @@ class User{
 
   String get secondName{
     return _secondName;
-  }
-
-  String get email{
-    return _email;
   }
 
   List<MediaEntity> get medias{
@@ -62,11 +61,13 @@ class User{
     String? firstName,
     String? secondName,
     String? email,
+    String? profilePic,
   }) => User(
     id: id ?? this.id,
     firstName: firstName ?? _firstName,
     secondName: secondName ?? _secondName,
-    email: email ?? _email
+    email: email ?? _email,
+    profilePic: profilePic ?? _profilePic,
   );
 
   static User fromJson(Map<String, Object?> json) => User(

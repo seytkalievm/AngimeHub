@@ -1,4 +1,7 @@
+import 'package:angime_hub/content/requests.dart';
 import 'package:angime_hub/data/database/user/user_database.dart';
+import 'package:angime_hub/data/models/artist_model.dart';
+import 'package:angime_hub/data/models/media_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/user_model.dart';
@@ -38,4 +41,18 @@ class DataRepository{
     return await db.delete(userTable);
   }
 
+  Future <List<Artist>> getPopularArtists()async{
+    var artists = getArtists();
+    return artists;
+  }
+
+  Future <List<MediaEntity>> getPopularPodcasts() async{
+    var podcasts = getPodcasts();
+    return podcasts;
+  }
+
+  Future <List<MediaEntity>> getPopularStandUps()async{
+    var standUps = getStandUps();
+    return standUps;
+  }
 }

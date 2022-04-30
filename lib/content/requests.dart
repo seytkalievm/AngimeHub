@@ -1,3 +1,7 @@
+import '../data/models/artist_model.dart';
+import '../data/models/media_model.dart';
+import '../data/models/user_model.dart';
+
 List popularArtistsList() {
   List artists = [];
   artists.add({
@@ -69,3 +73,98 @@ List popularShowsList() {
   });
   return shows;
 }
+
+Artist a1 = Artist(id: 1, firstName: "Surlan", secondName: "Naburov",
+  profilePic: "https://www.topnews.ru/wp-content/uploads/2022/04/Sabyrov.jpeg",
+);
+Artist a2 = Artist(id: 2, firstName: "Mambi", secondName: "Tasaev",
+  profilePic: "https://i.pinimg.com/736x/2e/77/68/2e77683dbbdff0d7c32055f32652fb7e.jpg",
+);
+Artist a3 = Artist(id: 3, firstName: "Hevin", secondName: "Kart",
+  profilePic: "https://media.newyorker.com/photos/5cb7a0e992dcf02ddc8613c2/master/pass/DSF-KevinHartSpecial.jpg",
+);
+Artist a4 = Artist(id: 4, firstName: "Couis", secondName: "L.K",
+  profilePic: 'https://static01.nyt.com/images/2019/11/05/arts/04louis-ck/04louis-ck-superJumbo.jpg',
+);
+Artist a5 = Artist(id: 5, firstName: "Ris", secondName: "Chrock",
+  profilePic: 'https://i.ytimg.com/vi/hvAu7L0Ii2M/maxresdefault.jpg',
+);
+Artist a6 = Artist(id: 6, firstName: "Ceorge", secondName: "Garlin",
+  profilePic: 'https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/32-george-carlin-concert-photos.jpg',
+);
+Artist a7 = Artist(id: 7, firstName: "Chave", secondName: "Dapelle",
+  profilePic: "https://static.onecms.io/wp-content/uploads/sites/9/2017/06/fwx-dave-chappelle.jpg",
+);
+
+MediaEntity show1 = MediaEntity(
+  id: 1,
+  url: "https://www.2do2go.ru/uploads/1c6d6afcf3f45972a2f4bd02f8fcce84.jpg",
+  preview: "https://www.2do2go.ru/uploads/1c6d6afcf3f45972a2f4bd02f8fcce84.jpg",
+  mediaName: "About trips",
+  artist: a1,
+  duration: 22,
+  type: 1,
+);
+
+MediaEntity show2 = MediaEntity(
+  id: 2,
+  url: "https://www.teatr-benefis.ru/wp-content/uploads/2021/08/1-2.jpg",
+  preview: "https://www.teatr-benefis.ru/wp-content/uploads/2021/08/1-2.jpg",
+  mediaName: "Adult",
+  artist: a2,
+  duration: 38,
+  type: 1,
+);
+
+MediaEntity show3 = MediaEntity(
+  id: 3,
+  url: "https://phonoteka.org/uploads/posts/2021-04/1618575494_30-phonoteka_org-p-stendap-fon-36.jpg",
+  preview: "https://phonoteka.org/uploads/posts/2021-04/1618575494_30-phonoteka_org-p-stendap-fon-36.jpg",
+  mediaName: "Clean",
+  artist: a3,
+  duration: 59,
+  type: 1,
+);
+
+MediaEntity show4 = MediaEntity(
+  id: 4,
+  url: "https://www.teatr-benefis.ru/wp-content/uploads/2021/08/1-2.jpg",
+  preview: "https://www.teatr-benefis.ru/wp-content/uploads/2021/08/1-2.jpg",
+  mediaName: "Principles",
+  artist: a4,
+  duration: 43,
+  type: 0,
+);
+
+MediaEntity show5 = MediaEntity(
+  id: 5,
+  url: "https://www.teatr-benefis.ru/wp-content/uploads/2021/08/1-2.jpg",
+  preview: "https://www.teatr-benefis.ru/wp-content/uploads/2021/08/1-2.jpg",
+  mediaName: "Adult",
+  artist: a5,
+  duration: 54,
+  type: 0,
+);
+
+MediaEntity show6 = MediaEntity(
+  id: 6,
+  url: "https://www.teatr-benefis.ru/wp-content/uploads/2021/08/1-2.jpg",
+  preview: "https://www.teatr-benefis.ru/wp-content/uploads/2021/08/1-2.jpg",
+  mediaName: "Kuji",
+  artist: a6,
+  duration: 67,
+  type: 0,
+);
+
+List<Artist> getArtists(){
+  return [a1, a2, a3, a4, a5, a6];
+}
+List <MediaEntity> getStandUps(){
+  return [show1, show2, show3];
+}
+
+List <MediaEntity> getPodcasts(){
+  return [show4, show5, show6];
+}
+
+
