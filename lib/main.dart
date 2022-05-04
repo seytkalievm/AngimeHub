@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:angime_hub/ui/main/profile/profile_view.dart';
 import 'package:angime_hub/ui/navigation/app_navigator.dart';
 import 'package:angime_hub/data/database/user/user_database.dart';
 import 'package:angime_hub/data/repository/data_repository.dart';
@@ -14,32 +15,29 @@ import 'data/repository/auth_repository.dart';
 
 void main() {
   runApp(
-      MaterialApp(
-        theme: ThemeData(
-          scaffoldBackgroundColor: const Color.fromARGB(255, 20, 22, 38),
-          fontFamily: "Open Sans",
-        ),
-        home: Scaffold(
-          body: MultiRepositoryProvider(
-            providers: [
-              RepositoryProvider(create: (context)=>AuthRepository()),
-              RepositoryProvider(create: (context)=>DataRepository())
-            ],
-            child: BlocProvider(
-              create: (context) =>
-                  SessionCubit(
-                    authRepo: context.read<AuthRepository>(),
-                    dataRepo: context.read<DataRepository>(),
-                  ),
-              child: const AppNavigator(),
+    MaterialApp(
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color.fromARGB(255, 20, 22, 38),
+        fontFamily: "Open Sans",
+      ),
+      home: Scaffold(
+        body: MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider(create: (context) => AuthRepository()),
+            RepositoryProvider(create: (context) => DataRepository())
+          ],
+          child: BlocProvider(
+            create: (context) => SessionCubit(
+              authRepo: context.read<AuthRepository>(),
+              dataRepo: context.read<DataRepository>(),
             ),
+            child: const AppNavigator(),
           ),
         ),
-        ),
+      ),
+    ),
   );
 }
-
-
 
 class MainApp extends StatefulWidget {
   const MainApp({Key? key}) : super(key: key);

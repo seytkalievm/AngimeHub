@@ -1,52 +1,159 @@
+import 'package:angime_hub/data/database/user/user_database.dart';
+import 'package:angime_hub/data/models/user_model.dart';
 import 'package:flutter/material.dart';
+import '../../../content/icons.dart';
 
-
-class Profile extends StatefulWidget {
-  const Profile({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<Profile> createState() => _ProfileState();
+Future<User> getUser() async {
+  final db = UserDatabase.instance;
+  final user = await db.getUser();
+  return user;
 }
 
-class _ProfileState extends State<Profile> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: const Color.fromARGB(255, 20, 22, 38),
+            body: SingleChildScrollView(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                  _header(),
+                  _info(),
+                  _becomeArtist(),
+                  _signOut()
+                ]))));
+  }
+}
 
-    return Scaffold(
-      appBar: AppBar(
+Widget _header() {
+  return Container(
+    alignment: Alignment.centerLeft,
+    height: 38,
+    margin: const EdgeInsets.fromLTRB(16, 40, 16, 41),
+    child: const Text(
+      "My Profile",
+      style: TextStyle(
+          fontWeight: FontWeight.w700,
+          fontSize: 28,
+          fontFamily: "OpenSans",
+          color: Color.fromARGB(255, 255, 255, 255)),
+    ),
+  );
+}
 
-        title: Text(widget.title),
+Widget _info() {
+  return Column(
+    children: [_photo(), _contacts()],
+  );
+}
+
+Widget _photo() {
+  return Container(
+    height: 48,
+    width: 48,
+    margin: const EdgeInsets.only(bottom: 16),
+    child: const CircleAvatar(
+      backgroundColor: Color.fromARGB(255, 156, 160, 199),
+      radius: 100,
+      child: Icon(
+        MyFlutterApp.account,
+        size: 32,
       ),
-      body: Center(
+    ),
+  );
+}
 
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+Widget _contacts() {
+  String name;
+  String email;
+  return FutureBuilder<User>(
+      future: getUser(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          name = snapshot.data!.firstName + " " + snapshot.data!.secondName;
+          email = snapshot.data!.email;
+          return Container(
+              margin: const EdgeInsets.fromLTRB(16, 0, 16, 72),
+              child: Center(
+                  child: Column(children: [
+                Text(
+                  name,
+                  style: const TextStyle(
+                      fontFamily: "OpenSans",
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      color: Color.fromARGB(255, 255, 255, 255)),
+                ),
+                Text(email,
+                    style: const TextStyle(
+                        fontFamily: "OpenSans",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Color.fromARGB(255, 255, 255, 255)))
+              ])));
+        }
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      });
+}
+
+Widget _becomeArtist() {
+  return Container(
+    height: 42,
+    margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+    child: ElevatedButton(
+      onPressed: () {},
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(
+            const Color.fromARGB(255, 11, 191, 184)),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      child: const Text(
+        "Become an Artist",
+        style: TextStyle(
+          fontSize: 16,
+          fontFamily: "Open Sans",
+          color: Colors.white,
+        ),
       ),
-    );
-  }
+    ),
+  );
+}
+
+Widget _signOut() {
+  return Container(
+    height: 42,
+    margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+    child: ElevatedButton(
+      onPressed: () {},
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(
+            const Color.fromARGB(255, 156, 160, 199)),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+        ),
+      ),
+      child: const Text(
+        "Sign Out",
+        style: TextStyle(
+          fontSize: 16,
+          fontFamily: "Open Sans",
+          color: Colors.white,
+        ),
+      ),
+    ),
+  );
 }
