@@ -6,33 +6,30 @@ import 'package:angime_hub/ui/session/session_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AppNavigator extends StatelessWidget{
+class AppNavigator extends StatelessWidget {
   const AppNavigator({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder <SessionCubit, SessionState>(builder: (context, state){
+    return BlocBuilder<SessionCubit, SessionState>(builder: (context, state) {
       return Navigator(
-      pages: [
+        pages: [
           if (state is UnknownSessionState)
             const MaterialPage(child: LoadingView()),
-
-          if (state is Unauthenticated) 
+          if (state is Unauthenticated)
             MaterialPage(
                 child: BlocProvider(
-                  create: (context) =>
-                      AuthCubit(sessionCubit: context.read<SessionCubit>()),
-                  child: const AuthNavigator(),
-                )
-            ),
+              create: (context) =>
+                  AuthCubit(sessionCubit: context.read<SessionCubit>()),
+              child: const AuthNavigator(),
+            )),
           if (state is Authenticated)
             MaterialPage(
               child: UserBottomBar(),
             ),
         ],
+        onPopPage: (route, result) => route.didPop(result),
       );
-    }
-    );
+    });
   }
-
 }
