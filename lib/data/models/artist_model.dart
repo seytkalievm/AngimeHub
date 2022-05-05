@@ -11,6 +11,10 @@ class Artist{
     required this.firstName,
     required this.secondName,
     required this.profilePic,
+  });
 
-});
+  @override
+  String toString() {
+    return "$firstName $secondName";
+  }
 }

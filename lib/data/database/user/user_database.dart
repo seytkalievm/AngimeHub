@@ -60,7 +60,8 @@ class UserDatabase {
     }
   }
 
-  Future <int> deleteUser(String email) async{
+  Future <int> deleteUser() async{
+    print("Trying to delete database @user_database");
     final db = await instance.database;
     return await db.delete(userTable);
   }

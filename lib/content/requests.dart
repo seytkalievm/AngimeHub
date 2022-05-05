@@ -90,7 +90,7 @@ Artist a5 = Artist(id: 5, firstName: "Ris", secondName: "Chrock",
   profilePic: 'https://i.ytimg.com/vi/hvAu7L0Ii2M/maxresdefault.jpg',
 );
 Artist a6 = Artist(id: 6, firstName: "Ceorge", secondName: "Garlin",
-  profilePic: 'https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/32-george-carlin-concert-photos.jpg',
+  profilePic: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/Jesus_is_coming.._Look_Busy_%28George_Carlin%29.jpg',
 );
 Artist a7 = Artist(id: 7, firstName: "Chave", secondName: "Dapelle",
   profilePic: "https://static.onecms.io/wp-content/uploads/sites/9/2017/06/fwx-dave-chappelle.jpg",
@@ -156,8 +156,11 @@ MediaEntity show6 = MediaEntity(
   type: 0,
 );
 
-List<Artist> getArtists(){
-  return [a1, a2, a3, a4, a5, a6];
+List<Artist> getStandUpArtists(){
+  return [a1, a2, a3, a4];
+}
+List<Artist> getPodcastArtists(){
+  return [a7, a6, a5, a4];
 }
 List <MediaEntity> getStandUps(){
   return [show1, show2, show3];

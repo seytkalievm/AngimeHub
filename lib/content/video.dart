@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
-import 'globals.dart' as globals;
 import 'icons.dart';
 
 class VideoPage extends StatefulWidget {
@@ -13,6 +12,7 @@ class VideoPage extends StatefulWidget {
 
 class VideoPageState extends State<VideoPage> {
   late VideoPlayerController controller;
+  int orientation = 0;
 
   @override
   void initState() {
@@ -153,19 +153,19 @@ class VideoPageState extends State<VideoPage> {
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    if (globals.orientation == 1) {
-                                      globals.orientation = 0;
+                                    if (orientation == 1) {
+                                      orientation = 0;
                                       SystemChrome.setPreferredOrientations([
                                         DeviceOrientation.portraitUp]);
                                     } else {
-                                      globals.orientation = 1;
+                                      orientation = 1;
                                       SystemChrome
                                           .setPreferredOrientations([
                                             DeviceOrientation.landscapeLeft]);
                                     }
                                     setState(() {});
                                     },
-                                  icon: Icon(globals.orientation == 1
+                                  icon: Icon(orientation == 1
                                       ? Icons.fullscreen_exit
                                       : Icons.fullscreen),
                                   color: Colors.white,

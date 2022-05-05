@@ -93,8 +93,8 @@ class LoginView extends StatelessWidget{
             cursorColor: Colors.white,
             validator: emailValidator,
             onChanged: (value) {
-              print("$value change @view");
-              context.read<LoginBloc>().add(LoginEmailChanged(email: value.trim()));
+              value = value.trim();
+              context.read<LoginBloc>().add(LoginEmailChanged(email: value));
             },
           ),
         );

@@ -37,12 +37,17 @@ class DataRepository{
     }
   }
 
-  Future <int> deleteUser(String email) async{
+  Future <int> deleteUser() async{
     return await db.delete(userTable);
   }
 
-  Future <List<Artist>> getPopularArtists()async{
-    var artists = getArtists();
+  Future <List<Artist>> getPopularPodcastArtists()async{
+    var artists = getPodcastArtists();
+    return artists;
+  }
+
+  Future<List<Artist>> getPopularStandUpArtists()async{
+    var artists = getStandUpArtists();
     return artists;
   }
 
@@ -54,5 +59,10 @@ class DataRepository{
   Future <List<MediaEntity>> getPopularStandUps()async{
     var standUps = getStandUps();
     return standUps;
+  }
+
+  Future <List<MediaEntity>> getSavedRecordings()async{
+    var user = await getUser();
+    return user.medias;
   }
 }

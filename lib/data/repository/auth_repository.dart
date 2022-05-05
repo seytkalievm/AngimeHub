@@ -8,11 +8,11 @@ const apiBase = 'http://35.246.32.45:80/';
 class AuthRepository{
 
   late String userToken;
+  final db = UserDatabase.instance;
 
   Future<User> attemptAutoLogin() async {
     late User user;
     try{
-      final db = UserDatabase.instance;
       user = await db.getUser();
       return user;
     }catch (e){
@@ -24,7 +24,6 @@ class AuthRepository{
       String email,
       String password) async{
     int statusCode;
-    final db = UserDatabase.instance;
     User user;
     try {
       final response = await http.get(
@@ -55,7 +54,6 @@ class AuthRepository{
       String email,
       String password) async{
     int statusCode;
-    print("$firstName, $secondName, $email. @register");
     try {
       final response = await http.post(
         Uri.parse(apiBase + "user/register"),
@@ -88,12 +86,13 @@ class AuthRepository{
     var firstName = jsonDecode(response.body)["firstName"].toString();
     var secondName = jsonDecode(response.body)["secondName"].toString();
     var email = jsonDecode(response.body)["email"].toString();
-    print("name: $firstName, $secondName, email: $email");
-
-    return User(firstName: firstName, secondName: secondName, email: email);
+    var user = User(firstName: firstName, secondName: secondName, email: email);
+    await db.addUser(user);
+    return user;
   }
 
-  Future<void> signOut() async {
-    await Future.delayed(const Duration(seconds: 2));
+  Future<int> signOut() async {
+    print("signing out @auth_repository");
+    return await db.deleteUser();
   }
 }

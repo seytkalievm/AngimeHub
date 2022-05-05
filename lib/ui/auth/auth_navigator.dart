@@ -9,13 +9,16 @@ class AuthNavigator extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    print("AuthNai");
     return BlocBuilder<AuthCubit, AuthState>(builder: (context, state){
       return Navigator(
         pages: [
           if (state is LogIn) MaterialPage(child: LoginView()),
           if (state is Register) MaterialPage(child: RegisterView()),
         ],
-        onPopPage: (route, result) => route.didPop(result),
+        onPopPage: (route, result) {
+          return route.didPop(result);
+        },
       );
     }
     );

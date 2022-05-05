@@ -36,7 +36,9 @@ class SessionCubit extends Cubit<SessionState> {
   }
 
   void signOut(){
+    print("signing out @session_cubit");
     authRepo.signOut();
+    print("signed out @session_cubit");
     emit(Unauthenticated());
   }
 }

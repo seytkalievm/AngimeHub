@@ -4,7 +4,6 @@ abstract class FormSubmissionStatus{
 
 class InitialFormStatus extends FormSubmissionStatus{
   const InitialFormStatus();
-
 }
 
 class FormSubmitting extends FormSubmissionStatus{}

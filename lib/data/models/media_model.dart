@@ -35,14 +35,20 @@ class MediaEntity{
   String get url{
     return _url;
   }
+  String get preview{
+    return _preview;
+  }
   String get name{
     return _mediaName;
   }
   Artist get artist{
     return _artist;
   }
-  int get duration{
-    return _duration;
+  String get duration{
+    int h = _duration ~/ 60;
+    int m = _duration % 60;
+    String mm = m<10? "0$m" : "$m";
+    return "$h:$mm";
   }
   int get type{
     return _type;

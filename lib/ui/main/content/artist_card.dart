@@ -1,4 +1,5 @@
 import 'package:angime_hub/styles.dart';
+import 'package:angime_hub/ui/main/artist/artist_page_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../../data/models/artist_model.dart';
@@ -13,13 +14,19 @@ class ArtistCard extends StatelessWidget{
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(right: 5, left: 5),
-
-      child: Column(
-        children: [
-          _photo(),
-          _name(),
-        ],
-      ),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute<void>(builder: (context){
+          return ArtistPage(artist: artist);
+          }));
+          },
+        child: Column(
+          children: [
+            _photo(),
+            _name(),
+          ],
+        ),
+      )
     );
   }
 

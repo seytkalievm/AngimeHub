@@ -1,6 +1,7 @@
-import 'package:angime_hub/content/podcast.dart';
-import 'package:angime_hub/content/saved.dart';
-import 'package:angime_hub/content/stand_up.dart';
+import 'package:angime_hub/styles.dart';
+import 'package:angime_hub/ui/main/content/podcasts_view.dart';
+import 'package:angime_hub/ui/main/content/standups_view.dart';
+import 'package:angime_hub/ui/main/saved/saved_view.dart';
 import 'package:angime_hub/ui/navigation/user_bottom_bar/icon.dart';
 import 'package:flutter/material.dart';
 import '../../../content/icons.dart';
@@ -9,9 +10,9 @@ import '../../../content/icons.dart';
 
 class UserBottomBar extends StatefulWidget{
   final screens = [
-    const StandUp(),
-    const Podcast(),
-    const SavedPage(),
+    StandUpPage(),
+    PodcastsPage(),
+    SavedRecordingsView(),
   ];
 
   UserBottomBar({Key? key}) : super(key: key);
@@ -28,7 +29,8 @@ class UserBottomState extends State<UserBottomBar>{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-    debugShowCheckedModeBanner: false,
+      theme: CommonStyle.mainTheme(),
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         body: IndexedStack(

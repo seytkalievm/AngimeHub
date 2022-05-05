@@ -36,4 +36,18 @@ class CommonStyle {
       color: Colors.white,
     );
   }
+
+  static Color mainColor(){
+    return const Color.fromARGB(255, 20, 22, 38);
+  }
+  static Color secondaryColor(){
+    return const Color.fromARGB(255, 42, 45, 71);
+  }
+
+  static ThemeData mainTheme(){
+    return ThemeData(
+      scaffoldBackgroundColor: const Color.fromARGB(255, 20, 22, 38),
+      fontFamily: "Open Sans",
+    );
+  }
 }
