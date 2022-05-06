@@ -3,7 +3,6 @@ import 'package:angime_hub/ui/main/media_players/podcast/page_manager.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:angime_hub/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 
 class PodcastPlayer extends StatefulWidget{
 
@@ -20,7 +19,7 @@ class PodcastPlayer extends StatefulWidget{
 
 class _PodcastPlayerState extends State<PodcastPlayer>{
   late final PageManager _pageManager;
-
+  double currentPlaybackSpeed = 1.0;
   @override
   void initState(){
     super.initState();
@@ -43,7 +42,7 @@ class _PodcastPlayerState extends State<PodcastPlayer>{
           children: [
             const Spacer(),
             progressBar(),
-            controls(),
+            controls(context: context),
           ],
         ),
       ),
@@ -80,11 +79,14 @@ class _PodcastPlayerState extends State<PodcastPlayer>{
   }
 
 
-  Widget controls(){
+  Widget controls({required BuildContext context}){
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        rewindButton(),
         playButton(),
+        fastForwardButton(),
+        setPlaybackSpeed(context:context),
       ],
     );
   }
@@ -121,6 +123,36 @@ class _PodcastPlayerState extends State<PodcastPlayer>{
             );
         }
       },
+    );
+  }
+
+  Widget fastForwardButton(){
+    return IconButton(
+      icon: const Icon(Icons.forward_10),
+      color: Colors.white,
+      iconSize: 32.0,
+      onPressed: () {
+        _pageManager.fastForward();
+      },
+    );
+  }
+
+  Widget rewindButton(){
+    return IconButton(
+      icon: const Icon(Icons.replay_10),
+      color: Colors.white,
+      iconSize: 32.0,
+      onPressed: () {
+        _pageManager.rewind();
+      },
+    );
+  }
+
+  Widget setPlaybackSpeed({required BuildContext context}){
+    return Container(
+      margin: const EdgeInsets.fromLTRB(0, 16, 16, 0),
+      alignment: Alignment.centerRight,
+      child: _pageManager.setPlayBackSpeed(context: context),
     );
   }
 

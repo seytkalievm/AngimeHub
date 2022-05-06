@@ -26,7 +26,7 @@ class AppNavigator extends StatelessWidget {
             )),
           if (state is Authenticated)
             MaterialPage(
-              child: ArtistProfilePage(),
+              child: UserBottomBar(),
             ),
         ],
         onPopPage: (route, result) => route.didPop(result),

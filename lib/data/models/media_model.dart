@@ -66,4 +66,10 @@ class MediaEntity {
   int get type {
     return _type;
   }
+
+  @override
+  String toString() {
+    return artist.toString() + ": " + name;
+  }
+
 }

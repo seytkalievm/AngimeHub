@@ -2,6 +2,9 @@ import 'package:angime_hub/content/icons.dart';
 import 'package:angime_hub/data/models/media_model.dart';
 import 'package:flutter/material.dart';
 
+import '../media_players/podcast/podcast_player.dart';
+import '../media_players/standup/standup_player.dart';
+
 class MediaCard extends StatelessWidget {
   final MediaEntity media;
   late IconData icon = MyFlutterApp.download;
@@ -13,27 +16,38 @@ class MediaCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 0, 18, 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              _preview(),
-              Stack(
-                alignment: Alignment.centerLeft,
-                children: [
-                  _info(),
-                ],
-              )
-            ],
-          ),
-          _saveToFavourites(),
-        ],
+      child: InkWell(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute<void>(builder: (context){
+            if (media.type == 0) {
+              return PodcastPlayer(audio: media);
+            }
+            return StandUpPlayer(standUp: media);
+          }));
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                _preview(),
+                Stack(
+                  alignment:  Alignment.centerLeft,
+                  children: [
+                    _info(),
+                  ],
+                )
+              ],
+            ),
+            _saveToFavourites(),
+          ],
+        ),
       ),
     );
+
   }
 
-  Widget _preview() {
+  Widget _preview(){
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: Image.network(
@@ -44,7 +58,7 @@ class MediaCard extends StatelessWidget {
     );
   }
 
-  Widget _info() {
+  Widget _info(){
     return Container(
       height: 48,
       margin: const EdgeInsets.fromLTRB(16, 6, 16, 6),
@@ -59,7 +73,7 @@ class MediaCard extends StatelessWidget {
     );
   }
 
-  Widget _name() {
+  Widget _name(){
     return Container(
       alignment: Alignment.topLeft,
       padding: const EdgeInsets.only(bottom: 2),
@@ -76,7 +90,7 @@ class MediaCard extends StatelessWidget {
     );
   }
 
-  Widget _artist() {
+  Widget _artist(){
     return Container(
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(bottom: 2),
@@ -92,7 +106,7 @@ class MediaCard extends StatelessWidget {
     );
   }
 
-  Widget _duration() {
+  Widget _duration(){
     return Container(
       alignment: Alignment.bottomLeft,
       child: Text(
@@ -107,7 +121,7 @@ class MediaCard extends StatelessWidget {
     );
   }
 
-  Widget _saveToFavourites() {
+  Widget _saveToFavourites(){
     return SizedBox(
       child: IconButton(
         color: const Color.fromARGB(255, 156, 160, 199),
