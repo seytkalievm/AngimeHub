@@ -1,5 +1,6 @@
 import 'package:angime_hub/ui/auth/auth_cubit.dart';
 import 'package:angime_hub/ui/auth/auth_navigator.dart';
+import 'package:angime_hub/ui/main/profile/artist_profile_view.dart';
 import 'package:angime_hub/ui/navigation/user_bottom_bar/user_bottom_bar_view.dart';
 import 'package:angime_hub/ui/session/loading_view.dart';
 import 'package:angime_hub/ui/session/session_cubit.dart';
@@ -25,7 +26,7 @@ class AppNavigator extends StatelessWidget {
             )),
           if (state is Authenticated)
             MaterialPage(
-              child: UserBottomBar(),
+              child: ArtistProfilePage(),
             ),
         ],
         onPopPage: (route, result) => route.didPop(result),

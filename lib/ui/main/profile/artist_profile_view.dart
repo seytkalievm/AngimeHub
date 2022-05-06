@@ -1,17 +1,17 @@
-import 'package:angime_hub/content/requests.dart';
+import 'package:angime_hub/content/icons.dart';
+import 'package:angime_hub/data/models/media_model.dart';
 import 'package:angime_hub/data/models/user_model.dart';
 import 'package:angime_hub/data/repository/data_repository.dart';
 import 'package:angime_hub/ui/main/content/components.dart';
 import 'package:angime_hub/ui/session/session_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../content/icons.dart';
 
-class ProfilePage extends StatelessWidget {
+class ArtistProfilePage extends StatelessWidget {
   late DataRepository dataRepo;
   late SessionCubit sessionCubit;
 
-  ProfilePage({Key? key}) : super(key: key);
+  ArtistProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +26,10 @@ class ProfilePage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+          children: <Widget>[
             _info(),
-            _becomeArtist(),
-            _signOut(),
+            _buttons(),
+            _recordings(),
           ],
         ),
       ),
@@ -40,6 +39,10 @@ class ProfilePage extends StatelessWidget {
   Future<User> getUser() async {
     final user = await dataRepo.getUser();
     return user;
+  }
+
+  Future<List<MediaEntity>> _getPopularShows() {
+    return dataRepo.getPopularPodcasts();
   }
 
   Widget _info() {
@@ -55,7 +58,7 @@ class ProfilePage extends StatelessWidget {
     return Container(
       height: 48,
       width: 48,
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 16, top: 16),
       child: const CircleAvatar(
         backgroundColor: Color.fromARGB(255, 156, 160, 199),
         radius: 100,
@@ -77,13 +80,10 @@ class ProfilePage extends StatelessWidget {
           name = snapshot.data!.firstName + " " + snapshot.data!.secondName;
           email = snapshot.data!.email;
           return Container(
-            margin: const EdgeInsets.fromLTRB(16, 0, 16, 72),
+            margin: const EdgeInsets.fromLTRB(16, 0, 16, 26),
             child: Center(
               child: Column(
-                children: [
-                  _name(name: name),
-                  _email(email: email),
-                ],
+                children: [_name(name: name), _email(email: email), _artist()],
               ),
             ),
           );
@@ -95,7 +95,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _name({String name = "name"}) {
+  Widget _name({String name = 'name'}) {
     return Text(
       name,
       style: const TextStyle(
@@ -119,10 +119,47 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _becomeArtist() {
+  Widget _artist() {
+    return const Text(
+      "Artist",
+      style: TextStyle(
+        fontFamily: "OpenSans",
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: Color.fromARGB(255, 11, 191, 184),
+      ),
+    );
+  }
+
+  Widget _recordings() {
+    return Column(
+      children: [
+        sectionTitle("My Recordings"),
+        showsListForArtist(showsFuture: _getPopularShows())
+      ],
+    );
+  }
+
+  Widget _buttons() {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 14, 16, 24),
+      child: Row(
+        children: [
+          Expanded(
+            child: _signOut(),
+          ),
+          Expanded(
+            child: _uploadRecording(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _uploadRecording() {
     return Container(
       height: 42,
-      margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+      margin: const EdgeInsets.only(left: 8),
       child: ElevatedButton(
         onPressed: () {},
         style: ButtonStyle(
@@ -135,7 +172,7 @@ class ProfilePage extends StatelessWidget {
           ),
         ),
         child: const Text(
-          "Become an Artist",
+          "Upload",
           style: TextStyle(
             fontSize: 16,
             fontFamily: "Open Sans",
@@ -149,7 +186,7 @@ class ProfilePage extends StatelessWidget {
   Widget _signOut() {
     return Container(
       height: 42,
-      margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+      margin: const EdgeInsets.only(right: 8),
       child: ElevatedButton(
         onPressed: () {
           sessionCubit.signOut();

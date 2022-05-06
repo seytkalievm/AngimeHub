@@ -2,12 +2,11 @@ import 'package:angime_hub/content/icons.dart';
 import 'package:angime_hub/data/models/media_model.dart';
 import 'package:flutter/material.dart';
 
-class MediaCard extends StatelessWidget {
+class ArtistMediaCard extends StatelessWidget {
   final MediaEntity media;
-  late IconData icon = MyFlutterApp.download;
+  final IconData icon = MyFlutterApp.remove;
 
-  MediaCard({required this.media, this.icon = MyFlutterApp.download, Key? key})
-      : super(key: key);
+  const ArtistMediaCard({required this.media, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +51,7 @@ class MediaCard extends StatelessWidget {
         alignment: Alignment.centerLeft,
         children: [
           _name(),
-          _artist(),
+          _views(),
           _duration(),
         ],
       ),
@@ -76,12 +75,12 @@ class MediaCard extends StatelessWidget {
     );
   }
 
-  Widget _artist() {
+  Widget _views() {
     return Container(
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(bottom: 2),
       child: Text(
-        media.artist.toString(),
+        media.views.toString() + ' views',
         style: const TextStyle(
           fontFamily: "OpenSans",
           fontSize: 10,

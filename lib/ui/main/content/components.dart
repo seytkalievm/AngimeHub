@@ -1,3 +1,4 @@
+import 'package:angime_hub/ui/main/content/artist_media_card.dart';
 import 'package:angime_hub/ui/main/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 import '../../../content/icons.dart';
@@ -11,35 +12,34 @@ AppBar appBar({
   required BuildContext context,
   required String pageTitle,
   required bool showProfileButton,
-}){
+}) {
   return AppBar(
     elevation: 3,
     toolbarHeight: 80,
     backgroundColor: CommonStyle.mainColor(),
     title: Text(
       pageTitle,
-      style: const  TextStyle(
+      style: const TextStyle(
           fontWeight: FontWeight.w700,
           fontSize: 28,
           fontFamily: "OpenSans",
-          color: Color.fromARGB(255, 255, 255, 255)
-      ),
+          color: Color.fromARGB(255, 255, 255, 255)),
     ),
-    actions: showProfileButton? <Widget>[
-      profileButton(context)
-    ]: [],
+    actions: showProfileButton ? <Widget>[profileButton(context)] : [],
   );
 }
 
-Widget profileButton(BuildContext context){
+Widget profileButton(BuildContext context) {
   return SizedBox(
     width: 50,
     height: 50,
     child: IconButton(
       onPressed: () {
-        Navigator.push(context, MaterialPageRoute<void>(builder: (context){
-          return ProfilePage();
-        }),
+        Navigator.push(
+          context,
+          MaterialPageRoute<void>(builder: (context) {
+            return ProfilePage();
+          }),
         );
       },
       icon: const CircleAvatar(
@@ -53,7 +53,7 @@ Widget profileButton(BuildContext context){
   );
 }
 
-Widget searchField(String hint){
+Widget searchField(String hint) {
   return Padding(
     padding: const EdgeInsets.fromLTRB(16, 10, 16, 34),
     child: TextField(
@@ -79,7 +79,7 @@ Widget searchField(String hint){
   );
 }
 
-Widget sectionTitle(String title){
+Widget sectionTitle(String title) {
   return Container(
     alignment: Alignment.centerLeft,
     child: Padding(
@@ -97,7 +97,7 @@ Widget sectionTitle(String title){
   );
 }
 
-Widget artistsList({required Future<List<Artist>> artistsFuture}){
+Widget artistsList({required Future<List<Artist>> artistsFuture}) {
   List<Artist> popularArtists;
   return Padding(
     padding: const EdgeInsets.fromLTRB(16, 10, 0, 10),
@@ -106,19 +106,19 @@ Widget artistsList({required Future<List<Artist>> artistsFuture}){
       child: FutureBuilder<List<Artist>>(
         future: artistsFuture,
         builder: (BuildContext context, AsyncSnapshot<List<Artist>> snapshot) {
-          if (snapshot.hasData){
+          if (snapshot.hasData) {
             popularArtists = snapshot.data!;
             return ListView(
               scrollDirection: Axis.horizontal,
               children: List.generate(
-                popularArtists.length, (index) {
-                Artist current = popularArtists[index];
-                return ArtistCard(artist: current);
-              },
+                popularArtists.length,
+                (index) {
+                  Artist current = popularArtists[index];
+                  return ArtistCard(artist: current);
+                },
               ),
             );
-          }
-          else {
+          } else {
             return const CircularProgressIndicator();
           }
         },
@@ -127,28 +127,29 @@ Widget artistsList({required Future<List<Artist>> artistsFuture}){
   );
 }
 
-Widget showsList({required Future<List<MediaEntity>> showsFuture} ){
+Widget showsList({required Future<List<MediaEntity>> showsFuture}) {
   List<MediaEntity> shows;
   return Padding(
     padding: const EdgeInsets.fromLTRB(16, 10, 0, 10),
     child: SizedBox(
       child: FutureBuilder<List<MediaEntity>>(
         future: showsFuture,
-        builder: (BuildContext context, AsyncSnapshot<List<MediaEntity>> snapshot) {
-          if (snapshot.hasData){
+        builder:
+            (BuildContext context, AsyncSnapshot<List<MediaEntity>> snapshot) {
+          if (snapshot.hasData) {
             shows = snapshot.data!;
             return ListView(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               children: List.generate(
-                shows.length, (index) {
-                MediaEntity current = shows[index];
-                return MediaCard(media: current);
-              },
+                shows.length,
+                (index) {
+                  MediaEntity current = shows[index];
+                  return MediaCard(media: current);
+                },
               ),
             );
-          }
-          else {
+          } else {
             return const CircularProgressIndicator();
           }
         },
@@ -156,4 +157,34 @@ Widget showsList({required Future<List<MediaEntity>> showsFuture} ){
     ),
   );
 }
- 
+
+Widget showsListForArtist({required Future<List<MediaEntity>> showsFuture}) {
+  List<MediaEntity> shows;
+  return Padding(
+    padding: const EdgeInsets.fromLTRB(16, 10, 0, 10),
+    child: SizedBox(
+      child: FutureBuilder<List<MediaEntity>>(
+        future: showsFuture,
+        builder:
+            (BuildContext context, AsyncSnapshot<List<MediaEntity>> snapshot) {
+          if (snapshot.hasData) {
+            shows = snapshot.data!;
+            return ListView(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              children: List.generate(
+                shows.length,
+                (index) {
+                  MediaEntity current = shows[index];
+                  return ArtistMediaCard(media: current);
+                },
+              ),
+            );
+          } else {
+            return const CircularProgressIndicator();
+          }
+        },
+      ),
+    ),
+  );
+}
