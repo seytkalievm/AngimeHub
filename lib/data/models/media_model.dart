@@ -54,6 +54,8 @@ class MediaEntity{
     return _type;
   }
 
-
-
+  @override
+  String toString() {
+    return artist.toString() + ": " + name;
+  }
 }

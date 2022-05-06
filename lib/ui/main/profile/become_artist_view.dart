@@ -14,27 +14,22 @@ class BecomeArtistPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     dataRepo = context.read<DataRepository>();
-    return MaterialApp(
-      theme: ThemeData(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 20, 22, 38),
-        fontFamily: "Open Sans",
-      ),
-      home: Scaffold(
-        appBar: appBar(
-            context: context,
-            pageTitle: 'Become an Artist',
-            showProfileButton: false),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _view(),
-              _fullNameForm(),
-              _countryForm(),
-              _becomeArtist(),
-              _cancel(),
-            ],
-          ),
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      appBar: appBar(
+          context: context,
+          pageTitle: 'Become an Artist',
+          showProfileButton: false),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _view(),
+            _fullNameForm(),
+            _countryForm(),
+            _becomeArtist(),
+            _cancel(),
+          ],
         ),
       ),
     );
@@ -172,7 +167,8 @@ class BecomeArtistPage extends StatelessWidget {
           style: TextStyle(
             fontSize: 16,
             fontFamily: "Open Sans",
-            color: Color.fromARGB(255, 11, 191, 184),
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
           ),
         ),
       ),
@@ -182,12 +178,12 @@ class BecomeArtistPage extends StatelessWidget {
   Widget _cancel() {
     return Container(
       height: 42,
-      margin: const EdgeInsets.fromLTRB(16, 72, 16, 16),
+      margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       child: ElevatedButton(
         onPressed: () {},
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(
-              const Color.fromARGB(255, 11, 191, 184)),
+              const Color.fromARGB(255, 156, 160, 199)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
@@ -199,7 +195,8 @@ class BecomeArtistPage extends StatelessWidget {
           style: TextStyle(
             fontSize: 16,
             fontFamily: "Open Sans",
-            color: Color.fromARGB(255, 156, 160, 199),
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
           ),
         ),
       ),

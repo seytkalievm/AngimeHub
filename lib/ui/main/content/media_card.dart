@@ -1,6 +1,9 @@
 import 'package:angime_hub/content/icons.dart';
 import 'package:angime_hub/data/models/media_model.dart';
+import 'package:angime_hub/ui/main/media_players/standup/standup_player.dart';
 import 'package:flutter/material.dart';
+
+import '../media_players/podcast/podcast_player.dart';
 
 class MediaCard extends StatelessWidget{
   final MediaEntity media;
@@ -11,22 +14,32 @@ class MediaCard extends StatelessWidget{
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 0, 18, 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              _preview(),
-              Stack(
-                alignment:  Alignment.centerLeft,
-                children: [
-                  _info(),
-                ],
-              )
-            ],
-          ),
-          _saveToFavourites(),
-        ],
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute<void>(builder: (context){
+            if (media.type == 0) {
+              return PodcastPlayer(audio: media);
+            }
+            return StandUpPlayer(standUp: media);
+          }));
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                _preview(),
+                Stack(
+                  alignment:  Alignment.centerLeft,
+                  children: [
+                    _info(),
+                  ],
+                )
+              ],
+            ),
+            _saveToFavourites(),
+          ],
+        ),
       ),
     );
 

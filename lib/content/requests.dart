@@ -128,7 +128,7 @@ MediaEntity show3 = MediaEntity(
 
 MediaEntity show4 = MediaEntity(
   id: 4,
-  url: "https://www.teatr-benefis.ru/wp-content/uploads/2021/08/1-2.jpg",
+  url: "https://storage.yandexcloud.net/angimehub/asdasd.mp3",
   preview: "https://www.teatr-benefis.ru/wp-content/uploads/2021/08/1-2.jpg",
   mediaName: "Principles",
   artist: a4,
@@ -138,7 +138,7 @@ MediaEntity show4 = MediaEntity(
 
 MediaEntity show5 = MediaEntity(
   id: 5,
-  url: "https://www.teatr-benefis.ru/wp-content/uploads/2021/08/1-2.jpg",
+  url: "https://storage.yandexcloud.net/angimehub/asdasd.mp3",
   preview: "https://www.teatr-benefis.ru/wp-content/uploads/2021/08/1-2.jpg",
   mediaName: "Adult",
   artist: a5,
@@ -148,7 +148,7 @@ MediaEntity show5 = MediaEntity(
 
 MediaEntity show6 = MediaEntity(
   id: 6,
-  url: "https://www.teatr-benefis.ru/wp-content/uploads/2021/08/1-2.jpg",
+  url: "https://storage.yandexcloud.net/angimehub/asdasd.mp3",
   preview: "https://www.teatr-benefis.ru/wp-content/uploads/2021/08/1-2.jpg",
   mediaName: "Kuji",
   artist: a6,

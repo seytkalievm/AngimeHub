@@ -25,12 +25,14 @@ class LoginView extends StatelessWidget {
           authCubit: context.read<AuthCubit>(),
         ),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _loginForm(),
-              _registerButton(context),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _loginForm(),
+                _registerButton(context),
+              ],
+            ),
           ),
         ),
       ),

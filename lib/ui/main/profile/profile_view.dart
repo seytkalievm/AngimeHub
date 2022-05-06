@@ -1,6 +1,7 @@
 import 'package:angime_hub/data/models/user_model.dart';
 import 'package:angime_hub/data/repository/data_repository.dart';
 import 'package:angime_hub/ui/main/content/components.dart';
+import 'package:angime_hub/ui/main/profile/become_artist_view.dart';
 import 'package:angime_hub/ui/session/session_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +30,7 @@ class ProfilePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _info(),
-            _becomeArtist(),
+            _becomeArtist(context),
             _signOut(),
           ],
         ),
@@ -109,12 +110,16 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _becomeArtist() {
+  Widget _becomeArtist(BuildContext context) {
     return Container(
       height: 42,
       margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute<void>(builder: (context){
+            return BecomeArtistPage();
+          }));
+        },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(
               const Color.fromARGB(255, 11, 191, 184)),
