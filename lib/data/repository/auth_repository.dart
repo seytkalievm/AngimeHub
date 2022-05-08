@@ -34,15 +34,13 @@ class AuthRepository{
           },
       );
       statusCode = response.statusCode;
+      print(response.statusCode);
       if(statusCode == 200){
-        print("logged in");
+        print("Status Code 200");
+        userToken = response.body;
+        user = await getUser();
       }
-      userToken = response.body;
-      print("token: $userToken");
-      user = await getUser();
-      db.addUser(user);
     }catch (e){
-      print(e.toString());
       statusCode = -1;
     }
     return statusCode;
@@ -64,7 +62,7 @@ class AuthRepository{
           'firstName': firstName,
           'secondName': secondName,
           'email': email,
-          'password': password
+          'password': password,
         }),
       );
       statusCode = response.statusCode;
@@ -86,13 +84,20 @@ class AuthRepository{
     var firstName = jsonDecode(response.body)["firstName"].toString();
     var secondName = jsonDecode(response.body)["secondName"].toString();
     var email = jsonDecode(response.body)["email"].toString();
-    var user = User(firstName: firstName, secondName: secondName, email: email);
+    var role = jsonDecode(response.body)["role"].toString();
+    var user = User(
+      firstName: firstName,
+      secondName: secondName,
+      email: email,
+      role: role,
+      token: userToken,);
+    print(role);
+    print("trying to add user into database");
     await db.addUser(user);
     return user;
   }
 
   Future<int> signOut() async {
-    print("signing out @auth_repository");
     return await db.deleteUser();
   }
 }

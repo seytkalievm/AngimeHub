@@ -19,7 +19,7 @@ class MediaCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           Navigator.push(context, MaterialPageRoute<void>(builder: (context){
-            if (media.type == 0) {
+            if (media.type == 1) {
               return PodcastPlayer(audio: media);
             }
             return StandUpPlayer(standUp: media);

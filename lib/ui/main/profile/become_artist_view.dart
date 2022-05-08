@@ -8,12 +8,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BecomeArtistPage extends StatelessWidget {
   late DataRepository dataRepo;
+  final User user;
 
-  BecomeArtistPage({Key? key}) : super(key: key);
+  BecomeArtistPage({required this.user, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     dataRepo = context.read<DataRepository>();
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: appBar(
@@ -27,17 +29,12 @@ class BecomeArtistPage extends StatelessWidget {
             _view(),
             _fullNameForm(),
             _countryForm(),
-            _becomeArtist(),
+            _becomeArtist(context),
             _cancel(),
           ],
         ),
       ),
     );
-  }
-
-  Future<User> getUser() async {
-    final user = await dataRepo.getUser();
-    return user;
   }
 
   Widget _view() {
@@ -84,42 +81,31 @@ class BecomeArtistPage extends StatelessWidget {
   }
 
   Widget _fullNameForm() {
-    String name;
-    return FutureBuilder<User>(
-      future: getUser(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          name = snapshot.data!.firstName + ' ' + snapshot.data!.secondName;
-          return Padding(
-            padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-            child: Column(
-              children: [
-                CommonStyle.formName(formName: "Full name"),
-                Container(
-                  margin: const EdgeInsets.only(top: 5),
-                  child: TextFormField(
-                    initialValue: name,
-                    keyboardType: TextInputType.name,
-                    style: CommonStyle.textFieldInputStyle(),
-                    decoration: CommonStyle.textField(
-                      hintTextStr: "Full name",
-                    ),
-                    cursorColor: Colors.white,
-                    onChanged: (value) {
-                      value = value.trim();
-                    },
-                  ),
-                ),
-              ],
+    String name = user.firstName + ' ' + user.secondName;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
+      child: Column(
+        children: [
+          CommonStyle.formName(formName: "Full name"),
+          Container(
+            margin: const EdgeInsets.only(top: 5),
+            child: TextFormField(
+              initialValue: name,
+              keyboardType: TextInputType.name,
+              style: CommonStyle.textFieldInputStyle(),
+              decoration: CommonStyle.textField(
+                hintTextStr: "Full name",
+              ),
+              cursorColor: Colors.white,
+              onChanged: (value) {
+                value = value.trim();
+                },
             ),
-          );
-        } else {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      },
+          ),
+        ],
+      ),
     );
+
   }
 
   Widget _countryForm() {
@@ -147,12 +133,23 @@ class BecomeArtistPage extends StatelessWidget {
     );
   }
 
-  Widget _becomeArtist() {
+  Widget _becomeArtist(BuildContext context) {
     return Container(
       height: 42,
       margin: const EdgeInsets.fromLTRB(16, 72, 16, 16),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          try{
+            dataRepo.becomeArtist(user.email);
+            Navigator.pop(context);
+          }catch (e){
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(e.toString()),
+              ),
+            );
+          }
+        },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(
               const Color.fromARGB(255, 11, 191, 184)),

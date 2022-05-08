@@ -7,7 +7,10 @@ class UserFields{
   static const String firstName = "firstName";
   static const String secondName = "secondName";
   static const String email = "email";
-  static const List<String> all = [id, firstName, secondName, email];
+  static const String role = "role";
+  static const String token = "token";
+  static const List<String> all =
+  [id, firstName, secondName, email, role, token];
 
 }
 
@@ -17,6 +20,8 @@ class User{
   late String _firstName;
   late String _secondName;
   late String _email;
+  late String _role;
+  late String _token;
   late String? _profilePic;
   List<MediaEntity> _medias = <MediaEntity>[];
 
@@ -25,13 +30,18 @@ class User{
     required String firstName,
     required String secondName,
     required String email,
+    required String role,
+    required String token,
     String? profilePic,
   }){
     _firstName = firstName;
     _secondName = secondName;
     _email = email;
+    _role = role;
+    _token = token;
     _profilePic = profilePic;
   }
+
 
   String get firstName{
     return _firstName;
@@ -39,6 +49,14 @@ class User{
 
   String get email {
     return _email;
+  }
+
+  String get role{
+    return _role;
+  }
+
+  String get token{
+    return _token;
   }
 
   String get secondName{
@@ -58,6 +76,8 @@ class User{
     UserFields.firstName : _firstName,
     UserFields.secondName : _secondName,
     UserFields.email : _email,
+    UserFields.role : _role,
+    UserFields.token : _token,
   };
 
   User copyWith({
@@ -65,19 +85,25 @@ class User{
     String? firstName,
     String? secondName,
     String? email,
+    String? role,
+    String? token,
     String? profilePic,
   }) => User(
     id: id ?? this.id,
     firstName: firstName ?? _firstName,
     secondName: secondName ?? _secondName,
     email: email ?? _email,
+    role: role ?? _role,
+    token: token ?? _token,
     profilePic: profilePic ?? _profilePic,
   );
 
   static User fromJson(Map<String, Object?> json) => User(
     firstName: json[UserFields.firstName] as String,
     secondName: json[UserFields.secondName] as String,
-    email: json[UserFields.email] as String
+    email: json[UserFields.email] as String,
+    role: json[UserFields.role] as String,
+    token: json[UserFields.token] as String,
   );
 
 }

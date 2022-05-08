@@ -1,5 +1,6 @@
 import 'package:angime_hub/ui/main/content/artist_media_card.dart';
 import 'package:angime_hub/ui/main/profile/profile_view.dart';
+import 'package:angime_hub/ui/main/profile/user_profile_view.dart';
 import 'package:flutter/material.dart';
 import '../../../content/icons.dart';
 import '../../../data/models/artist_model.dart';
@@ -38,7 +39,7 @@ Widget profileButton(BuildContext context) {
         Navigator.push(
           context,
           MaterialPageRoute<void>(builder: (context) {
-            return ProfilePage();
+            return const ProfilePage();
           }),
         );
       },

@@ -1,47 +1,81 @@
-import 'package:angime_hub/content/icons.dart';
-import 'package:angime_hub/content/requests.dart';
+import 'dart:io';
+import 'package:angime_hub/data/repository/data_repository.dart';
 import 'package:angime_hub/styles.dart';
 import 'package:angime_hub/ui/main/content/components.dart';
-import 'package:angime_hub/ui/main/content/media_card.dart';
+import 'package:angime_hub/ui/main/upload/upload_card.dart';
+import 'package:angime_hub/ui/main/upload/upload_entity.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+import '../../../data/models/user_model.dart';
 
 class UploadRecordingPage extends StatefulWidget {
-  const UploadRecordingPage({Key? key}) : super(key: key);
+  final User user;
+  const UploadRecordingPage({required this.user, Key? key}) : super(key: key);
 
   @override
   State<UploadRecordingPage> createState() => _UploadRecordingState();
 }
 
 class _UploadRecordingState extends State<UploadRecordingPage> {
+  late DataRepository dataRepo;
   String _type = 'Podcast';
+  bool _fileChosen = false;
+  bool _previewChosen = false;
+  bool _mediaNameSet = false;
+  late String _mediaName;
+  late PlatformFile? _preview;
+  late PlatformFile? _media;
+  late ProgressDialog _progressDialog;
+
 
   @override
   Widget build(BuildContext context) {
+    dataRepo = context.read<DataRepository>();
+    _progressDialog = ProgressDialog(
+      context,
+      type:ProgressDialogType.Normal,
+      isDismissible: false,
+    );
+    _progressDialog.style(
+      message: 'Uploading Video...',
+      borderRadius: 10.0,
+      backgroundColor: CommonStyle.secondaryColor(),
+      progressWidget: const CircularProgressIndicator(),
+      elevation: 10.0,
+      insetAnimCurve: Curves.easeInOut,
+      progressTextStyle: CommonStyle.descriptionTextStyle(),
+      messageTextStyle: CommonStyle.headingTextStyle(),
+    );
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: appBar(
-          context: context,
-          pageTitle: 'Upload Recording',
-          showProfileButton: true,
-        ),
-        body: CustomScrollView(scrollDirection: Axis.vertical, slivers: [
-          SliverFillRemaining(
-            hasScrollBody: false,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    _selectType(),
-                    _about(),
-                    _upload(),
-                  ],
-                ),
-                _navButtons(),
-              ],
-            ),
+      resizeToAvoidBottomInset: false,
+      appBar: appBar(
+        context: context,
+        pageTitle: 'Upload Recording',
+        showProfileButton: false,
+      ),
+      body: CustomScrollView(scrollDirection: Axis.vertical, slivers: [
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  _selectType(),
+                  _about(),
+                  _uploadPreview(),
+                  _uploadFile(),
+                ],
+              ),
+              _navButtons(context),
+            ],
           ),
-        ]));
+        ),
+      ],
+      ),
+    );
   }
 
   Widget _selectType() {
@@ -122,7 +156,7 @@ class _UploadRecordingState extends State<UploadRecordingPage> {
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
       child: Column(
         children: [
-          CommonStyle.formName(formName: "Short description"),
+          CommonStyle.formName(formName: "Name of your recording"),
           Container(
             margin: const EdgeInsets.only(top: 5),
             child: TextFormField(
@@ -133,7 +167,12 @@ class _UploadRecordingState extends State<UploadRecordingPage> {
               ),
               cursorColor: Colors.white,
               onChanged: (value) {
-                value = value.trim();
+                _mediaName = value.trim();
+                if (_mediaName == "") {
+                  _mediaNameSet = false;
+                }else{
+                  _mediaNameSet = true;
+                }
               },
             ),
           ),
@@ -142,24 +181,34 @@ class _UploadRecordingState extends State<UploadRecordingPage> {
     );
   }
 
-  Widget _upload() {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _label("Upload recording"),
-          _buttonSelect(),
-        ],
-      ),
+  Widget _uploadPreview(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _label("Choose Preview"),
+        _previewChosen? _selectedPreview() : _buttonSelect(_choosePreview),
+      ],
     );
   }
 
-  Widget _buttonSelect() {
+  Widget _uploadFile() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _label("Upload recording"),
+        _fileChosen? _selectedVideo():_buttonSelect(_chooseMedia),
+      ],
+    );
+  }
+
+  Widget _buttonSelect(Function selectFile) {
     return Container(
-      height: 42,
+      height: 42, 
       margin: const EdgeInsets.only(right: 16, left: 16),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () async {
+          selectFile();
+        },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(
               const Color.fromARGB(255, 72, 78, 128)),
@@ -182,23 +231,39 @@ class _UploadRecordingState extends State<UploadRecordingPage> {
     );
   }
 
-  Widget _selectedVideo() {
-    return MediaCard(
-      media: show1,
-      icon: MyFlutterApp.remove,
+  Widget _selectedPreview(){
+    return Container(
+      height: MediaQuery.of(context).size.width - 150,
+      margin: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+      child: Image.file(
+        File(_preview!.path!),
+        fit: BoxFit.contain ,
+      ),
     );
   }
 
-  Widget _navButtons() {
+  Widget _selectedVideo() {
     return Container(
-      margin: const EdgeInsets.fromLTRB(16, 14, 16, 24),
+      margin: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+      child: Text(
+        _media!.name,
+        style: CommonStyle.textFieldInputStyle(),
+      ),
+    );
+  }
+
+  Widget _navButtons(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 24, 16, 24),
       child: Row(
         children: [
           Expanded(
             child: _cancelButton(),
           ),
           Expanded(
-            child: _inactiveUploadButton(),
+            child: (_fileChosen && _previewChosen && _mediaNameSet)
+                ? _activeUploadButton(context)
+                : _inactiveUploadButton(),
           ),
         ],
       ),
@@ -210,7 +275,12 @@ class _UploadRecordingState extends State<UploadRecordingPage> {
       height: 42,
       margin: const EdgeInsets.only(right: 8),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          setState(() {
+            _fileChosen = false;
+            _previewChosen = false;
+          });
+        },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(
               const Color.fromARGB(255, 156, 160, 199)),
@@ -261,12 +331,14 @@ class _UploadRecordingState extends State<UploadRecordingPage> {
     );
   }
 
-  Widget _activeUploadButton() {
+  Widget _activeUploadButton(BuildContext context) {
     return Container(
       height: 42,
       margin: const EdgeInsets.only(left: 8),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          _showMediaCard(context);
+          },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(
               const Color.fromARGB(255, 11, 191, 184)),
@@ -288,4 +360,99 @@ class _UploadRecordingState extends State<UploadRecordingPage> {
       ),
     );
   }
+
+  void _choosePreview() async{
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.image
+    );
+    if (result != null){
+      setState(() {
+        _preview = result.files.first;
+        _previewChosen = true;
+      });
+    }
+  }
+
+  void _chooseMedia() async{
+    FileType _fileType = _type == 'Podcast'? FileType.audio : FileType.video;
+    FilePickerResult? file = await FilePicker.platform.pickFiles(
+        type: _fileType
+    );
+    if (file != null){
+      setState(() {
+        _media = file.files.first;
+        _fileChosen = true;
+      });
+    }
+  }
+
+  Future <void> _showMediaCard(BuildContext context)async{
+    final entity = UploadEntity(
+        preview: _preview!,
+        media: _media!,
+        user: widget.user,
+        mediaName: _mediaName,
+        type: _type == "Podcast"? 1 : 0);
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          backgroundColor: CommonStyle.secondaryColor(),
+          title: const Text(
+              "Upload media?",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          content: UploadCard(entity: entity),
+          actions: [
+            TextButton(
+              child: const Text("Cancel"),
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+            ),
+            TextButton(
+              child: const Text("Upload"),
+              onPressed: () async {
+                await _upload(context, entity);
+                Navigator.pop(context, 'Upload');
+              },
+            ),
+          ],
+        );
+      }
+    );
+  }
+
+
+  Future <String> _upload(BuildContext context, UploadEntity media)async {
+    setState(() {
+      _progressDialog.show();
+    });
+    try{
+      final response = await dataRepo.uploadFile(media);
+      if (response.isNotEmpty){
+        setState(() {
+          _media = null;
+          _preview = null;
+          _mediaNameSet = false;
+          _fileChosen = false;
+          _previewChosen = false;
+          _progressDialog.hide();
+          var snackBar = SnackBar(
+            content: Text(response),
+            duration: const Duration(seconds: 6),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        });
+      }
+      return response;
+    } catch (e){
+      var snackBar = SnackBar(content: Text(e.toString()));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      _progressDialog.hide();
+      return "Error occured";
+    }
+  }
+
+
 }

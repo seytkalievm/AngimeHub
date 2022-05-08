@@ -29,7 +29,9 @@ class UserDatabase {
      ${UserFields.id} $idType,
      ${UserFields.firstName} $stringType,
      ${UserFields.secondName} $stringType,
-     ${UserFields.email} $stringType
+     ${UserFields.email} $stringType,
+     ${UserFields.role} $stringType,
+     ${UserFields.token} $stringType
      )
      ''');
   }
@@ -43,6 +45,7 @@ class UserDatabase {
   Future<void> addUser(User user) async{
     final db = await instance.database;
     await db.insert(userTable, user.toJson());
+    print("User added to db");
   }
 
 
@@ -54,14 +57,15 @@ class UserDatabase {
     );
 
     if (maps.isNotEmpty){
+      print("User in the database");
       return User.fromJson(maps.first);
     } else{
+      print("No user in the database");
       throw Exception("No user in the database");
     }
   }
 
   Future <int> deleteUser() async{
-    print("Trying to delete database @user_database");
     final db = await instance.database;
     return await db.delete(userTable);
   }

@@ -1,20 +1,19 @@
-import 'package:angime_hub/content/icons.dart';
-import 'package:angime_hub/data/models/media_model.dart';
+import 'package:angime_hub/content/requests.dart';
 import 'package:angime_hub/data/models/user_model.dart';
 import 'package:angime_hub/data/repository/data_repository.dart';
 import 'package:angime_hub/ui/main/content/components.dart';
+import 'package:angime_hub/ui/main/profile/become_artist_view.dart';
 import 'package:angime_hub/ui/session/session_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../content/icons.dart';
 
-import '../upload/upload_recording_view.dart';
-
-class ArtistProfilePage extends StatelessWidget {
+class UserProfilePage extends StatelessWidget {
   late final DataRepository dataRepo;
   late final SessionCubit sessionCubit;
   final User user;
 
-  ArtistProfilePage({required this.user, Key? key}) : super(key: key);
+  UserProfilePage({required this.user, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,18 +28,20 @@ class ArtistProfilePage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: <Widget>[
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
             _info(),
-            _buttons(context),
-            _recordings(),
+            _becomeArtist(context: context),
+            _signOut(),
           ],
         ),
       ),
     );
   }
 
-  Future<List<MediaEntity>> _getPopularShows() {
-    return dataRepo.getPopularPodcasts();
+  Future<User> getUser() async {
+    final user = await dataRepo.getUser();
+    return user;
   }
 
   Widget _info() {
@@ -56,7 +57,7 @@ class ArtistProfilePage extends StatelessWidget {
     return Container(
       height: 48,
       width: 48,
-      margin: const EdgeInsets.only(bottom: 16, top: 16),
+      margin: const EdgeInsets.only(bottom: 16),
       child: const CircleAvatar(
         backgroundColor: Color.fromARGB(255, 156, 160, 199),
         radius: 100,
@@ -69,19 +70,34 @@ class ArtistProfilePage extends StatelessWidget {
   }
 
   Widget _contacts() {
-    String name = user.firstName + " " + user.secondName;
-    String email = user.email;
-    return Container(
-      margin: const EdgeInsets.fromLTRB(16, 0, 16, 26),
-      child: Center(
-        child: Column(
-          children: [_name(name: name), _email(email: email), _artist()],
-        ),
-      ),
+    String name;
+    String email;
+    return FutureBuilder<User>(
+      future: getUser(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          name = snapshot.data!.firstName + " " + snapshot.data!.secondName;
+          email = snapshot.data!.email;
+          return Container(
+            margin: const EdgeInsets.fromLTRB(16, 0, 16, 72),
+            child: Center(
+              child: Column(
+                children: [
+                  _name(name: name),
+                  _email(email: email),
+                ],
+              ),
+            ),
+          );
+        }
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 
-  Widget _name({String name = 'name'}) {
+  Widget _name({String name = "name"}) {
     return Text(
       name,
       style: const TextStyle(
@@ -105,51 +121,14 @@ class ArtistProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _artist() {
-    return const Text(
-      "Artist",
-      style: TextStyle(
-        fontFamily: "OpenSans",
-        fontSize: 16,
-        fontWeight: FontWeight.w400,
-        color: Color.fromARGB(255, 11, 191, 184),
-      ),
-    );
-  }
-
-  Widget _recordings() {
-    return Column(
-      children: [
-        sectionTitle("My Recordings"),
-        showsListForArtist(showsFuture: _getPopularShows())
-      ],
-    );
-  }
-
-  Widget _buttons(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(16, 14, 16, 24),
-      child: Row(
-        children: [
-          Expanded(
-            child: _signOut(),
-          ),
-          Expanded(
-            child: _uploadRecording(context),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _uploadRecording(BuildContext context) {
+  Widget _becomeArtist({required BuildContext context}) {
     return Container(
       height: 42,
-      margin: const EdgeInsets.only(left: 8),
+      margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       child: ElevatedButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute<void>(builder: (context){
-            return UploadRecordingPage(user: user);
+            return BecomeArtistPage(user: user,);
           }));
         },
         style: ButtonStyle(
@@ -162,7 +141,7 @@ class ArtistProfilePage extends StatelessWidget {
           ),
         ),
         child: const Text(
-          "Upload",
+          "Become an Artist",
           style: TextStyle(
             fontSize: 16,
             fontFamily: "Open Sans",
@@ -176,7 +155,7 @@ class ArtistProfilePage extends StatelessWidget {
   Widget _signOut() {
     return Container(
       height: 42,
-      margin: const EdgeInsets.only(right: 8),
+      margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       child: ElevatedButton(
         onPressed: () {
           sessionCubit.signOut();

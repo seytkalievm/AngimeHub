@@ -1,6 +1,5 @@
 import '../data/models/artist_model.dart';
 import '../data/models/media_model.dart';
-import '../data/models/user_model.dart';
 
 List popularArtistsList() {
   List artists = [];
@@ -130,7 +129,7 @@ MediaEntity show1 = MediaEntity(
   artist: a1,
   views: 820,
   duration: 22,
-  type: 1,
+  type: 0,
 );
 
 MediaEntity show2 = MediaEntity(
@@ -141,7 +140,7 @@ MediaEntity show2 = MediaEntity(
   artist: a2,
   views: 230,
   duration: 38,
-  type: 1,
+  type: 0,
 );
 
 MediaEntity show3 = MediaEntity(
@@ -154,7 +153,7 @@ MediaEntity show3 = MediaEntity(
   artist: a3,
   views: 120,
   duration: 59,
-  type: 1,
+  type: 0,
 );
 
 MediaEntity show4 = MediaEntity(
@@ -165,7 +164,7 @@ MediaEntity show4 = MediaEntity(
   artist: a4,
   views: 240,
   duration: 43,
-  type: 0,
+  type: 1,
 );
 
 MediaEntity show5 = MediaEntity(
@@ -176,7 +175,7 @@ MediaEntity show5 = MediaEntity(
   artist: a5,
   views: 235,
   duration: 54,
-  type: 0,
+  type: 1,
 );
 
 MediaEntity show6 = MediaEntity(
@@ -187,7 +186,7 @@ MediaEntity show6 = MediaEntity(
   artist: a6,
   views: 132,
   duration: 67,
-  type: 0,
+  type: 1,
 );
 
 List<Artist> getStandUpArtists() {
