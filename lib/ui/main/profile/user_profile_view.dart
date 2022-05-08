@@ -1,4 +1,3 @@
-import 'package:angime_hub/content/requests.dart';
 import 'package:angime_hub/data/models/user_model.dart';
 import 'package:angime_hub/data/repository/data_repository.dart';
 import 'package:angime_hub/ui/main/content/components.dart';

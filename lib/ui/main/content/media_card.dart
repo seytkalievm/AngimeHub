@@ -5,6 +5,7 @@ import 'package:angime_hub/data/repository/data_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../data/models/user_model.dart';
 import '../media_players/podcast/podcast_player.dart';
 import '../media_players/standup/standup_player.dart';
 
@@ -12,17 +13,20 @@ class MediaCard extends StatelessWidget {
   final MediaCardEntity mediaCardEntity;
   late IconData icon = MyFlutterApp.download;
   late DataRepository dataRepo;
+  late User user;
+  late MediaQueryData mediaQuery;
 
   MediaCard({
     required this.mediaCardEntity,
     this.icon = MyFlutterApp.download,
     Key? key,
-  })
-      : super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     dataRepo = context.read<DataRepository>();
+    _getUser();
+    mediaQuery = MediaQuery.of(context);
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 0, 18, 16),
       child: InkWell(
@@ -56,15 +60,31 @@ class MediaCard extends StatelessWidget {
     );
   }
 
+  Future<void> _getUser() async{
+    user = await dataRepo.getUser();
+  }
+
   Widget _preview(){
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15),
-      child: Image.network(
-        mediaCardEntity.previewUrl,
-        height: 60,
-        width: 83,
-      ),
-    );
+    if(mediaCardEntity.previewUrl.isNotEmpty){
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Image.network(
+          mediaCardEntity.previewUrl,
+          height: 60,
+          width: 83,
+        ),
+      );
+    }else{
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Image.asset(
+          'assets/images/no_image.jpg',
+          height: 60,
+          width: 83,
+        ),
+      );
+    }
+
   }
 
   Widget _info(){
@@ -84,17 +104,21 @@ class MediaCard extends StatelessWidget {
   Widget _name(){
     return Container(
       alignment: Alignment.topLeft,
+      width: mediaQuery.size.width *0.39,
       padding: const EdgeInsets.only(bottom: 2),
-      child: Text(
+      child:Text(
         mediaCardEntity.mediaName,
         textAlign: TextAlign.left,
+        maxLines: 1,
+        softWrap: false,
+        overflow: TextOverflow.fade,
         style: const TextStyle(
           fontFamily: "OpenSans",
           fontSize: 12,
           fontWeight: FontWeight.w400,
           color: Colors.white,
         ),
-      ),
+      ) ,
     );
   }
 
@@ -123,7 +147,9 @@ class MediaCard extends StatelessWidget {
           icon,
           size: 16,
         ),
-        onPressed: () {},
+        onPressed: () {
+          dataRepo.addMediaToFavourites(token: user.token, id: mediaCardEntity.mediaId);
+        },
       ),
     );
   }

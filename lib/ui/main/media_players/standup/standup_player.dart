@@ -54,7 +54,9 @@ class _StandUpPlayerState extends State<StandUpPlayer> {
         child: Column(
           children: [
             _showVideo(),
-            _showInfo ? info(media: widget.standUp) : Container()
+            _showInfo ?
+            info(mediaQuery: MediaQuery.of(context), media: widget.standUp) :
+            Container()
           ],
         ),
       ),

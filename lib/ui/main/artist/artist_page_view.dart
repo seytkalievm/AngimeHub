@@ -1,5 +1,6 @@
 import 'package:angime_hub/data/models/media_model.dart';
 import 'package:angime_hub/data/repository/data_repository.dart';
+import 'package:angime_hub/styles.dart';
 import 'package:angime_hub/ui/main/artist/artist_all_shows.dart';
 import 'package:angime_hub/ui/main/content/components.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,9 @@ class _ArtistPageState extends State<ArtistPage> {
   }
 
   Widget _body(BuildContext context, Artist newArtist){
+    bool hasStandUps = newArtist.standUps.isNotEmpty;
+    bool hasPodcasts = newArtist.podcasts.isNotEmpty;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: appBar(
@@ -57,8 +61,8 @@ class _ArtistPageState extends State<ArtistPage> {
           child: Column(
             children: [
               _info(newArtist),
-              _popularsBlock(newArtist, type: "Podcasts"),
-              _popularsBlock(newArtist, type: "Stand-Ups")
+              hasPodcasts?_popularsBlock(newArtist, type: "Podcasts"):_noShows(),
+              hasStandUps?_popularsBlock(newArtist, type: "Stand-Ups"):_noShows(),
             ],
           ),
         ),
@@ -66,6 +70,11 @@ class _ArtistPageState extends State<ArtistPage> {
     );
   }
 
+  Widget _noShows(){
+    return const Text(
+      "",
+    );
+  }
 
   Widget _info(Artist newArtist) {
     return Column(

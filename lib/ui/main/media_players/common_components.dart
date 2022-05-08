@@ -3,10 +3,10 @@ import 'package:angime_hub/data/models/media_model.dart';
 import 'package:angime_hub/styles.dart';
 import 'package:flutter/material.dart';
 
-Widget info({required MediaEntity media}) {
+Widget info({required MediaQueryData mediaQuery, required MediaEntity media}) {
   return Column(
     children: [
-      _firstLine(name: media.name),
+      _firstLine(mediaQuery: mediaQuery, name: media.name),
       _secondLine(
         artistName: media.artist.toString(),
         artistPhoto: media.artist.profilePic,
@@ -15,26 +15,30 @@ Widget info({required MediaEntity media}) {
   );
 }
 
-Widget _firstLine({required String name}) {
+Widget _firstLine({required MediaQueryData mediaQuery, required String name}) {
   return Container(
     margin: const EdgeInsets.fromLTRB(16, 24, 16, 0),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _showName(name: name),
+        _showName(mediaQuery: mediaQuery,name: name),
         _icon(),
       ],
     ),
   );
 }
 
-Widget _showName({required String name}) {
-  return Text(
-    name,
-    style: const TextStyle(
+Widget _showName({required MediaQueryData mediaQuery,required String name}) {
+  return Container(
+    width: mediaQuery.size.width *0.8,
+    child: Text(
+      name,
+      style: const TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w500,
-        color: Color.fromARGB(255, 255, 255, 255)),
+        color: Color.fromARGB(255, 255, 255, 255),
+      ),
+    ),
   );
 }
 

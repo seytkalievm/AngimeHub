@@ -183,8 +183,6 @@ class DataRepository{
   }
 
   Future<MediaEntity> getFullMediaInfo(int id) async{
-
-    print("Getting full media Info");
     try{
       final response = await http.get(Uri.parse(
           apiBase + "media/videoFullInfo?videoId=$id"));
@@ -196,7 +194,6 @@ class DataRepository{
         Artist artist = await getArtistInfo(artistId);
         int type = jsonDecode(utf8.decode(response.bodyBytes))["type"];
         int views = jsonDecode(utf8.decode(response.bodyBytes))["views"];
-        print(response.body);
         return MediaEntity(
           id: id,
           url: url,
@@ -215,7 +212,6 @@ class DataRepository{
   }
 
   Future<Artist> getArtistInfo(int id) async{
-    print("gettign Artist info");
     try{
       final response = await http.get(Uri.parse(
           apiBase + "artist/getInfo?artistId=$id"));
@@ -260,4 +256,33 @@ class DataRepository{
       rethrow;
     }
   }
+
+  Future<String> addMediaToFavourites({
+    required String token, required int id})async{
+    try{
+      final response = await http.post(
+    Uri.parse(apiBase + "user/favourite/add?token=$token&videoId=$id"));
+      if(response.statusCode == 200){
+        return "Successfully added show to favourites";
+      }
+      return "Error occured, couldn't add show to favourites";
+    }catch(e){
+      return e.toString();
+    }
+  }
+
+  Future<String> deleteMediaFromFavourites({
+    required String token, required int id})async{
+    try{
+      final response = await http.post(
+          Uri.parse(apiBase + "user/favourite/delete?token=$token&videoId=$id"));
+      if(response.statusCode == 200){
+        return "Successfully deleted show from favourites";
+      }
+      return "Error occured, couldn't delete show from favourites";
+    }catch(e){
+      return e.toString();
+    }
+  }
+
 }

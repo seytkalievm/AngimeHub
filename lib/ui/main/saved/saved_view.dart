@@ -7,27 +7,46 @@ import '../../../data/models/user_model.dart';
 import '../../../styles.dart';
 import '../content/components.dart';
 
-class SavedRecordingsView extends StatelessWidget {
+
+class SavedRecordingsView extends StatefulWidget {
   SavedRecordingsView({Key? key}) : super(key: key);
+
+
+  @override
+  State<StatefulWidget> createState() {
+    return _SavedRecordingsViewState();
+  }
+
+}
+class _SavedRecordingsViewState extends State<SavedRecordingsView>{
   late DataRepository dataRepo;
+  late Future<List<MediaCardEntity>> saved;
 
   @override
   Widget build(BuildContext context) {
     dataRepo = context.read<DataRepository>();
     return Scaffold(
         appBar: appBar(context: context, pageTitle: "Saved Recordings", showProfileButton: true),
-        body: Column(
+        body: SingleChildScrollView(
+        child: Column(
           children: [
             searchField("Artists or shows"),
             _savedRecordings(),
           ],
         ),
+        ),
     );
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    _getSavedRecordings();
   }
 
   Future<List<MediaCardEntity>> _getSavedRecordings()async{
     User user = await dataRepo.getUser();
-    return dataRepo.getSavedRecordings(user.token);
+    saved = dataRepo.getSavedRecordings(user.token);
+    return saved;
   }
   
   Widget _savedRecordings(){
@@ -38,4 +57,5 @@ class SavedRecordingsView extends StatelessWidget {
       ],
     );
   }
+
 }
