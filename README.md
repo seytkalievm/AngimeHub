@@ -30,13 +30,9 @@ First two screen show popular shows and artist.
 Tapping on the show, the user gets into the page demonstrating it. For now video opens from stand-up and podcast pages, audio from saved page. The video / audio page can be closed by swipping down.
 
 Video can be played / paused (by tapping on the center on the video), rewound back or forward on 5 seconds (by double tapping on the corresponding sides of the video), current state of the video can be changed with the use of progress indicator (timeline at the bottom of the video). The user also can restart the video (bottom left) ot change the orientation (bottom right).
-
-<img src="https://github.com/seytkalievm/AngimeHub/blob/master/assets/images/readme/videoStopped.jpg" width="200" height="400" /> <img src="https://github.com/seytkalievm/AngimeHub/blob/master/assets/images/readme/videoPlayed.jpg" width="200" height="400" />
-
 Audio can be played / paused, restarted. The speed of the audio also can be changed.
 
-<img src="https://github.com/seytkalievm/AngimeHub/blob/master/assets/images/readme/audio.jpg" width="200" height="400" />
-
+<img src="https://github.com/seytkalievm/AngimeHub/blob/master/assets/screens/video.png" width="200" height="400" /> <img src="https://github.com/seytkalievm/AngimeHub/blob/master/assets/screens/audio.png" width="200" height="400" />
 
 Simple user can become an artist to be able to upload his recordings.
 
