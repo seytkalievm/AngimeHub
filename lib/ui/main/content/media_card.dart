@@ -1,25 +1,35 @@
 import 'package:angime_hub/content/icons.dart';
+import 'package:angime_hub/data/models/media_card_model.dart';
 import 'package:angime_hub/data/models/media_model.dart';
+import 'package:angime_hub/data/repository/data_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../media_players/podcast/podcast_player.dart';
 import '../media_players/standup/standup_player.dart';
 
 class MediaCard extends StatelessWidget {
-  final MediaEntity media;
+  final MediaCardEntity mediaCardEntity;
   late IconData icon = MyFlutterApp.download;
+  late DataRepository dataRepo;
 
-  MediaCard({required this.media, this.icon = MyFlutterApp.download, Key? key})
+  MediaCard({
+    required this.mediaCardEntity,
+    this.icon = MyFlutterApp.download,
+    Key? key,
+  })
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    dataRepo = context.read<DataRepository>();
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 0, 18, 16),
       child: InkWell(
-        onTap: () {
+        onTap: () async {
+          MediaEntity media = await dataRepo.getFullMediaInfo(mediaCardEntity.mediaId);
           Navigator.push(context, MaterialPageRoute<void>(builder: (context){
-            if (media.type == 1) {
+            if (mediaCardEntity.type == 1) {
               return PodcastPlayer(audio: media);
             }
             return StandUpPlayer(standUp: media);
@@ -44,14 +54,13 @@ class MediaCard extends StatelessWidget {
         ),
       ),
     );
-
   }
 
   Widget _preview(){
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: Image.network(
-        media.preview,
+        mediaCardEntity.previewUrl,
         height: 60,
         width: 83,
       ),
@@ -67,7 +76,6 @@ class MediaCard extends StatelessWidget {
         children: [
           _name(),
           _artist(),
-          _duration(),
         ],
       ),
     );
@@ -78,7 +86,7 @@ class MediaCard extends StatelessWidget {
       alignment: Alignment.topLeft,
       padding: const EdgeInsets.only(bottom: 2),
       child: Text(
-        media.name,
+        mediaCardEntity.mediaName,
         textAlign: TextAlign.left,
         style: const TextStyle(
           fontFamily: "OpenSans",
@@ -95,7 +103,7 @@ class MediaCard extends StatelessWidget {
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(bottom: 2),
       child: Text(
-        media.artist.toString(),
+        "${mediaCardEntity.artistFirstName} ${mediaCardEntity.artistSecondName}",
         style: const TextStyle(
           fontFamily: "OpenSans",
           fontSize: 10,
@@ -106,20 +114,6 @@ class MediaCard extends StatelessWidget {
     );
   }
 
-  Widget _duration(){
-    return Container(
-      alignment: Alignment.bottomLeft,
-      child: Text(
-        media.duration,
-        style: const TextStyle(
-          fontFamily: "OpenSans",
-          fontSize: 10,
-          fontWeight: FontWeight.w400,
-          color: Color.fromARGB(255, 156, 160, 199),
-        ),
-      ),
-    );
-  }
 
   Widget _saveToFavourites(){
     return SizedBox(

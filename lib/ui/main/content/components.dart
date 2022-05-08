@@ -1,9 +1,9 @@
 import 'package:angime_hub/ui/main/content/artist_media_card.dart';
 import 'package:angime_hub/ui/main/profile/profile_view.dart';
-import 'package:angime_hub/ui/main/profile/user_profile_view.dart';
 import 'package:flutter/material.dart';
 import '../../../content/icons.dart';
 import '../../../data/models/artist_model.dart';
+import '../../../data/models/media_card_model.dart';
 import '../../../data/models/media_model.dart';
 import '../../../styles.dart';
 import 'artist_card.dart';
@@ -128,15 +128,15 @@ Widget artistsList({required Future<List<Artist>> artistsFuture}) {
   );
 }
 
-Widget showsList({required Future<List<MediaEntity>> showsFuture}) {
-  List<MediaEntity> shows;
+Widget showsList({required Future<List<MediaCardEntity>> showsFuture}) {
+  List<MediaCardEntity> shows;
   return Padding(
     padding: const EdgeInsets.fromLTRB(16, 10, 0, 10),
     child: SizedBox(
-      child: FutureBuilder<List<MediaEntity>>(
+      child: FutureBuilder<List<MediaCardEntity>>(
         future: showsFuture,
         builder:
-            (BuildContext context, AsyncSnapshot<List<MediaEntity>> snapshot) {
+            (BuildContext context, AsyncSnapshot<List<MediaCardEntity>> snapshot) {
           if (snapshot.hasData) {
             shows = snapshot.data!;
             return ListView(
@@ -145,8 +145,11 @@ Widget showsList({required Future<List<MediaEntity>> showsFuture}) {
               children: List.generate(
                 shows.length,
                 (index) {
-                  MediaEntity current = shows[index];
-                  return MediaCard(media: current);
+                  MediaCardEntity current = shows[index];
+                  return MediaCard(
+                    mediaCardEntity: current,
+                    icon: MyFlutterApp.saved,
+                  );
                 },
               ),
             );
@@ -159,15 +162,15 @@ Widget showsList({required Future<List<MediaEntity>> showsFuture}) {
   );
 }
 
-Widget showsListForArtist({required Future<List<MediaEntity>> showsFuture}) {
-  List<MediaEntity> shows;
+Widget showsListForArtist({required Future<List<MediaCardEntity>> showsFuture}) {
+  List<MediaCardEntity> shows;
   return Padding(
     padding: const EdgeInsets.fromLTRB(16, 10, 0, 10),
     child: SizedBox(
-      child: FutureBuilder<List<MediaEntity>>(
+      child: FutureBuilder<List<MediaCardEntity>>(
         future: showsFuture,
         builder:
-            (BuildContext context, AsyncSnapshot<List<MediaEntity>> snapshot) {
+            (BuildContext context, AsyncSnapshot<List<MediaCardEntity>> snapshot) {
           if (snapshot.hasData) {
             shows = snapshot.data!;
             return ListView(
@@ -176,13 +179,15 @@ Widget showsListForArtist({required Future<List<MediaEntity>> showsFuture}) {
               children: List.generate(
                 shows.length,
                 (index) {
-                  MediaEntity current = shows[index];
+                  MediaCardEntity current = shows[index];
                   return ArtistMediaCard(media: current);
                 },
               ),
             );
           } else {
-            return const CircularProgressIndicator();
+            return const Center(
+                child: CircularProgressIndicator()
+            );
           }
         },
       ),

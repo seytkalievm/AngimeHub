@@ -7,6 +7,7 @@ import 'package:angime_hub/ui/session/session_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../data/models/media_card_model.dart';
 import '../upload/upload_recording_view.dart';
 
 class ArtistProfilePage extends StatelessWidget {
@@ -39,8 +40,8 @@ class ArtistProfilePage extends StatelessWidget {
     );
   }
 
-  Future<List<MediaEntity>> _getPopularShows() {
-    return dataRepo.getPopularPodcasts();
+  Future<List<MediaCardEntity>> _getMyRecordings() {
+    return dataRepo.getUserRecordings(user.token);
   }
 
   Widget _info() {
@@ -121,7 +122,7 @@ class ArtistProfilePage extends StatelessWidget {
     return Column(
       children: [
         sectionTitle("My Recordings"),
-        showsListForArtist(showsFuture: _getPopularShows())
+        showsListForArtist(showsFuture: _getMyRecordings())
       ],
     );
   }

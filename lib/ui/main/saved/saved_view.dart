@@ -1,7 +1,9 @@
 import 'package:angime_hub/data/repository/data_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../data/models/media_card_model.dart';
 import '../../../data/models/media_model.dart';
+import '../../../data/models/user_model.dart';
 import '../../../styles.dart';
 import '../content/components.dart';
 
@@ -23,8 +25,9 @@ class SavedRecordingsView extends StatelessWidget {
     );
   }
 
-  Future<List<MediaEntity>> _getSavedRecordings(){
-    return dataRepo.getSavedRecordings();
+  Future<List<MediaCardEntity>> _getSavedRecordings()async{
+    User user = await dataRepo.getUser();
+    return dataRepo.getSavedRecordings(user.token);
   }
   
   Widget _savedRecordings(){

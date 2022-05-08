@@ -78,6 +78,8 @@ Artist a1 = Artist(
   firstName: "Surlan",
   secondName: "Naburov",
   profilePic: "https://www.topnews.ru/wp-content/uploads/2022/04/Sabyrov.jpeg",
+  standUps: [], podcasts: [],
+
 );
 Artist a2 = Artist(
   id: 2,
@@ -85,6 +87,8 @@ Artist a2 = Artist(
   secondName: "Tasaev",
   profilePic:
       "https://i.pinimg.com/736x/2e/77/68/2e77683dbbdff0d7c32055f32652fb7e.jpg",
+  standUps: [], podcasts: [],
+
 );
 Artist a3 = Artist(
   id: 3,
@@ -92,6 +96,8 @@ Artist a3 = Artist(
   secondName: "Kart",
   profilePic:
       "https://media.newyorker.com/photos/5cb7a0e992dcf02ddc8613c2/master/pass/DSF-KevinHartSpecial.jpg",
+  standUps: [], podcasts: [],
+
 );
 Artist a4 = Artist(
   id: 4,
@@ -99,12 +105,16 @@ Artist a4 = Artist(
   secondName: "L.K",
   profilePic:
       'https://static01.nyt.com/images/2019/11/05/arts/04louis-ck/04louis-ck-superJumbo.jpg',
+  standUps: [], podcasts: [],
+
 );
 Artist a5 = Artist(
   id: 5,
   firstName: "Ris",
   secondName: "Chrock",
   profilePic: 'https://i.ytimg.com/vi/hvAu7L0Ii2M/maxresdefault.jpg',
+  standUps: [], podcasts: [],
+
 );
 Artist a6 = Artist(
   id: 6,
@@ -112,6 +122,8 @@ Artist a6 = Artist(
   secondName: "Garlin",
   profilePic:
       'https://upload.wikimedia.org/wikipedia/commons/2/2e/Jesus_is_coming.._Look_Busy_%28George_Carlin%29.jpg',
+  standUps: [], podcasts: [],
+
 );
 Artist a7 = Artist(
   id: 7,
@@ -119,6 +131,7 @@ Artist a7 = Artist(
   secondName: "Dapelle",
   profilePic:
       "https://static.onecms.io/wp-content/uploads/sites/9/2017/06/fwx-dave-chappelle.jpg",
+  standUps: [], podcasts: [],
 );
 
 MediaEntity show1 = MediaEntity(
@@ -128,7 +141,6 @@ MediaEntity show1 = MediaEntity(
   mediaName: "About trips",
   artist: a1,
   views: 820,
-  duration: 22,
   type: 0,
 );
 
@@ -139,7 +151,6 @@ MediaEntity show2 = MediaEntity(
   mediaName: "Adult",
   artist: a2,
   views: 230,
-  duration: 38,
   type: 0,
 );
 
@@ -152,7 +163,6 @@ MediaEntity show3 = MediaEntity(
   mediaName: "Clean",
   artist: a3,
   views: 120,
-  duration: 59,
   type: 0,
 );
 
@@ -163,7 +173,6 @@ MediaEntity show4 = MediaEntity(
   mediaName: "Principles",
   artist: a4,
   views: 240,
-  duration: 43,
   type: 1,
 );
 
@@ -174,7 +183,6 @@ MediaEntity show5 = MediaEntity(
   mediaName: "Adult",
   artist: a5,
   views: 235,
-  duration: 54,
   type: 1,
 );
 
@@ -185,7 +193,6 @@ MediaEntity show6 = MediaEntity(
   mediaName: "Kuji",
   artist: a6,
   views: 132,
-  duration: 67,
   type: 1,
 );
 

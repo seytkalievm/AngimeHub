@@ -2,8 +2,10 @@ import 'package:angime_hub/content/icons.dart';
 import 'package:angime_hub/data/models/media_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../../data/models/media_card_model.dart';
+
 class ArtistMediaCard extends StatelessWidget {
-  final MediaEntity media;
+  final MediaCardEntity media;
   final IconData icon = MyFlutterApp.remove;
 
   const ArtistMediaCard({required this.media, Key? key}) : super(key: key);
@@ -36,7 +38,7 @@ class ArtistMediaCard extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: Image.network(
-        media.preview,
+        media.previewUrl,
         height: 60,
         width: 83,
       ),
@@ -52,7 +54,6 @@ class ArtistMediaCard extends StatelessWidget {
         children: [
           _name(),
           _views(),
-          _duration(),
         ],
       ),
     );
@@ -63,7 +64,7 @@ class ArtistMediaCard extends StatelessWidget {
       alignment: Alignment.topLeft,
       padding: const EdgeInsets.only(bottom: 2),
       child: Text(
-        media.name,
+        media.mediaName,
         textAlign: TextAlign.left,
         style: const TextStyle(
           fontFamily: "OpenSans",
@@ -79,9 +80,9 @@ class ArtistMediaCard extends StatelessWidget {
     return Container(
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(bottom: 2),
-      child: Text(
-        media.views.toString() + ' views',
-        style: const TextStyle(
+      child: const Text(
+        'views',
+        style: TextStyle(
           fontFamily: "OpenSans",
           fontSize: 10,
           fontWeight: FontWeight.w400,
@@ -91,20 +92,6 @@ class ArtistMediaCard extends StatelessWidget {
     );
   }
 
-  Widget _duration() {
-    return Container(
-      alignment: Alignment.bottomLeft,
-      child: Text(
-        media.duration,
-        style: const TextStyle(
-          fontFamily: "OpenSans",
-          fontSize: 10,
-          fontWeight: FontWeight.w400,
-          color: Color.fromARGB(255, 156, 160, 199),
-        ),
-      ),
-    );
-  }
 
   Widget _saveToFavourites() {
     return SizedBox(

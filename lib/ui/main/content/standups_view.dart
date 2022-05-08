@@ -2,6 +2,7 @@ import 'package:angime_hub/ui/main/content/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/models/artist_model.dart';
+import '../../../data/models/media_card_model.dart';
 import '../../../data/models/media_model.dart';
 import '../../../data/repository/data_repository.dart';
 import '../../../styles.dart';
@@ -16,7 +17,7 @@ class StandUpPage extends StatelessWidget{
     return dataRepo.getPopularStandUpArtists();
   }
 
-  Future<List<MediaEntity>> _getPopularShows(){
+  Future<List<MediaCardEntity>> _getPopularShows(){
     return dataRepo.getPopularStandUps();
   }
 

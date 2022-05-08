@@ -9,7 +9,6 @@ class MediaEntity {
   late String _mediaName;
   late Artist _artist;
   late int _views;
-  late int _duration;
   late int _type;
 
   MediaEntity({
@@ -19,7 +18,6 @@ class MediaEntity {
     required String mediaName,
     required Artist artist,
     required int views,
-    required int duration,
     required int type,
   }) {
     _id = id;
@@ -28,7 +26,6 @@ class MediaEntity {
     _mediaName = mediaName;
     _artist = artist;
     _views = views;
-    _duration = duration;
     _type = type;
   }
 
@@ -56,12 +53,6 @@ class MediaEntity {
     return _views;
   }
 
-  String get duration {
-    int h = _duration ~/ 60;
-    int m = _duration % 60;
-    String mm = m < 10 ? "0$m" : "$m";
-    return "$h:$mm";
-  }
 
   int get type {
     return _type;

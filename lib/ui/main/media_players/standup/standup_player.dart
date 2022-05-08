@@ -127,10 +127,10 @@ class _StandUpPlayerState extends State<StandUpPlayer> {
           child: _showControls == false
               ? const SizedBox(height: 80, width: 80)
               : const Icon(
-                  Icons.replay_10,
-                  color: Color.fromARGB(190, 255, 255, 255),
-                  size: 50.0,
-                ),
+            Icons.replay_10,
+            color: Color.fromARGB(190, 255, 255, 255),
+            size: 50.0,
+          ),
         ),
         onDoubleTap: () async {
           if ((await controller.position)! > const Duration(seconds: 10)) {
@@ -154,10 +154,10 @@ class _StandUpPlayerState extends State<StandUpPlayer> {
           child: _showControls == false
               ? const SizedBox(height: 80, width: 80)
               : const Icon(
-                  Icons.play_arrow,
-                  color: Colors.white,
-                  size: 80.0,
-                ),
+            Icons.play_arrow,
+            color: Colors.white,
+            size: 80.0,
+          ),
         ),
         onTap: () {
           controller.value.isPlaying
@@ -179,10 +179,10 @@ class _StandUpPlayerState extends State<StandUpPlayer> {
           child: _showControls == false
               ? const SizedBox(height: 80, width: 80)
               : const Icon(
-                  Icons.forward_10,
-                  color: Color.fromARGB(190, 255, 255, 255),
-                  size: 50.0,
-                ),
+            Icons.forward_10,
+            color: Color.fromARGB(190, 255, 255, 255),
+            size: 50.0,
+          ),
         ),
         onDoubleTap: () async {
           if (((await controller.position)! + const Duration(seconds: 10)) <
@@ -233,7 +233,7 @@ class _StandUpPlayerState extends State<StandUpPlayer> {
         setState(() {});
       },
       icon:
-          Icon(orientationIcon == 1 ? Icons.fullscreen_exit : Icons.fullscreen),
+      Icon(orientationIcon == 1 ? Icons.fullscreen_exit : Icons.fullscreen),
       color: Colors.white,
       iconSize: 30,
     );
