@@ -38,6 +38,18 @@ Audio can be played / paused, restarted. The speed of the audio also can be chan
 <img src="https://github.com/seytkalievm/AngimeHub/blob/master/assets/images/readme/audio.jpg" width="200" height="400" />
 
 
+Simple user can become an artist to be able to upload his recordings.
+
+<img src="https://github.com/seytkalievm/AngimeHub/blob/master/assets/screens/become_artist.png" width="200" height="400" />
+
+Uploading recording.
+
+<img src="https://github.com/seytkalievm/AngimeHub/blob/master/assets/screens/upload.png" width="200" height="400" /> <img src="https://github.com/seytkalievm/AngimeHub/blob/master/assets/screens/apload2.png" width="200" height="400" />
+
+After that the artist can see his recordings on his page.
+
+<img src="https://github.com/seytkalievm/AngimeHub/blob/master/assets/screens/myrecordings.png" width="200" height="400" />
+
 
 ## :tm: Contributors
 - [Makshe Seytkaliev](https://github.com/seytkalievm)
