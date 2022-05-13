@@ -30,7 +30,6 @@ class AppNavigator extends StatelessWidget {
               ),
           ],
           onPopPage: (route, result) {
-            print("Zdes pizdec");
             SystemChrome.setPreferredOrientations(
                 [DeviceOrientation.portraitUp]);
             return route.didPop(result);
