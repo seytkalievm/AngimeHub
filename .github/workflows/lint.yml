@@ -1,11 +1,6 @@
-name: lint check
+name: lint
 
-on:
-  pull_request:
-    types: [opened, synchronize]
-  push:
-    branches:
-      - main
+on: [push, workflow_dispatch]
 
 jobs:
   lint:
