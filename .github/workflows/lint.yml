@@ -1,7 +1,5 @@
-name: Run lint on pull requests
-on:
-  pull_request:
-    branches: [ develop ]
+name: Run lint
+on: [push, workflow_dispatch]
 
 jobs:
   lint:
