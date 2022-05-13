@@ -12,7 +12,6 @@ class UserBottomBar extends StatefulWidget{
   final screens = [
     StandUpPage(),
     PodcastsPage(),
-    SavedRecordingsView(),
   ];
 
   UserBottomBar({Key? key}) : super(key: key);
@@ -33,10 +32,7 @@ class UserBottomState extends State<UserBottomBar>{
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: IndexedStack(
-          children: widget.screens,
-          index: _currentPage,
-        ),
+        body: getBody(),
         bottomNavigationBar: Container(
           height: 54,
           decoration:
@@ -103,6 +99,16 @@ class UserBottomState extends State<UserBottomBar>{
     );
   }
 
+  Widget getBody() {
+    if (_currentPage == 0 || _currentPage == 1) {
+      return IndexedStack(
+        children: widget.screens,
+        index: _currentPage,
+      );
+    } else {
+      return const SavedRecordingsView();
+    }
+  }
 
 
 }

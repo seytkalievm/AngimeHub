@@ -1,3 +1,4 @@
+import 'package:angime_hub/content/icons.dart';
 import 'package:angime_hub/ui/main/content/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,11 +26,12 @@ class PodcastsPage extends StatelessWidget{
   Widget build(BuildContext context) {
     dataRepo = context.read<DataRepository>();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
         appBar: appBar(context: context, pageTitle: "Podcasts", showProfileButton: true),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              searchField("Artists or Shows"),
+              searchField(context, "Artists or Shows"),
               _popularArtists(),
               _popularShows(),
             ],
@@ -52,7 +54,7 @@ class PodcastsPage extends StatelessWidget{
     return Column(
       children: [
         sectionTitle("Popular Podcasts"),
-        showsList(showsFuture: _getPopularShows()),
+        showsList(showsFuture: _getPopularShows(), icon: MyFlutterApp.heart),
       ],
     );
   }

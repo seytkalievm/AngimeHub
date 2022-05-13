@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:angime_hub/data/database/user/user_database.dart';
 import 'package:angime_hub/data/models/artist_model.dart';
 import 'package:angime_hub/data/models/media_model.dart';
+import 'package:angime_hub/data/models/search_result_model.dart';
 import 'package:angime_hub/ui/main/upload/upload_entity.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:http/http.dart' as http;
@@ -279,10 +280,42 @@ class DataRepository{
       if(response.statusCode == 200){
         return "Successfully deleted show from favourites";
       }
-      return "Error occured, couldn't delete show from favourites";
+      return "Error occurred, couldn't delete show from favourites";
     }catch(e){
       return e.toString();
     }
   }
 
+  Future<SearchResult> getSearchResult(String query) async{
+    try{
+      final response = await http.get(
+        Uri.parse(apiBase + "search?searchValue=$query"));
+      if(response.body.isNotEmpty){
+        List rawArtists = jsonDecode(utf8.decode(response.bodyBytes))['artists'];
+        List rawPodcasts = jsonDecode(utf8.decode(response.bodyBytes))['podcasts'];
+        List rawStandUps = jsonDecode(utf8.decode(response.bodyBytes))['standups'];
+        List<Artist>? artists;
+        List <MediaCardEntity>? standUps;
+        List <MediaCardEntity>? podcasts;
+
+        if(rawArtists != null){
+          artists = rawArtists.map((i) =>
+              Artist.fromJson(i, null, null)).toList();
+        }
+        if(rawStandUps != null){
+          standUps = (rawStandUps).map((i) =>
+              MediaCardEntity.fromJson(i)).toList();
+        }
+        if(rawPodcasts != null){
+          podcasts = (rawPodcasts).map((i) =>
+              MediaCardEntity.fromJson(i)).toList();
+        }
+
+        return SearchResult(artists: artists, standUps: standUps, podcasts: podcasts);
+      }
+      throw Exception(response.body);
+    }catch (e){
+      rethrow;
+    }
+  }
 }

@@ -2,7 +2,7 @@
 
 ## :scroll: Project description
 Cross-platform streaming mobile application on Flutter. This app allows users to see stand-up shows and podcasts in one place.
-You can download pre-release APK [here](https://github.com/seytkalievm/AngimeHub/releases/download/v2.0.0/AngimeHub.apk).
+You can download pre-release APK [here](https://github.com/seytkalievm/AngimeHub/releases/download/v1.0.0/AngimeHub.apk).
 
 ## :hammer: Building the project
 

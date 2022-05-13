@@ -1,5 +1,6 @@
 import 'package:angime_hub/ui/main/content/artist_media_card.dart';
 import 'package:angime_hub/ui/main/profile/profile_view.dart';
+import 'package:angime_hub/ui/main/search/search_page_view.dart';
 import 'package:flutter/material.dart';
 import '../../../content/icons.dart';
 import '../../../data/models/artist_model.dart';
@@ -54,11 +55,25 @@ Widget profileButton(BuildContext context) {
   );
 }
 
-Widget searchField(String hint) {
+Widget searchField(BuildContext context, String hint) {
+  final controller = TextEditingController();
   return Padding(
     padding: const EdgeInsets.fromLTRB(16, 10, 16, 34),
     child: TextField(
+      controller: controller,
       textInputAction: TextInputAction.search,
+      onSubmitted: (value) {
+        if (value.isNotEmpty) {
+          var query = value;
+          controller.clear();
+          Navigator.push(
+              context,
+              MaterialPageRoute<void>(builder: (context) {
+                return SearchPage(query: query);
+              })
+          );
+        }
+      },
       style: CommonStyle.textFieldInputStyle(),
       decoration: InputDecoration(
         filled: true,
@@ -128,7 +143,7 @@ Widget artistsList({required Future<List<Artist>> artistsFuture}) {
   );
 }
 
-Widget showsList({required Future<List<MediaCardEntity>> showsFuture}) {
+Widget showsList({required Future<List<MediaCardEntity>> showsFuture, required IconData icon}) {
   List<MediaCardEntity> shows;
   return Padding(
     padding: const EdgeInsets.fromLTRB(16, 10, 0, 10),
@@ -148,7 +163,7 @@ Widget showsList({required Future<List<MediaCardEntity>> showsFuture}) {
                   MediaCardEntity current = shows[index];
                   return MediaCard(
                     mediaCardEntity: current,
-                    icon: MyFlutterApp.saved,
+                    icon: icon,
                   );
                 },
               ),

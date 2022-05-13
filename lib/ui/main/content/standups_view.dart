@@ -1,11 +1,10 @@
 import 'package:angime_hub/ui/main/content/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../content/icons.dart';
 import '../../../data/models/artist_model.dart';
 import '../../../data/models/media_card_model.dart';
-import '../../../data/models/media_model.dart';
 import '../../../data/repository/data_repository.dart';
-import '../../../styles.dart';
 
 
 class StandUpPage extends StatelessWidget{
@@ -25,17 +24,17 @@ class StandUpPage extends StatelessWidget{
   Widget build(BuildContext context) {
     dataRepo = context.read<DataRepository>();
     return  Scaffold(
-        appBar: appBar(context: context, pageTitle: "Stand-Up Shows", showProfileButton: true),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              searchField("Artists or Shows"),
-              _popularArtists(),
-              _popularShows(),
-            ],
-          ),
+      resizeToAvoidBottomInset: false,
+      appBar: appBar(context: context, pageTitle: "Stand-Up Shows", showProfileButton: true),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            searchField(context, "Artists or Shows"),
+            _popularArtists(),
+            _popularShows(),
+          ],
         ),
-
+      ),
     );
   }
 
@@ -54,7 +53,7 @@ class StandUpPage extends StatelessWidget{
     return Column(
       children: [
         sectionTitle("Popular Stand-Up Shows"),
-        showsList(showsFuture: _getPopularShows())
+        showsList(showsFuture: _getPopularShows(),icon: MyFlutterApp.heart)
       ],
     );
   }

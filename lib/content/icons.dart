@@ -22,4 +22,6 @@ class MyFlutterApp {
       IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData saved =
       IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData heart =
+      IconData(0xe25c, fontFamily: 'MaterialIcons');
 }

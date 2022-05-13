@@ -1,16 +1,14 @@
 import 'package:angime_hub/data/repository/data_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../content/icons.dart';
 import '../../../data/models/media_card_model.dart';
-import '../../../data/models/media_model.dart';
 import '../../../data/models/user_model.dart';
-import '../../../styles.dart';
 import '../content/components.dart';
 
 
 class SavedRecordingsView extends StatefulWidget {
-  SavedRecordingsView({Key? key}) : super(key: key);
-
+  const SavedRecordingsView({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -26,11 +24,11 @@ class _SavedRecordingsViewState extends State<SavedRecordingsView>{
   Widget build(BuildContext context) {
     dataRepo = context.read<DataRepository>();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
         appBar: appBar(context: context, pageTitle: "Saved Recordings", showProfileButton: true),
         body: SingleChildScrollView(
         child: Column(
           children: [
-            searchField("Artists or shows"),
             _savedRecordings(),
           ],
         ),
@@ -53,7 +51,7 @@ class _SavedRecordingsViewState extends State<SavedRecordingsView>{
     return Column(
       children: [
         sectionTitle("Saved Stand-up shows and Podcasts"),
-        showsList(showsFuture: _getSavedRecordings()),
+        showsList(showsFuture: _getSavedRecordings(), icon: MyFlutterApp.remove),
       ],
     );
   }

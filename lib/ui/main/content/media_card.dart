@@ -18,7 +18,7 @@ class MediaCard extends StatelessWidget {
 
   MediaCard({
     required this.mediaCardEntity,
-    this.icon = MyFlutterApp.download,
+    this.icon = MyFlutterApp.heart,
     Key? key,
   }) : super(key: key);
 
@@ -53,7 +53,7 @@ class MediaCard extends StatelessWidget {
                 )
               ],
             ),
-            _saveToFavourites(),
+            _favouritesButton(),
           ],
         ),
       ),
@@ -139,7 +139,7 @@ class MediaCard extends StatelessWidget {
   }
 
 
-  Widget _saveToFavourites(){
+  Widget _favouritesButton(){
     return SizedBox(
       child: IconButton(
         color: const Color.fromARGB(255, 156, 160, 199),
@@ -148,7 +148,13 @@ class MediaCard extends StatelessWidget {
           size: 16,
         ),
         onPressed: () {
-          dataRepo.addMediaToFavourites(token: user.token, id: mediaCardEntity.mediaId);
+          if(icon == MyFlutterApp.heart) {
+            dataRepo.addMediaToFavourites(
+                token: user.token, id: mediaCardEntity.mediaId);
+          }else{
+            dataRepo.deleteMediaFromFavourites(
+                token: user.token, id: mediaCardEntity.mediaId);
+          }
         },
       ),
     );

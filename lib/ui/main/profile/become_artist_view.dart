@@ -17,7 +17,7 @@ class BecomeArtistPage extends StatelessWidget {
     dataRepo = context.read<DataRepository>();
 
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       appBar: appBar(
           context: context,
           pageTitle: 'Become an Artist',
