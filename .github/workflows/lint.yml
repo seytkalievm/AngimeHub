@@ -19,4 +19,4 @@ jobs:
       - name: flutter pub get
         run: flutter pub get
       - name: flutter analyze
-        run: flutter analyze
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
