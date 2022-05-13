@@ -6,6 +6,7 @@ import 'package:angime_hub/ui/main/content/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// ignore: must_be_immutable
 class BecomeArtistPage extends StatelessWidget {
   late DataRepository dataRepo;
   final User user;
@@ -99,13 +100,12 @@ class BecomeArtistPage extends StatelessWidget {
               cursorColor: Colors.white,
               onChanged: (value) {
                 value = value.trim();
-                },
+              },
             ),
           ),
         ],
       ),
     );
-
   }
 
   Widget _countryForm() {
@@ -139,10 +139,10 @@ class BecomeArtistPage extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(16, 72, 16, 16),
       child: ElevatedButton(
         onPressed: () {
-          try{
+          try {
             dataRepo.becomeArtist(user.email);
             Navigator.pop(context);
-          }catch (e){
+          } catch (e) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(e.toString()),

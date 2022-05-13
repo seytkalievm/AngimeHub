@@ -1,4 +1,3 @@
-import 'package:angime_hub/content/icons.dart';
 import 'package:angime_hub/data/models/media_model.dart';
 import 'package:angime_hub/styles.dart';
 import 'package:flutter/material.dart';
@@ -18,19 +17,13 @@ Widget info({required MediaQueryData mediaQuery, required MediaEntity media}) {
 Widget _firstLine({required MediaQueryData mediaQuery, required String name}) {
   return Container(
     margin: const EdgeInsets.fromLTRB(16, 24, 16, 0),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        _showName(mediaQuery: mediaQuery,name: name),
-        _icon(),
-      ],
-    ),
+    child: _showName(mediaQuery: mediaQuery, name: name),
   );
 }
 
-Widget _showName({required MediaQueryData mediaQuery,required String name}) {
-  return Container(
-    width: mediaQuery.size.width *0.8,
+Widget _showName({required MediaQueryData mediaQuery, required String name}) {
+  return SizedBox(
+    width: mediaQuery.size.width * 0.9,
     child: Text(
       name,
       style: const TextStyle(
@@ -39,14 +32,6 @@ Widget _showName({required MediaQueryData mediaQuery,required String name}) {
         color: Color.fromARGB(255, 255, 255, 255),
       ),
     ),
-  );
-}
-
-Widget _icon() {
-  return const Icon(
-    MyFlutterApp.download,
-    size: 16,
-    color: Color.fromARGB(255, 156, 160, 199),
   );
 }
 
@@ -69,8 +54,8 @@ Widget _photo({required String artistPhoto}) {
       borderRadius: BorderRadius.circular(15),
       child: Image.network(
         artistPhoto,
-        height: 97,
-        width: 95,
+        height: 65,
+        width: 65,
       ),
     ),
     margin: const EdgeInsets.only(right: 10),

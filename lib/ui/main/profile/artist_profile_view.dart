@@ -1,5 +1,4 @@
 import 'package:angime_hub/content/icons.dart';
-import 'package:angime_hub/data/models/media_model.dart';
 import 'package:angime_hub/data/models/user_model.dart';
 import 'package:angime_hub/data/repository/data_repository.dart';
 import 'package:angime_hub/ui/main/content/components.dart';
@@ -15,6 +14,7 @@ class ArtistProfilePage extends StatelessWidget {
   late final SessionCubit sessionCubit;
   final User user;
 
+  // ignore: prefer_const_constructors_in_immutables
   ArtistProfilePage({required this.user, Key? key}) : super(key: key);
 
   @override
@@ -149,7 +149,7 @@ class ArtistProfilePage extends StatelessWidget {
       margin: const EdgeInsets.only(left: 8),
       child: ElevatedButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute<void>(builder: (context){
+          Navigator.push(context, MaterialPageRoute<void>(builder: (context) {
             return UploadRecordingPage(user: user);
           }));
         },

@@ -54,9 +54,10 @@ class _StandUpPlayerState extends State<StandUpPlayer> {
         child: Column(
           children: [
             _showVideo(),
-            _showInfo ?
-            info(mediaQuery: MediaQuery.of(context), media: widget.standUp) :
-            Container()
+            _showInfo
+                ? info(
+                    mediaQuery: MediaQuery.of(context), media: widget.standUp)
+                : Container()
           ],
         ),
       ),
@@ -74,7 +75,7 @@ class _StandUpPlayerState extends State<StandUpPlayer> {
             _replayBack(),
             _playPause(),
             _replayForward(),
-            !controller.value.isPlaying
+            !_showControls == false
                 ? _bottomControls()
                 : const SizedBox.shrink()
           ],
@@ -83,7 +84,7 @@ class _StandUpPlayerState extends State<StandUpPlayer> {
       onTap: () async {
         _showControls = true;
         setState(() {});
-        await Future.delayed(Duration(seconds: 2));
+        await Future.delayed(const Duration(seconds: 2));
         controller.value.isPlaying ? _showControls = false : null;
         setState(() {});
       },
@@ -129,10 +130,10 @@ class _StandUpPlayerState extends State<StandUpPlayer> {
           child: _showControls == false
               ? const SizedBox(height: 80, width: 80)
               : const Icon(
-            Icons.replay_10,
-            color: Color.fromARGB(190, 255, 255, 255),
-            size: 50.0,
-          ),
+                  Icons.replay_10,
+                  color: Color.fromARGB(190, 255, 255, 255),
+                  size: 50.0,
+                ),
         ),
         onDoubleTap: () async {
           if ((await controller.position)! > const Duration(seconds: 10)) {
@@ -155,11 +156,11 @@ class _StandUpPlayerState extends State<StandUpPlayer> {
           reverseDuration: const Duration(milliseconds: 200),
           child: _showControls == false
               ? const SizedBox(height: 80, width: 80)
-              : const Icon(
-            Icons.play_arrow,
-            color: Colors.white,
-            size: 80.0,
-          ),
+              : Icon(
+                  controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+                  color: Colors.white,
+                  size: 80.0,
+                ),
         ),
         onTap: () {
           controller.value.isPlaying
@@ -181,10 +182,10 @@ class _StandUpPlayerState extends State<StandUpPlayer> {
           child: _showControls == false
               ? const SizedBox(height: 80, width: 80)
               : const Icon(
-            Icons.forward_10,
-            color: Color.fromARGB(190, 255, 255, 255),
-            size: 50.0,
-          ),
+                  Icons.forward_10,
+                  color: Color.fromARGB(190, 255, 255, 255),
+                  size: 50.0,
+                ),
         ),
         onDoubleTap: () async {
           if (((await controller.position)! + const Duration(seconds: 10)) <
@@ -235,7 +236,7 @@ class _StandUpPlayerState extends State<StandUpPlayer> {
         setState(() {});
       },
       icon:
-      Icon(orientationIcon == 1 ? Icons.fullscreen_exit : Icons.fullscreen),
+          Icon(orientationIcon == 1 ? Icons.fullscreen_exit : Icons.fullscreen),
       color: Colors.white,
       iconSize: 30,
     );

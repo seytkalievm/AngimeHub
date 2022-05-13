@@ -10,13 +10,14 @@ import '../../../data/models/artist_model.dart';
 import '../../../data/models/media_card_model.dart';
 import '../content/media_card.dart';
 
-class SearchPage extends StatelessWidget{
+// ignore: must_be_immutable
+class SearchPage extends StatelessWidget {
   final String query;
   late DataRepository dataRepo;
   late SearchResult result;
   SearchPage({required this.query, Key? key}) : super(key: key);
 
-  Future<SearchResult> getSearchResult(){
+  Future<SearchResult> getSearchResult() {
     return dataRepo.getSearchResult(query);
   }
 
@@ -29,28 +30,34 @@ class SearchPage extends StatelessWidget{
           pageTitle: "Search results",
           showProfileButton: false),
       body: FutureBuilder<SearchResult>(
-          future: getSearchResult(),
-          builder: (BuildContext context, AsyncSnapshot<SearchResult> snapshot){
-            if(snapshot.hasData){
-              result = snapshot.data!;
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    result.artists.isNotEmpty?_artists(result.artists):_empty(),
-                    result.podcasts.isNotEmpty?_podcasts(result.podcasts):_empty(),
-                    result.standUps.isNotEmpty?_standUps(result.standUps):_empty(),
-                  ],
-                ),
-              );
-            }else{
-              return const CircularProgressIndicator();
-            }
-          },
-        ),
+        future: getSearchResult(),
+        builder: (BuildContext context, AsyncSnapshot<SearchResult> snapshot) {
+          if (snapshot.hasData) {
+            result = snapshot.data!;
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  result.artists.isNotEmpty
+                      ? _artists(result.artists)
+                      : _empty(),
+                  result.podcasts.isNotEmpty
+                      ? _podcasts(result.podcasts)
+                      : _empty(),
+                  result.standUps.isNotEmpty
+                      ? _standUps(result.standUps)
+                      : _empty(),
+                ],
+              ),
+            );
+          } else {
+            return const CircularProgressIndicator();
+          }
+        },
+      ),
     );
   }
 
-  Widget _artists(List<Artist> artists){
+  Widget _artists(List<Artist> artists) {
     return Column(
       children: [
         sectionTitle("Artists:"),
@@ -59,7 +66,7 @@ class SearchPage extends StatelessWidget{
           physics: const NeverScrollableScrollPhysics(),
           children: List.generate(
             artists.length,
-                (index) {
+            (index) {
               Artist current = artists[index];
               return ArtistCard(artist: current);
             },
@@ -69,7 +76,7 @@ class SearchPage extends StatelessWidget{
     );
   }
 
-  Widget _podcasts(List<MediaCardEntity> podcasts){
+  Widget _podcasts(List<MediaCardEntity> podcasts) {
     return Column(
       children: [
         sectionTitle("Podcasts:"),
@@ -78,7 +85,7 @@ class SearchPage extends StatelessWidget{
           physics: const NeverScrollableScrollPhysics(),
           children: List.generate(
             podcasts.length,
-                (index) {
+            (index) {
               MediaCardEntity current = podcasts[index];
               return MediaCard(
                 mediaCardEntity: current,
@@ -91,7 +98,7 @@ class SearchPage extends StatelessWidget{
     );
   }
 
-  Widget _standUps(List<MediaCardEntity> standUps){
+  Widget _standUps(List<MediaCardEntity> standUps) {
     return Column(
       children: [
         sectionTitle("StandUps:"),
@@ -100,7 +107,7 @@ class SearchPage extends StatelessWidget{
           physics: const NeverScrollableScrollPhysics(),
           children: List.generate(
             standUps.length,
-                (index) {
+            (index) {
               MediaCardEntity current = standUps[index];
               return MediaCard(
                 mediaCardEntity: current,
@@ -113,10 +120,9 @@ class SearchPage extends StatelessWidget{
     );
   }
 
-  Widget _empty(){
+  Widget _empty() {
     return const Text(
       "",
     );
   }
-
 }

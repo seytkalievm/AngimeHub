@@ -5,52 +5,45 @@ import '../models/user_model.dart';
 
 const apiBase = 'http://35.246.32.45:80/';
 
-class AuthRepository{
-
+class AuthRepository {
   late String userToken;
   final db = UserDatabase.instance;
 
   Future<User> attemptAutoLogin() async {
     late User user;
-    try{
+    try {
       user = await db.getUser();
       return user;
-    }catch (e){
+    } catch (e) {
       rethrow;
     }
   }
 
-  Future<int> login(
-      String email,
-      String password) async{
+  Future<int> login(String email, String password) async {
     int statusCode;
+    // ignore: unused_local_variable
     User user;
     try {
       final response = await http.get(
-        Uri.parse(apiBase+"user/login?email=$email&password=$password"),
-          headers: <String, String>{
+        Uri.parse(apiBase + "user/login?email=$email&password=$password"),
+        headers: <String, String>{
           'Content-Type': 'application/json',
-            'Charset': 'utf-8',
-          },
+          'Charset': 'utf-8',
+        },
       );
       statusCode = response.statusCode;
-      print(response.statusCode);
-      if(statusCode == 200){
-        print("Status Code 200");
+      if (statusCode == 200) {
         userToken = response.body;
         user = await getUser();
       }
-    }catch (e){
+    } catch (e) {
       statusCode = -1;
     }
     return statusCode;
   }
 
-  Future<int> register(
-      String firstName,
-      String secondName,
-      String email,
-      String password) async{
+  Future<int> register(String firstName, String secondName, String email,
+      String password) async {
     int statusCode;
     try {
       final response = await http.post(
@@ -66,14 +59,14 @@ class AuthRepository{
         }),
       );
       statusCode = response.statusCode;
-    }catch (e){
+    } catch (e) {
       statusCode = -1;
     }
-    
+
     return statusCode;
   }
 
-  Future <User> getUser() async{
+  Future<User> getUser() async {
     final response = await http.get(
       Uri.parse(apiBase + 'user/info?token=$userToken'),
       headers: <String, String>{
@@ -90,9 +83,8 @@ class AuthRepository{
       secondName: secondName,
       email: email,
       role: role,
-      token: userToken,);
-    print(role);
-    print("trying to add user into database");
+      token: userToken,
+    );
     await db.addUser(user);
     return user;
   }

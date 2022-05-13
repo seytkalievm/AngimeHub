@@ -7,6 +7,7 @@ import '../../../validators.dart';
 import '../auth_cubit.dart';
 import '../form_submission_status.dart';
 
+// ignore: must_be_immutable
 class RegisterView extends StatelessWidget {
   RegisterView({Key? key}) : super(key: key);
 

@@ -1,6 +1,4 @@
-import 'package:angime_hub/data/models/media_model.dart';
 import 'package:angime_hub/data/repository/data_repository.dart';
-import 'package:angime_hub/styles.dart';
 import 'package:angime_hub/ui/main/artist/artist_all_shows.dart';
 import 'package:angime_hub/ui/main/content/components.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +8,7 @@ import '../../../data/models/artist_model.dart';
 import '../../../data/models/media_card_model.dart';
 import '../content/media_card.dart';
 
-
-class ArtistPage extends StatefulWidget{
-
+class ArtistPage extends StatefulWidget {
   final Artist artist;
 
   const ArtistPage({required this.artist, Key? key}) : super(key: key);
@@ -21,8 +17,8 @@ class ArtistPage extends StatefulWidget{
   State<StatefulWidget> createState() {
     return _ArtistPageState();
   }
-
 }
+
 class _ArtistPageState extends State<ArtistPage> {
   late DataRepository dataRepo;
 
@@ -31,21 +27,20 @@ class _ArtistPageState extends State<ArtistPage> {
     dataRepo = context.read<DataRepository>();
     return FutureBuilder<Artist>(
       future: _getFullArtistInfo(),
-      builder: (context, snapshot){
-        if (snapshot.hasData){
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
           return _body(context, snapshot.data!);
         }
         return const CircularProgressIndicator();
       },
     );
-
   }
 
-  Future<Artist> _getFullArtistInfo() async{
+  Future<Artist> _getFullArtistInfo() async {
     return await dataRepo.getArtistInfo(widget.artist.id);
   }
 
-  Widget _body(BuildContext context, Artist newArtist){
+  Widget _body(BuildContext context, Artist newArtist) {
     bool hasStandUps = newArtist.standUps.isNotEmpty;
     bool hasPodcasts = newArtist.podcasts.isNotEmpty;
 
@@ -61,8 +56,12 @@ class _ArtistPageState extends State<ArtistPage> {
           child: Column(
             children: [
               _info(newArtist),
-              hasPodcasts?_popularsBlock(newArtist, type: "Podcasts"):_noShows(),
-              hasStandUps?_popularsBlock(newArtist, type: "Stand-Ups"):_noShows(),
+              hasPodcasts
+                  ? _popularsBlock(newArtist, type: "Podcasts")
+                  : _noShows(),
+              hasStandUps
+                  ? _popularsBlock(newArtist, type: "Stand-Ups")
+                  : _noShows(),
             ],
           ),
         ),
@@ -70,7 +69,7 @@ class _ArtistPageState extends State<ArtistPage> {
     );
   }
 
-  Widget _noShows(){
+  Widget _noShows() {
     return const Text(
       "",
     );
@@ -124,44 +123,46 @@ class _ArtistPageState extends State<ArtistPage> {
     );
   }
 
-  Widget _showShows(Artist newArtist,{required String type}){
-    List <MediaCardEntity> shows =
-                        type == "Podcasts"? newArtist.podcasts : newArtist.standUps;
+  Widget _showShows(Artist newArtist, {required String type}) {
+    List<MediaCardEntity> shows =
+        type == "Podcasts" ? newArtist.podcasts : newArtist.standUps;
     return ListView(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       children: List.generate(
-        shows.length > 3? 3 : shows.length,
-            (index) {
+        shows.length > 3 ? 3 : shows.length,
+        (index) {
           MediaCardEntity current = shows[index];
           return MediaCard(
             mediaCardEntity: current,
-            icon: MyFlutterApp.saved,
+            icon: MyFlutterApp.heart,
           );
         },
       ),
     );
   }
 
-
   Widget _heading(Artist newArtist, {required String type}) {
-    int showType = type == "Podcasts"? 1:0;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        sectionTitle("Popular $type"),
-        Row(
-          children: [
-            _showAll(showType, newArtist),
-            _iconShow(newArtist),
-          ],
-        ),
-      ],
+    int showType = type == "Podcasts" ? 1 : 0;
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          sectionTitle("Popular $type"),
+          Row(
+            children: [
+              _showAll(showType, newArtist),
+              _iconShow(newArtist),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
   Widget _showAll(int type, Artist newArtist) {
-    var shows = type==1?newArtist.podcasts:newArtist.standUps;
+    var shows = type == 1 ? newArtist.podcasts : newArtist.standUps;
     return InkWell(
       child: Container(
         margin: const EdgeInsets.only(right: 4),

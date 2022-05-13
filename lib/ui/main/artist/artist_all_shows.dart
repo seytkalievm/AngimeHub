@@ -5,7 +5,8 @@ import '../../../content/icons.dart';
 import '../content/components.dart';
 import '../content/media_card.dart';
 
-class AllShows extends StatelessWidget{
+// ignore: must_be_immutable
+class AllShows extends StatelessWidget {
   late String pageTitle;
   final List<MediaCardEntity> shows;
   final int type;
@@ -13,11 +14,9 @@ class AllShows extends StatelessWidget{
     required this.shows,
     required this.type,
     Key? key,
-  }) : super(key: key){
-   pageTitle = type == 1? "All Podcasts" : "All StandUp Shows";
+  }) : super(key: key) {
+    pageTitle = type == 1 ? "All Podcasts" : "All StandUp Shows";
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,7 @@ class AllShows extends StatelessWidget{
           physics: const NeverScrollableScrollPhysics(),
           children: List.generate(
             shows.length,
-                (index) {
+            (index) {
               MediaCardEntity current = shows[index];
               return MediaCard(
                 mediaCardEntity: current,

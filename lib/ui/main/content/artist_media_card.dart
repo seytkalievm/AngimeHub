@@ -1,5 +1,4 @@
 import 'package:angime_hub/content/icons.dart';
-import 'package:angime_hub/data/models/media_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../data/models/media_card_model.dart';
@@ -91,7 +90,6 @@ class ArtistMediaCard extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _saveToFavourites() {
     return SizedBox(

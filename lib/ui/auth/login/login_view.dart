@@ -10,6 +10,7 @@ import 'login_bloc.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 
+// ignore: must_be_immutable
 class LoginView extends StatelessWidget {
   LoginView({Key? key}) : super(key: key);
 

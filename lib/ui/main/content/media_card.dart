@@ -9,9 +9,10 @@ import '../../../data/models/user_model.dart';
 import '../media_players/podcast/podcast_player.dart';
 import '../media_players/standup/standup_player.dart';
 
+// ignore: must_be_immutable
 class MediaCard extends StatelessWidget {
   final MediaCardEntity mediaCardEntity;
-  late IconData icon = MyFlutterApp.download;
+  late IconData icon = MyFlutterApp.heart;
   late DataRepository dataRepo;
   late User user;
   late MediaQueryData mediaQuery;
@@ -31,8 +32,9 @@ class MediaCard extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(16, 0, 18, 16),
       child: InkWell(
         onTap: () async {
-          MediaEntity media = await dataRepo.getFullMediaInfo(mediaCardEntity.mediaId);
-          Navigator.push(context, MaterialPageRoute<void>(builder: (context){
+          MediaEntity media =
+              await dataRepo.getFullMediaInfo(mediaCardEntity.mediaId);
+          Navigator.push(context, MaterialPageRoute<void>(builder: (context) {
             if (mediaCardEntity.type == 1) {
               return PodcastPlayer(audio: media);
             }
@@ -46,7 +48,7 @@ class MediaCard extends StatelessWidget {
               children: [
                 _preview(),
                 Stack(
-                  alignment:  Alignment.centerLeft,
+                  alignment: Alignment.centerLeft,
                   children: [
                     _info(),
                   ],
@@ -60,12 +62,12 @@ class MediaCard extends StatelessWidget {
     );
   }
 
-  Future<void> _getUser() async{
+  Future<void> _getUser() async {
     user = await dataRepo.getUser();
   }
 
-  Widget _preview(){
-    if(mediaCardEntity.previewUrl.isNotEmpty){
+  Widget _preview() {
+    if (mediaCardEntity.previewUrl.isNotEmpty) {
       return ClipRRect(
         borderRadius: BorderRadius.circular(15),
         child: Image.network(
@@ -74,7 +76,7 @@ class MediaCard extends StatelessWidget {
           width: 83,
         ),
       );
-    }else{
+    } else {
       return ClipRRect(
         borderRadius: BorderRadius.circular(15),
         child: Image.asset(
@@ -84,10 +86,9 @@ class MediaCard extends StatelessWidget {
         ),
       );
     }
-
   }
 
-  Widget _info(){
+  Widget _info() {
     return Container(
       height: 48,
       margin: const EdgeInsets.fromLTRB(16, 6, 16, 6),
@@ -101,12 +102,12 @@ class MediaCard extends StatelessWidget {
     );
   }
 
-  Widget _name(){
+  Widget _name() {
     return Container(
       alignment: Alignment.topLeft,
-      width: mediaQuery.size.width *0.39,
+      width: mediaQuery.size.width * 0.39,
       padding: const EdgeInsets.only(bottom: 2),
-      child:Text(
+      child: Text(
         mediaCardEntity.mediaName,
         textAlign: TextAlign.left,
         maxLines: 1,
@@ -118,11 +119,11 @@ class MediaCard extends StatelessWidget {
           fontWeight: FontWeight.w400,
           color: Colors.white,
         ),
-      ) ,
+      ),
     );
   }
 
-  Widget _artist(){
+  Widget _artist() {
     return Container(
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.only(bottom: 2),
@@ -138,8 +139,7 @@ class MediaCard extends StatelessWidget {
     );
   }
 
-
-  Widget _favouritesButton(){
+  Widget _favouritesButton() {
     return SizedBox(
       child: IconButton(
         color: const Color.fromARGB(255, 156, 160, 199),
@@ -148,10 +148,10 @@ class MediaCard extends StatelessWidget {
           size: 16,
         ),
         onPressed: () {
-          if(icon == MyFlutterApp.heart) {
+          if (icon == MyFlutterApp.heart) {
             dataRepo.addMediaToFavourites(
                 token: user.token, id: mediaCardEntity.mediaId);
-          }else{
+          } else {
             dataRepo.deleteMediaFromFavourites(
                 token: user.token, id: mediaCardEntity.mediaId);
           }

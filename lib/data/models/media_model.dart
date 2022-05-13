@@ -1,5 +1,3 @@
-import 'package:angime_hub/data/models/user_model.dart';
-
 import 'artist_model.dart';
 
 class MediaEntity {
@@ -53,7 +51,6 @@ class MediaEntity {
     return _views;
   }
 
-
   int get type {
     return _type;
   }
@@ -62,5 +59,4 @@ class MediaEntity {
   String toString() {
     return artist.toString() + ": " + name;
   }
-
 }

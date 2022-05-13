@@ -15,11 +15,11 @@ class PodcastPlayer extends StatefulWidget {
   }
 }
 
-class _PodcastPlayerState extends State<PodcastPlayer>{
+class _PodcastPlayerState extends State<PodcastPlayer> {
   late final PageManager _pageManager;
   double currentPlaybackSpeed = 1.0;
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _pageManager = PageManager(audio: widget.audio);
   }

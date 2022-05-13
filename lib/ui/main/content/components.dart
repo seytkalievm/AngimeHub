@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../../../content/icons.dart';
 import '../../../data/models/artist_model.dart';
 import '../../../data/models/media_card_model.dart';
-import '../../../data/models/media_model.dart';
 import '../../../styles.dart';
 import 'artist_card.dart';
 import 'media_card.dart';
@@ -58,7 +57,7 @@ Widget profileButton(BuildContext context) {
 Widget searchField(BuildContext context, String hint) {
   final controller = TextEditingController();
   return Padding(
-    padding: const EdgeInsets.fromLTRB(16, 10, 16, 34),
+    padding: const EdgeInsets.fromLTRB(16, 10, 16, 14),
     child: TextField(
       controller: controller,
       textInputAction: TextInputAction.search,
@@ -66,12 +65,9 @@ Widget searchField(BuildContext context, String hint) {
         if (value.isNotEmpty) {
           var query = value;
           controller.clear();
-          Navigator.push(
-              context,
-              MaterialPageRoute<void>(builder: (context) {
-                return SearchPage(query: query);
-              })
-          );
+          Navigator.push(context, MaterialPageRoute<void>(builder: (context) {
+            return SearchPage(query: query);
+          }));
         }
       },
       style: CommonStyle.textFieldInputStyle(),
@@ -143,15 +139,17 @@ Widget artistsList({required Future<List<Artist>> artistsFuture}) {
   );
 }
 
-Widget showsList({required Future<List<MediaCardEntity>> showsFuture, required IconData icon}) {
+Widget showsList(
+    {required Future<List<MediaCardEntity>> showsFuture,
+    required IconData icon}) {
   List<MediaCardEntity> shows;
   return Padding(
     padding: const EdgeInsets.fromLTRB(16, 10, 0, 10),
     child: SizedBox(
       child: FutureBuilder<List<MediaCardEntity>>(
         future: showsFuture,
-        builder:
-            (BuildContext context, AsyncSnapshot<List<MediaCardEntity>> snapshot) {
+        builder: (BuildContext context,
+            AsyncSnapshot<List<MediaCardEntity>> snapshot) {
           if (snapshot.hasData) {
             shows = snapshot.data!;
             return ListView(
@@ -177,15 +175,16 @@ Widget showsList({required Future<List<MediaCardEntity>> showsFuture, required I
   );
 }
 
-Widget showsListForArtist({required Future<List<MediaCardEntity>> showsFuture}) {
+Widget showsListForArtist(
+    {required Future<List<MediaCardEntity>> showsFuture}) {
   List<MediaCardEntity> shows;
   return Padding(
     padding: const EdgeInsets.fromLTRB(16, 10, 0, 10),
     child: SizedBox(
       child: FutureBuilder<List<MediaCardEntity>>(
         future: showsFuture,
-        builder:
-            (BuildContext context, AsyncSnapshot<List<MediaCardEntity>> snapshot) {
+        builder: (BuildContext context,
+            AsyncSnapshot<List<MediaCardEntity>> snapshot) {
           if (snapshot.hasData) {
             shows = snapshot.data!;
             return ListView(
@@ -200,9 +199,7 @@ Widget showsListForArtist({required Future<List<MediaCardEntity>> showsFuture}) 
               ),
             );
           } else {
-            return const Center(
-                child: CircularProgressIndicator()
-            );
+            return const Center(child: CircularProgressIndicator());
           }
         },
       ),

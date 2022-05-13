@@ -4,21 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/models/artist_model.dart';
 import '../../../data/models/media_card_model.dart';
-import '../../../data/models/media_model.dart';
 import '../../../data/repository/data_repository.dart';
-import '../../../styles.dart';
 
-
-class PodcastsPage extends StatelessWidget{
+// ignore: must_be_immutable
+class PodcastsPage extends StatelessWidget {
   PodcastsPage({Key? key}) : super(key: key);
 
   late DataRepository dataRepo;
 
-  Future<List<Artist>> _getPopularArtists(){
+  Future<List<Artist>> _getPopularArtists() {
     return dataRepo.getPopularPodcastArtists();
   }
 
-  Future<List<MediaCardEntity>> _getPopularShows(){
+  Future<List<MediaCardEntity>> _getPopularShows() {
     return dataRepo.getPopularPodcasts();
   }
 
@@ -27,21 +25,21 @@ class PodcastsPage extends StatelessWidget{
     dataRepo = context.read<DataRepository>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
-        appBar: appBar(context: context, pageTitle: "Podcasts", showProfileButton: true),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              searchField(context, "Artists or Shows"),
-              _popularArtists(),
-              _popularShows(),
-            ],
-          ),
+      appBar: appBar(
+          context: context, pageTitle: "Podcasts", showProfileButton: true),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            searchField(context, "Artists or Shows"),
+            _popularArtists(),
+            _popularShows(),
+          ],
         ),
-
+      ),
     );
   }
 
-  Widget _popularArtists(){
+  Widget _popularArtists() {
     return Column(
       children: [
         sectionTitle("Popular Artists"),
@@ -50,7 +48,7 @@ class PodcastsPage extends StatelessWidget{
     );
   }
 
-  Widget _popularShows(){
+  Widget _popularShows() {
     return Column(
       children: [
         sectionTitle("Popular Podcasts"),
@@ -58,5 +56,4 @@ class PodcastsPage extends StatelessWidget{
       ],
     );
   }
-
 }

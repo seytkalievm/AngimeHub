@@ -6,26 +6,29 @@ import '../../../data/models/artist_model.dart';
 import '../../../data/models/media_card_model.dart';
 import '../../../data/repository/data_repository.dart';
 
-
-class StandUpPage extends StatelessWidget{
+// ignore: must_be_immutable
+class StandUpPage extends StatelessWidget {
   StandUpPage({Key? key}) : super(key: key);
 
   late DataRepository dataRepo;
 
-  Future<List<Artist>> _getPopularArtists(){
+  Future<List<Artist>> _getPopularArtists() {
     return dataRepo.getPopularStandUpArtists();
   }
 
-  Future<List<MediaCardEntity>> _getPopularShows(){
+  Future<List<MediaCardEntity>> _getPopularShows() {
     return dataRepo.getPopularStandUps();
   }
 
   @override
   Widget build(BuildContext context) {
     dataRepo = context.read<DataRepository>();
-    return  Scaffold(
+    return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: appBar(context: context, pageTitle: "Stand-Up Shows", showProfileButton: true),
+      appBar: appBar(
+          context: context,
+          pageTitle: "Stand-Up Shows",
+          showProfileButton: true),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -38,8 +41,7 @@ class StandUpPage extends StatelessWidget{
     );
   }
 
-
-  Widget _popularArtists(){
+  Widget _popularArtists() {
     return Column(
       children: [
         sectionTitle("Popular Artists"),
@@ -48,14 +50,12 @@ class StandUpPage extends StatelessWidget{
     );
   }
 
-
-  Widget _popularShows(){
+  Widget _popularShows() {
     return Column(
       children: [
         sectionTitle("Popular Stand-Up Shows"),
-        showsList(showsFuture: _getPopularShows(),icon: MyFlutterApp.heart)
+        showsList(showsFuture: _getPopularShows(), icon: MyFlutterApp.heart)
       ],
     );
   }
-
 }

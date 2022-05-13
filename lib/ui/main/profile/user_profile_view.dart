@@ -12,6 +12,7 @@ class UserProfilePage extends StatelessWidget {
   late final SessionCubit sessionCubit;
   final User user;
 
+  // ignore: prefer_const_constructors_in_immutables
   UserProfilePage({required this.user, Key? key}) : super(key: key);
 
   @override
@@ -126,8 +127,10 @@ class UserProfilePage extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       child: ElevatedButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute<void>(builder: (context){
-            return BecomeArtistPage(user: user,);
+          Navigator.push(context, MaterialPageRoute<void>(builder: (context) {
+            return BecomeArtistPage(
+              user: user,
+            );
           }));
         },
         style: ButtonStyle(

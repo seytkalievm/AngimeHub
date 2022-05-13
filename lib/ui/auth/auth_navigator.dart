@@ -4,13 +4,12 @@ import 'package:angime_hub/ui/auth/register/register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AuthNavigator extends StatelessWidget{
+class AuthNavigator extends StatelessWidget {
   const AuthNavigator({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print("AuthNai");
-    return BlocBuilder<AuthCubit, AuthState>(builder: (context, state){
+    return BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
       return Navigator(
         pages: [
           if (state is LogIn) MaterialPage(child: LoginView()),
@@ -20,8 +19,6 @@ class AuthNavigator extends StatelessWidget{
           return route.didPop(result);
         },
       );
-    }
-    );
+    });
   }
-
 }

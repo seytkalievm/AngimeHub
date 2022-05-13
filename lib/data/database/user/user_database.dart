@@ -14,14 +14,14 @@ class UserDatabase {
     return _database!;
   }
 
-  Future<Database> _initDB(String filePath) async{
+  Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
-    final path = dbPath+filePath;
+    final path = dbPath + filePath;
 
     return await openDatabase(path, version: 1, onCreate: _createDb);
   }
 
-  Future _createDb(Database db, int version) async{
+  Future _createDb(Database db, int version) async {
     const idType = "INTEGER PRIMARY KEY AUTOINCREMENT";
     const stringType = "STRING NOT NULL";
     await db.execute('''
@@ -36,38 +36,27 @@ class UserDatabase {
      ''');
   }
 
-  Future _close() async{
-    final db = await instance.database;
-    db.close();
-  }
-
-
-  Future<void> addUser(User user) async{
+  Future<void> addUser(User user) async {
     final db = await instance.database;
     await db.insert(userTable, user.toJson());
-    print("User added to db");
   }
 
-
-  Future<User> getUser() async{
+  Future<User> getUser() async {
     final db = await instance.database;
     final maps = await db.query(
       userTable,
       columns: UserFields.all,
     );
 
-    if (maps.isNotEmpty){
-      print("User in the database");
+    if (maps.isNotEmpty) {
       return User.fromJson(maps.first);
-    } else{
-      print("No user in the database");
+    } else {
       throw Exception("No user in the database");
     }
   }
 
-  Future <int> deleteUser() async{
+  Future<int> deleteUser() async {
     final db = await instance.database;
     return await db.delete(userTable);
   }
-
 }
