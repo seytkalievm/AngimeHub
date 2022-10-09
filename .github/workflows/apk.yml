@@ -33,7 +33,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            *Commit failed!*
+            Commit failed!
             
             ${{ github.actor }} created commit:
             Commit message: ${{ github.event.commits[0].message }}
@@ -54,7 +54,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            *Success commit!*
+            Success commit!
             
             ${{ github.actor }} created commit:
             Commit message: ${{ github.event.commits[0].message }}
