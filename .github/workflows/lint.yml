@@ -20,3 +20,5 @@ jobs:
         run: flutter pub get
       - name: flutter analyze
         run: flutter analyze --no-fatal-infos --no-fatal-warnings
+      - name: upload coverage to Codecov
+        uses: codecov/codecov-action@v1
