@@ -1,14 +1,24 @@
-workflow "Spell Checking with Aspell" {
-  on = "push"
-  resolves = ["GitHub Action for Aspell"]
-}
+name: Test prose
 
-action "GitHub Action for Aspell" {
-  uses = "mh61503891/action-paper-aspell@master"
-  env = {
-    ASPELL_LANG = "en"
-    ASPELL_MODE = "tex"
-    ASPELL_PERSONAL = "./.aspell.en.pws"
-    ASPELL_FILES = "README.md"
-  }
-}
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      max-parallel: 4
+      matrix:
+        os: [ubuntu-latest]
+        python-version: [3.8]
+
+    steps:
+    - name: Install aspell (spell checker)
+      run: |
+        sudo apt-get install aspell aspell-en
+
+    - name: Run spell checker
+      run: |
+        inv spellcheck
