@@ -21,7 +21,7 @@ jobs:
           name: release-apk
           path: build/app/outputs/apk/release/app-release.apk
           
-  message:
+  failure_message:
     needs: build
     if: failure()
     name: Send message on failure
@@ -30,7 +30,7 @@ jobs:
       - name: send telegram message on build failure
         uses: appleboy/telegram-action@master
         with:
-          to: ${{ secrets.TELEGRAM_TO }}
+          to: ${{ secrets.TELEGRAM_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             Commit failed!

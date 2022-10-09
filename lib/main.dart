@@ -8,7 +8,7 @@ import 'data/repository/auth_repository.dart';
 
 void main() {
   runApp(
-    MaterialAp(
+    MaterialApp(
       theme: CommonStyle.mainTheme(),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
