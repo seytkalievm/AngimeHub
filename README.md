@@ -12,7 +12,7 @@ To run app with server you need:
 
 ## :iphone: Screens and Features
 
-Fisrt page where the user arrives - Sign in page. Server checks if the user is registered and if the password is correct and returns the answer.
+First page where the user arrives - Sign in page. Server checks if the user is registered and if the password is correct and returns the answer.
 There are two possibilities: sign in, if you already have account, or register in the app. During registration first and second names are checked to have only letters, passwords are checked to be same, email is checked to be in apropriate form. Server checks if the user with such email is already registered or not and returns the answer.
 
  <img src="https://github.com/seytkalievm/AngimeHub/blob/master/assets/screens/login.png" width="200" height="400" /> <img src="https://github.com/seytkalievm/AngimeHub/blob/master/assets/screens/register.png" width="200" height="400" />
@@ -22,7 +22,7 @@ The user profile page:
 
 <img src="https://github.com/seytkalievm/AngimeHub/blob/master/assets/screens/profile.png" width="200" height="400" />
 
-App is navigated through bootom bar. There are three options: stand-up shows, podcasts and saved shows.
+App is navigated through bottom bar. There are three options: stand-up shows, podcasts and saved shows.
 First two screen show popular shows and artist.
 
 <img src="https://github.com/seytkalievm/AngimeHub/blob/master/assets/screens/standUp.jpg" width="200" height="400" /> <img src="https://github.com/seytkalievm/AngimeHub/blob/master/assets/screens/podcast.jpg" width="200" height="400" /> <img src="https://github.com/seytkalievm/AngimeHub/blob/master/assets/screens/saved.jpg" width="200" height="400" />
