@@ -31,6 +31,6 @@ def spellcheck(c):
             exit_code = 1
         else:
             out = f"In {tex_path} everything is fine!"
-            print(f"::set-output name=myOutput::{out}")
+            print(f"::set-output name=out::{out}")
 
     sys.exit(exit_code)
