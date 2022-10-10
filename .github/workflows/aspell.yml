@@ -31,7 +31,7 @@ jobs:
         id: summary
         uses: juliangruber/read-file-action@v1
         with:
-          path: AngimeHub/aspell_output.txt
+          path: ../../aspell_output.txt
       - name: Print the summary
         run: |
           echo "Summary of the aspell check"
