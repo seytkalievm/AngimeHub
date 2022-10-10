@@ -33,4 +33,5 @@ def spellcheck(c):
         else:
             output_file.write(f"In {tex_path} everithing is fine!")
 
+    output_file.close()
     sys.exit(exit_code)
