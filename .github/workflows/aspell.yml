@@ -31,7 +31,7 @@ jobs:
         uses: juliangruber/read-file-action@v1
         id: summary
         with:
-          path: aspell_output.txt
+          path: ./aspell_output.txt
       - name: Print the summary
         run: |
           echo "Summary of the aspell check"
