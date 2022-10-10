@@ -19,7 +19,6 @@ jobs:
         run: |
           sudo apt-get install aspell aspell-en
       - name: Run spell checker
-        uses: actions/checkout@v2.1.0
         id: summary
         run: |
           output = $(inv spellcheck)
