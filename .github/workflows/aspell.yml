@@ -28,7 +28,7 @@ jobs:
     name: Write output to summary
     steps:
       - name: Read the summary
-        uses: ./
+        uses: juliangruber/read-file-action@v1
         id: summary
         with:
           path: aspell_output.txt
