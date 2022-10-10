@@ -22,13 +22,7 @@ jobs:
         id: summary
         run: |
           inv spellcheck
-
-  aspell_summary:
-    needs: build
-    runs-on: ubuntu-latest
-    if: success() || failure()
-    name: Write output to summary
-    steps:
       - name: Print the summary
+        if: failure() || success()
         run: |
           echo "${{ steps.summary.outputs.output }}" >> $GITHUB_STEP_SUMMARY
