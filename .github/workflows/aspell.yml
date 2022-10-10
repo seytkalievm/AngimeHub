@@ -31,5 +31,4 @@ jobs:
     steps:
       - name: Print the summary
         run: |
-          echo "Summary of the aspell check" >> $GITHUB_STEP_SUMMARY
           echo "${{ steps.summary.outputs.out }}" >> $GITHUB_STEP_SUMMARY
