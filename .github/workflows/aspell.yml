@@ -28,7 +28,7 @@ jobs:
     name: Write output to summary
     steps:
       - name: Check out repository
-          uses: actions/checkout@v3
+        uses: actions/checkout@v3
       - name: Read the summary
         uses: juliangruber/read-file-action@v1
         id: summary
