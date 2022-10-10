@@ -36,5 +36,5 @@ jobs:
           path: ./aspell_output.txt
       - name: Print the summary
         run: |
-          echo "Summary of the aspell check"
+          echo "Summary of the aspell check" >> $GITHUB_STEP_SUMMARY
           echo "${{ steps.package.summary.content }}" >> $GITHUB_STEP_SUMMARY
