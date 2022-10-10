@@ -3,7 +3,7 @@ on: [push, workflow_dispatch]
 
 jobs:
   build:
-  name: Check with aspell
+    name: Check with aspell
     runs-on: ${{ matrix.os }}
     strategy:
       max-parallel: 4
