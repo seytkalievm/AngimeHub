@@ -28,10 +28,10 @@ jobs:
     name: Write output to summary
     steps:
       - name: Read the summary
+        uses: ./
         id: summary
-        uses: juliangruber/read-file-action@v1
         with:
-          path: ./aspell_output.txt
+          path: aspell_output.txt
       - name: Print the summary
         run: |
           echo "Summary of the aspell check"
