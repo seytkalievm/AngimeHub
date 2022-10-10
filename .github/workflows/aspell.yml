@@ -29,3 +29,13 @@ jobs:
     - name: Run spell checker
       run: |
         inv spellcheck
+
+    - name: Read the summary
+      id: summary
+      uses: juliangruber/read-file-action@v1
+      with:
+        path: ./aspell_output.txt
+    
+    - name: Print the summary
+      run: |
+        echo "${{ steps.package.summary.content }}" >> $GITHUB_STEP_SUMMARY
