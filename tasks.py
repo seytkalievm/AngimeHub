@@ -15,6 +15,7 @@ def get_files_to_check():
 def spellcheck(c):
 
     exit_code = 0
+    out = ""
 
     for tex_path in get_files_to_check():
 
@@ -24,7 +25,7 @@ def spellcheck(c):
         )
         incorrect_words = set(aspell_output.split("\n")) - {""} - known.words
         if len(incorrect_words) > 0:
-            out = f":x: **In {tex_path} the following words are not known:** <br />"
+            out += f":x: **In {tex_path} the following words are not known:** <br />"
             for string in sorted(incorrect_words):
                 out += f"- {string}<br />"
             exit_code = 1
