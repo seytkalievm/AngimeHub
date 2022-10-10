@@ -25,8 +25,9 @@ def spellcheck(c):
         incorrect_words = set(aspell_output.split("\n")) - {""} - known.words
         if len(incorrect_words) > 0:
             out = f"In {tex_path} the following words are not known: "
+            print(f"::set-output name=output::{out}")
             for string in sorted(incorrect_words):
-                print(string)
+                print(f"::set-output name=output::{string}")
             exit_code = 1
         else:
             out = f"In {tex_path} everything is fine!"
