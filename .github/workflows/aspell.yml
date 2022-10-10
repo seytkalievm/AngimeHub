@@ -31,7 +31,7 @@ jobs:
       run: |
         inv spellcheck
 
-  summary:
+  aspell_summary:
     runs-on: ${{ matrix.os }}
     name: Write output to summary
     needs: build
