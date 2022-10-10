@@ -26,6 +26,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     name: Write output to summary
+    steps:
       - name: Read the summary
         id: summary
         uses: juliangruber/read-file-action@v1
