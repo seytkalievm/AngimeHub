@@ -10,7 +10,6 @@ def get_files_to_check():
     for path in pathlib.Path("").glob("README.md"):
         yield path
 
-output_file = open('aspell_output.txt', 'w')
 
 @task
 def spellcheck(c):
@@ -25,13 +24,9 @@ def spellcheck(c):
         )
         incorrect_words = set(aspell_output.split("\n")) - {""} - known.words
         if len(incorrect_words) > 0:
-            output_file.write(f"In {tex_path} the following words are not known: ")
-            for string in incorrect_words:
-                output_file.write(string)
+            print(f"In {tex_path} the following words are not known: ")
+            for string in sorted(incorrect_words):
+                print(string)
             exit_code = 1
 
-        else:
-            output_file.write(f"In {tex_path} everithing is fine!")
-
-    output_file.close()
     sys.exit(exit_code)

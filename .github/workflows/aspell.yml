@@ -19,8 +19,10 @@ jobs:
         run: |
           sudo apt-get install aspell aspell-en
       - name: Run spell checker
+        uses: actions/checkout@v2.1.0
+        id: summary
         run: |
-          inv spellcheck
+          output = $(inv spellcheck)
 
   aspell_summary:
     needs: build
@@ -28,14 +30,7 @@ jobs:
     if: success() || failure()
     name: Write output to summary
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v3
-      - name: Read the summary
-        uses: juliangruber/read-file-action@v1
-        id: summary
-        with:
-          path: ./aspell_output.txt
       - name: Print the summary
         run: |
           echo "Summary of the aspell check" >> $GITHUB_STEP_SUMMARY
-          echo "${{ steps.package.summary.content }}" >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.summary.outputs.content }}" >> $GITHUB_STEP_SUMMARY
