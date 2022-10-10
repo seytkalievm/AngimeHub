@@ -25,12 +25,11 @@ def spellcheck(c):
         incorrect_words = set(aspell_output.split("\n")) - {""} - known.words
         if len(incorrect_words) > 0:
             out = f"In {tex_path} the following words are not known: "
-            print(f"::set-output name=myOutput::{out}")
             for string in sorted(incorrect_words):
-                print(f"::set-output name=myOutput::{string}")
+                print(string)
             exit_code = 1
         else:
             out = f"In {tex_path} everything is fine!"
-            print(f"::set-output name=out::{out}")
+            print(f"::set-output name=output::{out}")
 
     sys.exit(exit_code)
