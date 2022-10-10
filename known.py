@@ -1,3 +1,5 @@
 words = {
     
+    'pre',
+    'tm'
     }
