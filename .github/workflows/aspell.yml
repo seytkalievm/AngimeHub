@@ -30,6 +30,11 @@ jobs:
       run: |
         inv spellcheck
 
+  summary:
+    runs-on: ${{ matrix.os }}
+    name: Write output to summary
+    needs: build
+
     - name: Read the summary
       id: summary
       uses: juliangruber/read-file-action@v1
@@ -38,4 +43,5 @@ jobs:
     
     - name: Print the summary
       run: |
+        echo "Summary of the aspell check"
         echo "${{ steps.package.summary.content }}" >> $GITHUB_STEP_SUMMARY
